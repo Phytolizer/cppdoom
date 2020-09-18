@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/kyle/Documents/c++/doom/build",
+  "command": "/usr/bin/clang++ -DFMT_HEADER_ONLY=1 -DFMT_LOCALE -isystem /home/kyle/.local/share/vcpkg/installed/x64-linux/include -g -std=gnu++17 -o CMakeFiles/doom.dir/src/arglex.cc.o -c /home/kyle/Documents/c++/doom/src/arglex.cc",
+  "file": "/home/kyle/Documents/c++/doom/src/arglex.cc"
+},
+{
+  "directory": "/home/kyle/Documents/c++/doom/build",
+  "command": "/usr/bin/clang++ -DFMT_HEADER_ONLY=1 -DFMT_LOCALE -isystem /home/kyle/.local/share/vcpkg/installed/x64-linux/include -g -std=gnu++17 -o CMakeFiles/doom.dir/src/doom.cc.o -c /home/kyle/Documents/c++/doom/src/doom.cc",
+  "file": "/home/kyle/Documents/c++/doom/src/doom.cc"
+}
+]
