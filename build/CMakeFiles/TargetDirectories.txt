@@ -1,3 +1,0 @@
-/home/kyle/Documents/c++/doom/build/CMakeFiles/rebuild_cache.dir
-/home/kyle/Documents/c++/doom/build/CMakeFiles/edit_cache.dir
-/home/kyle/Documents/c++/doom/build/CMakeFiles/doom.dir

@@ -7,17 +7,8 @@
 #include <string>
 #include <vector>
 
-enum class ArgType
+namespace arglex
 {
-  Flag,
-  Positional,
-};
-
-struct Arg
-{
-  std::string value;
-  ArgType type;
-};
 
 struct RecordFromTo
 {
@@ -40,8 +31,22 @@ enum class VideoMode
   ModeGL,
 };
 
+enum class ArgType
+{
+  Flag,
+  Positional,
+};
+
+struct Arg
+{
+  std::string value;
+  ArgType type;
+};
+
 struct ArgMeta
 {
+  std::string argv0;
+
   std::optional<std::string> record;
   std::optional<std::string> recordFrom;
   std::optional<RecordFromTo> recordFromTo;
@@ -68,7 +73,7 @@ struct ArgMeta
   std::optional<std::string> iwad;
   std::vector<std::string> files;
 
-  std::optional<uint8_t> loadGame;
+  std::optional<std::string> loadGame;
   std::optional<Warp> warp;
   std::optional<uint8_t> skill;
 
@@ -107,5 +112,7 @@ struct ArgMeta
 std::vector<Arg> lexArgs(int argc, const char *const *argv);
 boost::variant2::variant<ArgMeta, std::string>
 parseArgs(const std::vector<Arg> &args);
+
+} // namespace arglex
 
 #endif

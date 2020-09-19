@@ -1,12 +1,18 @@
 #include "arglex.hh"
 
 #include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 #include <fmt/core.h>
 #include <string>
 #include <strtk.hpp>
 #include <vector>
 
-std::vector<Arg> lexArgs(int argc, const char *const *argv)
+#include "string_tools.hh"
+
+using namespace boost::variant2;
+using namespace arglex;
+
+std::vector<Arg> arglex::lexArgs(int argc, const char *const *argv)
 {
   std::vector<Arg> args;
   for (int i = 0; i < argc; i++)
@@ -24,10 +30,10 @@ std::vector<Arg> lexArgs(int argc, const char *const *argv)
   return args;
 }
 
-boost::variant2::variant<ArgMeta, std::string>
-parseArgs(const std::vector<Arg> &args)
+variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
 {
   ArgMeta argMeta;
+  argMeta.argv0 = args[0].value;
   bool firstSwitch = false;
 
   for (auto arg = next(args.begin()); arg != args.end(); ++arg)
@@ -51,13 +57,14 @@ parseArgs(const std::vector<Arg> &args)
 
       if (arg->value == "complevel")
       {
-        int32_t complevel;
         ++arg;
         if (arg == args.end())
         {
           return "-complevel requires an argument";
         }
-        if (!strtk::parse(arg->value, "", complevel))
+        auto complevel = parseString<uint32_t>(arg->value);
+
+        if (!complevel.has_value())
         {
           return fmt::format(
               "bad argument to -complevel: {} (expected integer)", arg->value);
@@ -65,55 +72,55 @@ parseArgs(const std::vector<Arg> &args)
         // negative number hack (arglex is very limited)
         if (arg->type == ArgType::Flag)
         {
-          complevel = -complevel;
+          complevel.value() = -complevel.value();
         }
-        argMeta.complevel = complevel;
+        argMeta.complevel = complevel.value();
       }
       else if (arg->value == "width")
       {
-        uint32_t width;
         ++arg;
         if (arg == args.end())
         {
           return "-width requires an argument";
         }
-        if (!strtk::parse(arg->value, "", width))
+        auto width = parseString<uint32_t>(arg->value);
+        if (!width.has_value())
         {
           return fmt::format("bad argument to -width: {} (expected integer)",
                              arg->value);
         }
-        argMeta.width = width;
+        argMeta.width = width.value();
       }
       else if (arg->value == "height")
       {
-        uint32_t height;
         ++arg;
         if (arg == args.end())
         {
           return "-height requires an argument";
         }
-        if (!strtk::parse(arg->value, "", height))
+        auto height = parseString<uint32_t>(arg->value);
+        if (!height.has_value())
         {
           return fmt::format("bad argument to -height: {} (expected integer)",
                              arg->value);
         }
-        argMeta.height = height;
+        argMeta.height = height.value();
       }
       else if (arg->value == "viewangle")
       {
-        uint8_t viewAngle = 0;
         ++arg;
         if (arg == args.end())
         {
           return "-viewangle requires an argument";
         }
-        if (!strtk::parse(arg->value, "", viewAngle) || viewAngle > '7')
+        auto viewAngle = parseString<uint8_t>(arg->value);
+        if (!viewAngle.has_value() || viewAngle > 7)
         {
           return fmt::format(
               "bad argument to -viewangle: {} (expected integer 0..7)",
               arg->value);
         }
-        argMeta.viewAngle = viewAngle - '0';
+        argMeta.viewAngle = viewAngle;
       }
       else if (arg->value == "vidmode")
       {
@@ -178,21 +185,283 @@ parseArgs(const std::vector<Arg> &args)
       else if (arg->value == "file")
       {
         ++arg;
-        if (arg == args.end() || arg->type == ArgType::Flag)
+        if (arg == args.end())
         {
           return "-file requires an argument";
         }
-        while (arg != args.end() && arg->type == ArgType::Positional)
+        argMeta.files.push_back(arg->value);
+        while (next(arg) != args.end() &&
+               next(arg)->type == ArgType::Positional)
         {
-          argMeta.files.push_back(arg->value);
+          argMeta.files.push_back(next(arg)->value);
           ++arg;
         }
+      }
+      else if (arg->value == "deh")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-deh requires an argument";
+        }
+        argMeta.dehs.push_back(arg->value);
+      }
+      else if (arg->value == "loadgame")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-loadgame requires an argument";
+        }
+        argMeta.loadGame = arg->value;
+      }
+      else if (arg->value == "warp")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-warp requires an argument";
+        }
+        Warp warp;
+        if (!parseString<uint8_t>(arg->value, &warp.episode))
+        {
+          return fmt::format("bad argument to -warp: {} (expected integer)",
+                             arg->value);
+        }
+        if (next(arg) != args.end() && next(arg)->type == ArgType::Positional)
+        {
+          ++arg;
+          if (!parseString<uint8_t>(arg->value, &warp.map))
+          {
+            return fmt::format(
+                "bad second argument to -warp: {} (expected integer)",
+                arg->value);
+          }
+        }
+        argMeta.warp = warp;
+      }
+      else if (arg->value == "skill")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-skill requires an argument";
+        }
+        auto skill = parseString<uint8_t>(arg->value);
+        if (!skill.has_value() || skill == 0 || skill > 5)
+        {
+          return fmt::format(
+              "bad argument to -skill: {} (expected an integer 1..5)",
+              arg->value);
+        }
+        argMeta.skill = skill.value();
+      }
+      else if (arg->value == "respawn")
+      {
+        argMeta.respawn = true;
+      }
+      else if (arg->value == "fast")
+      {
+        argMeta.fast = true;
+      }
+      else if (arg->value == "nomonsters")
+      {
+        argMeta.noMonsters = true;
+      }
+      else if (arg->value == "net")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-net requires an argument";
+        }
+        argMeta.net = arg->value;
+      }
+      else if (arg->value == "port")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-port requires an argument";
+        }
+        auto port = parseString<uint32_t>(arg->value);
+        if (!port.has_value())
+        {
+          return fmt::format("bad argument to -port: {} (expected integer)",
+                             arg->value);
+        }
+        argMeta.port = port.value();
+      }
+      else if (arg->value == "solo-net")
+      {
+        argMeta.soloNet = true;
+      }
+      else if (arg->value == "record")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-record requires an argument";
+        }
+        argMeta.record = arg->value;
+      }
+      else if (arg->value == "recordfrom")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-recordfrom requires an argument";
+        }
+        argMeta.recordFrom = arg->value;
+      }
+      else if (arg->value == "recordfromto")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-recordfromto requires 2 arguments";
+        }
+        RecordFromTo recordFromTo;
+        recordFromTo.from = arg->value;
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-recordfromto requires 2 arguments";
+        }
+        recordFromTo.to = arg->value;
+        argMeta.recordFromTo = recordFromTo;
+      }
+      else if (arg->value == "playdemo")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-playdemo requires an argument";
+        }
+        argMeta.playdemo = arg->value;
+      }
+      else if (arg->value == "timedemo")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-timedemo requires an argument";
+        }
+        argMeta.timedemo = arg->value;
+      }
+      else if (arg->value == "fastdemo")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-fastdemo requires an argument";
+        }
+        argMeta.fastdemo = arg->value;
+      }
+      else if (arg->value == "ffmap")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-ffmap requires an argument";
+        }
+        auto ffmap = parseString<uint8_t>(arg->value);
+        if (!ffmap.has_value())
+        {
+          return fmt::format("bad argument to -ffmap: {} (expected integer)",
+                             arg->value);
+        }
+        argMeta.ffmap = ffmap.value();
+      }
+      else if (arg->value == "nosound")
+      {
+        argMeta.noSound = true;
+      }
+      else if (arg->value == "nosfx")
+      {
+        argMeta.noSfx = true;
+      }
+      else if (arg->value == "nomusic")
+      {
+        argMeta.noMusic = true;
+      }
+      else if (arg->value == "nojoy")
+      {
+        argMeta.noJoy = true;
+      }
+      else if (arg->value == "nomouse")
+      {
+        argMeta.noMouse = true;
+      }
+      else if (arg->value == "noaccel")
+      {
+        argMeta.noAccel = true;
+      }
+      else if (arg->value == "1" || arg->value == "2" || arg->value == "3")
+      {
+        argMeta.scaleFactor = arg->value[0] - '0';
+      }
+      else if (arg->value == "config")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-config requires an argument";
+        }
+        argMeta.config = arg->value;
+      }
+      else if (arg->value == "save")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-save requires an argument";
+        }
+        argMeta.save = arg->value;
+      }
+      else if (arg->value == "devparm")
+      {
+        argMeta.devparm = true;
+      }
+      else if (arg->value == "debugfile")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-debugfile requires an argument";
+        }
+        argMeta.debugFile = arg->value;
+      }
+      else if (arg->value == "nodrawers")
+      {
+        argMeta.noDrawers = true;
+      }
+      else if (arg->value == "noblit")
+      {
+        argMeta.noBlit = true;
+      }
+      else if (arg->value == "bexout")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-bexout requires an argument";
+        }
+        argMeta.bexOut = arg->value;
       }
       else
       {
         return fmt::format("unknown parameter -{}", arg->value);
       }
     }
+  }
+
+  if ((argMeta.record.has_value() || argMeta.recordFrom.has_value() ||
+       argMeta.recordFromTo.has_value()) &&
+      (argMeta.playdemo.has_value() || argMeta.timedemo.has_value() ||
+       argMeta.fastdemo.has_value()))
+  {
+    return "cannot record and play back a demo at the same time";
   }
 
   return argMeta;
