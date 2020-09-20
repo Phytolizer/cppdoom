@@ -1,9 +1,14 @@
 #include "file.hh"
 
-#include <bits/c++config.h>
+#include <cstddef>
 #include <cstdlib>
 #include <fmt/core.h>
 #include <rang.hpp>
+#include <string_view>
+
+#if not(defined(__unix__)) && not(defined(__APPLE__) && defined(__MACH__))
+#include "win/getline.h"
+#endif
 
 void file::File::FileDeleter::operator()(std::FILE *handle)
 {
@@ -43,7 +48,7 @@ std::string file::File::readLine()
   char *line = nullptr;
   std::size_t n = 0;
 
-  ssize_t nread = getline(&line, &n, handle.get());
+  size_t nread = getline(&line, &n, handle.get());
   if (nread == -1)
   {
     std::free(line);
@@ -77,3 +82,33 @@ bool file::File::eof()
 {
   return feof(handle.get());
 }
+std::string file::File::readUntil(char delim) noexcept(false)
+{
+  char *line = nullptr;
+  std::size_t n = 0;
+  std::size_t nread = getdelim(&line, &n, delim, handle.get());
+  if (nread == -1)
+  {
+    if (eof())
+    {
+      return std::string{};
+    }
+    else
+    {
+      throw io::IoException{fmt::format(
+          "could not read until delimiter from file: {}", strerror(errno))};
+    }
+  }
+  std::string out{line, line + strlen(line)};
+  std::free(line);
+  return out;
+}
+std::size_t file::File::length()
+{
+  std::size_t pos = ftell(handle.get());
+  fseek(handle.get(), 0, SEEK_END);
+  std::size_t len = ftell(handle.get());
+  fseek(handle.get(), pos, SEEK_SET);
+  return len;
+}
+file::File::File() = default;

@@ -99,6 +99,8 @@ inline bool parseHexString(std::string_view s, gsl::not_null<T *> v)
   return ss.str() == s;
 }
 
+bool hasTrailingSlash(std::string_view s);
+
 } // namespace string_tools
 
 #endif

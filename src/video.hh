@@ -8,7 +8,10 @@
 namespace video
 {
 
+extern int process_affinity_mask;
 extern int process_priority;
+
+void preInitGraphics();
 
 }
 

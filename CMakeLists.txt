@@ -1,12 +1,23 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.16)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_TOOLCHAIN_FILE "/home/kyle/.local/share/vcpkg/scripts/buildsystems/vcpkg.cmake")
+if(WIN32)
+  set(CMAKE_TOOLCHAIN_FILE "C:\\dev\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake")
+else()
+  set(CMAKE_TOOLCHAIN_FILE
+      "/home/kyle/.local/share/vcpkg/scripts/buildsystems/vcpkg.cmake")
+endif()
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(doom)
 
 file(GLOB_RECURSE SOURCES "src/*.cc")
 add_executable(doom ${SOURCES})
+
+if(WIN32)
+  set(SDL2_DIR "/dev/libs/SDL2/")
+  set(SDL2_INCLUDE_DIRS "/dev/libs/SDL2/include")
+  set(SDL2_LIBRARY "/dev/libs/SDL2/lib/x64")
+endif()
 
 find_package(SDL2 REQUIRED)
 
@@ -19,7 +30,8 @@ find_path(BOOST_VARIANT2_INCLUDE_DIRS "boost/variant2/variant.hpp")
 target_include_directories(doom SYSTEM PRIVATE ${BOOST_VARIANT2_INCLUDE_DIRS})
 
 find_path(BOOST_LEXICAL_CAST_INCLUDE_DIRS "boost/detail/basic_pointerbuf.hpp")
-target_include_directories(doom SYSTEM PRIVATE ${BOOST_LEXICAL_CAST_INCLUDE_DIRS})
+target_include_directories(doom SYSTEM
+                           PRIVATE ${BOOST_LEXICAL_CAST_INCLUDE_DIRS})
 
 find_path(RANG_INCLUDE_DIRS "rang.hpp")
 target_include_directories(doom SYSTEM PRIVATE ${RANG_INCLUDE_DIRS})

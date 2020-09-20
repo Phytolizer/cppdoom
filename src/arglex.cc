@@ -1,7 +1,6 @@
 #include "arglex.hh"
 
 #include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 #include <fmt/core.h>
 #include <string>
 #include <strtk.hpp>
@@ -18,14 +17,7 @@ std::vector<Arg> arglex::lexArgs(int argc, const char *const *argv)
   for (int i = 0; i < argc; i++)
   {
     std::string arg = argv[i];
-    if (arg[0] == '-')
-    {
-      args.push_back(Arg{arg.substr(1), ArgType::Flag});
-    }
-    else
-    {
-      args.push_back(Arg{arg, ArgType::Positional});
-    }
+    args.push_back(arglex::lexArg(arg));
   }
   return args;
 }
@@ -465,6 +457,17 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
   }
 
   return argMeta;
+}
+Arg arglex::lexArg(const std::string &arg)
+{
+  if (arg[0] == '-')
+  {
+    return Arg{arg.substr(1), ArgType::Flag};
+  }
+  else
+  {
+    return Arg{arg, ArgType::Positional};
+  }
 }
 
 void ArgMeta::handleLooseArg(const Arg& arg)

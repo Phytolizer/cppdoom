@@ -106,13 +106,14 @@ struct ArgMeta
   bool noBlit;
   std::optional<std::string> bexOut;
 
-  void handleLooseArg(const Arg& arg);
+  void handleLooseArg(const Arg &arg);
 };
 
 std::vector<Arg> lexArgs(int argc, const char *const *argv);
 boost::variant2::variant<ArgMeta, std::string>
 parseArgs(const std::vector<Arg> &args);
 
+Arg lexArg(const std::string &arg);
 } // namespace arglex
 
 #endif
