@@ -3,6 +3,9 @@
 //
 
 #include "doom_main.hh"
+
+#include "deh.hh"
+
 void doom::main()
 {
   doom::mainSetup();

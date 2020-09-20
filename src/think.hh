@@ -9,6 +9,19 @@ namespace think
 {
 
 using ActionF = void (*)();
+using Think = ActionF;
+
+struct Thinker
+{
+  Thinker *prev;
+  Thinker *next;
+  Think function;
+
+  Thinker *cnext;
+  Thinker *cprev;
+
+  uint32_t references;
+};
 
 }
 

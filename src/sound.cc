@@ -167,7 +167,7 @@ sound::SfxInfo sound::sfx[]{
     {"hoof", false, 70, nullptr, -1, -1, nullptr},
     {"metal", false, 70, nullptr, -1, -1, nullptr},
     {"chgun", false, 64,
-     &sound::sfx[static_cast<size_t>(info::SfxEnum::sfx_pistol)], 150, 0,
+     &sound::sfx[static_cast<size_t>(info::Sfx::sfx_pistol)], 150, 0,
      nullptr},
     {"tink", false, 60, nullptr, -1, -1, nullptr},
     {"bdopn", false, 100, nullptr, -1, -1, nullptr},

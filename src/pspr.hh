@@ -5,10 +5,27 @@
 #ifndef DOOM_PSPR_HH
 #define DOOM_PSPR_HH
 
+#include "info.hh"
+
 namespace pspr
 {
 
 extern int weapon_attack_alignment;
+
+enum class PSprEnum
+{
+  PS_WEAPON,
+  PS_FLASH,
+  NUMPSPRITES,
+};
+
+struct PSpDef
+{
+  info::State *state;
+  int32_t tics;
+  fixed::Fixed sx;
+  fixed::Fixed sy;
+};
 
 }
 
