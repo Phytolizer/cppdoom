@@ -21,11 +21,14 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_PUNCHDOWN
     {SpriteEnum::SPR_PUNG, 0, 1, action::raise, StateEnum::S_PUNCHUP, 0,
      0}, // S_PUNCHUP
-    {SpriteEnum::SPR_PUNG, 1, 4, nullptr, StateEnum::S_PUNCH2, 0, 0}, // S_PUNCH1
+    {SpriteEnum::SPR_PUNG, 1, 4, nullptr, StateEnum::S_PUNCH2, 0,
+     0}, // S_PUNCH1
     {SpriteEnum::SPR_PUNG, 2, 4, action::punch, StateEnum::S_PUNCH3, 0,
-     0},                                                             // S_PUNCH2
-    {SpriteEnum::SPR_PUNG, 3, 5, nullptr, StateEnum::S_PUNCH4, 0, 0}, // S_PUNCH3
-    {SpriteEnum::SPR_PUNG, 2, 4, nullptr, StateEnum::S_PUNCH5, 0, 0}, // S_PUNCH4
+     0}, // S_PUNCH2
+    {SpriteEnum::SPR_PUNG, 3, 5, nullptr, StateEnum::S_PUNCH4, 0,
+     0}, // S_PUNCH3
+    {SpriteEnum::SPR_PUNG, 2, 4, nullptr, StateEnum::S_PUNCH5, 0,
+     0}, // S_PUNCH4
     {SpriteEnum::SPR_PUNG, 1, 5, action::reFire, StateEnum::S_PUNCH, 0,
      0}, // S_PUNCH5
     {SpriteEnum::SPR_PISG, 0, 1, action::weaponReady, StateEnum::S_PISTOL, 0,
@@ -49,10 +52,10 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_SHTG, 0, 1, action::lower, StateEnum::S_SGUNDOWN, 0,
      0}, // S_SGUNDOWN
     {SpriteEnum::SPR_SHTG, 0, 1, action::raise, StateEnum::S_SGUNUP, 0,
-     0},                                                            // S_SGUNUP
+     0},                                                             // S_SGUNUP
     {SpriteEnum::SPR_SHTG, 0, 3, nullptr, StateEnum::S_SGUN2, 0, 0}, // S_SGUN1
     {SpriteEnum::SPR_SHTG, 0, 7, action::fireShotgun, StateEnum::S_SGUN3, 0,
-     0},                                                            // S_SGUN2
+     0},                                                             // S_SGUN2
     {SpriteEnum::SPR_SHTG, 1, 5, nullptr, StateEnum::S_SGUN4, 0, 0}, // S_SGUN3
     {SpriteEnum::SPR_SHTG, 2, 5, nullptr, StateEnum::S_SGUN5, 0, 0}, // S_SGUN4
     {SpriteEnum::SPR_SHTG, 3, 4, nullptr, StateEnum::S_SGUN6, 0, 0}, // S_SGUN5
@@ -71,27 +74,31 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_DSGUNDOWN
     {SpriteEnum::SPR_SHT2, 0, 1, action::raise, StateEnum::S_DSGUNUP, 0,
      0}, // S_DSGUNUP
-    {SpriteEnum::SPR_SHT2, 0, 3, nullptr, StateEnum::S_DSGUN2, 0, 0}, // S_DSGUN1
+    {SpriteEnum::SPR_SHT2, 0, 3, nullptr, StateEnum::S_DSGUN2, 0,
+     0}, // S_DSGUN1
     {SpriteEnum::SPR_SHT2, 0, 7, action::fireShotgun2, StateEnum::S_DSGUN3, 0,
-     0},                                                             // S_DSGUN2
-    {SpriteEnum::SPR_SHT2, 1, 7, nullptr, StateEnum::S_DSGUN4, 0, 0}, // S_DSGUN3
+     0}, // S_DSGUN2
+    {SpriteEnum::SPR_SHT2, 1, 7, nullptr, StateEnum::S_DSGUN4, 0,
+     0}, // S_DSGUN3
     {SpriteEnum::SPR_SHT2, 2, 7, action::checkReload, StateEnum::S_DSGUN5, 0,
      0}, // S_DSGUN4
     {SpriteEnum::SPR_SHT2, 3, 7, action::openShotgun2, StateEnum::S_DSGUN6, 0,
-     0},                                                             // S_DSGUN5
-    {SpriteEnum::SPR_SHT2, 4, 7, nullptr, StateEnum::S_DSGUN7, 0, 0}, // S_DSGUN6
+     0}, // S_DSGUN5
+    {SpriteEnum::SPR_SHT2, 4, 7, nullptr, StateEnum::S_DSGUN7, 0,
+     0}, // S_DSGUN6
     {SpriteEnum::SPR_SHT2, 5, 7, action::loadShotgun2, StateEnum::S_DSGUN8, 0,
-     0},                                                             // S_DSGUN7
-    {SpriteEnum::SPR_SHT2, 6, 6, nullptr, StateEnum::S_DSGUN9, 0, 0}, // S_DSGUN8
+     0}, // S_DSGUN7
+    {SpriteEnum::SPR_SHT2, 6, 6, nullptr, StateEnum::S_DSGUN9, 0,
+     0}, // S_DSGUN8
     {SpriteEnum::SPR_SHT2, 7, 6, action::closeShotgun2, StateEnum::S_DSGUN10, 0,
      0}, // S_DSGUN9
     {SpriteEnum::SPR_SHT2, 0, 5, action::reFire, StateEnum::S_DSGUN, 0,
-     0},                                                            // S_DSGUN10
+     0}, // S_DSGUN10
     {SpriteEnum::SPR_SHT2, 1, 7, nullptr, StateEnum::S_DSNR2, 0, 0}, // S_DSNR1
     {SpriteEnum::SPR_SHT2, 0, 3, nullptr, StateEnum::S_DSGUNDOWN, 0,
      0}, // S_DSNR2
-    {SpriteEnum::SPR_SHT2, 32776, 5, action::light1, StateEnum::S_DSGUNFLASH2, 0,
-     0}, // S_DSGUNFLASH1
+    {SpriteEnum::SPR_SHT2, 32776, 5, action::light1, StateEnum::S_DSGUNFLASH2,
+     0, 0}, // S_DSGUNFLASH1
     {SpriteEnum::SPR_SHT2, 32777, 4, action::light2, StateEnum::S_LIGHTDONE, 0,
      0}, // S_DSGUNFLASH2
     {SpriteEnum::SPR_CHGG, 0, 1, action::weaponReady, StateEnum::S_CHAIN, 0,
@@ -138,8 +145,10 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_SAWDOWN
     {SpriteEnum::SPR_SAWG, 2, 1, action::raise, StateEnum::S_SAWUP, 0,
      0}, // S_SAWUP
-    {SpriteEnum::SPR_SAWG, 0, 4, action::saw, StateEnum::S_SAW2, 0, 0}, // S_SAW1
-    {SpriteEnum::SPR_SAWG, 1, 4, action::saw, StateEnum::S_SAW3, 0, 0}, // S_SAW2
+    {SpriteEnum::SPR_SAWG, 0, 4, action::saw, StateEnum::S_SAW2, 0,
+     0}, // S_SAW1
+    {SpriteEnum::SPR_SAWG, 1, 4, action::saw, StateEnum::S_SAW3, 0,
+     0}, // S_SAW2
     {SpriteEnum::SPR_SAWG, 1, 0, action::reFire, StateEnum::S_SAW, 0,
      0}, // S_SAW3
     {SpriteEnum::SPR_PLSG, 0, 1, action::weaponReady, StateEnum::S_PLASMA, 0,
@@ -174,11 +183,13 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_BFGFLASH1
     {SpriteEnum::SPR_BFGF, 32769, 6, action::light2, StateEnum::S_LIGHTDONE, 0,
      0}, // S_BFGFLASH2
-    {SpriteEnum::SPR_BLUD, 2, 8, nullptr, StateEnum::S_BLOOD2, 0, 0}, // S_BLOOD1
-    {SpriteEnum::SPR_BLUD, 1, 8, nullptr, StateEnum::S_BLOOD3, 0, 0}, // S_BLOOD2
-    {SpriteEnum::SPR_BLUD, 0, 8, nullptr, StateEnum::S_NULL, 0, 0},   // S_BLOOD3
+    {SpriteEnum::SPR_BLUD, 2, 8, nullptr, StateEnum::S_BLOOD2, 0,
+     0}, // S_BLOOD1
+    {SpriteEnum::SPR_BLUD, 1, 8, nullptr, StateEnum::S_BLOOD3, 0,
+     0},                                                            // S_BLOOD2
+    {SpriteEnum::SPR_BLUD, 0, 8, nullptr, StateEnum::S_NULL, 0, 0}, // S_BLOOD3
     {SpriteEnum::SPR_PUFF, 32768, 4, nullptr, StateEnum::S_PUFF2, 0,
-     0},                                                            // S_PUFF1
+     0},                                                             // S_PUFF1
     {SpriteEnum::SPR_PUFF, 1, 4, nullptr, StateEnum::S_PUFF3, 0, 0}, // S_PUFF2
     {SpriteEnum::SPR_PUFF, 2, 4, nullptr, StateEnum::S_PUFF4, 0, 0}, // S_PUFF3
     {SpriteEnum::SPR_PUFF, 3, 4, nullptr, StateEnum::S_NULL, 0, 0},  // S_PUFF4
@@ -285,7 +296,7 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_IFOG, 32771, 6, nullptr, StateEnum::S_IFOG5, 0,
      0}, // S_IFOG4
     {SpriteEnum::SPR_IFOG, 32772, 6, nullptr, StateEnum::S_NULL, 0,
-     0},                                                            // S_IFOG5
+     0},                                                             // S_IFOG5
     {SpriteEnum::SPR_PLAY, 0, -1, nullptr, StateEnum::S_NULL, 0, 0}, // S_PLAY
     {SpriteEnum::SPR_PLAY, 0, 4, nullptr, StateEnum::S_PLAY_RUN2, 0,
      0}, // S_PLAY_RUN1
@@ -423,8 +434,8 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_SPOS_RUN8
     {SpriteEnum::SPR_SPOS, 4, 10, action::faceTarget, StateEnum::S_SPOS_ATK2, 0,
      0}, // S_SPOS_ATK1
-    {SpriteEnum::SPR_SPOS, 32773, 10, action::sPosAttack, StateEnum::S_SPOS_ATK3,
-     0, 0}, // S_SPOS_ATK2
+    {SpriteEnum::SPR_SPOS, 32773, 10, action::sPosAttack,
+     StateEnum::S_SPOS_ATK3, 0, 0}, // S_SPOS_ATK2
     {SpriteEnum::SPR_SPOS, 4, 10, nullptr, StateEnum::S_SPOS_RUN1, 0,
      0}, // S_SPOS_ATK3
     {SpriteEnum::SPR_SPOS, 6, 3, nullptr, StateEnum::S_SPOS_PAIN2, 0,
@@ -499,8 +510,8 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_VILE_RUN12
     {SpriteEnum::SPR_VILE, 32774, 0, action::vileStart, StateEnum::S_VILE_ATK2,
      0, 0}, // S_VILE_ATK1
-    {SpriteEnum::SPR_VILE, 32774, 10, action::faceTarget, StateEnum::S_VILE_ATK3,
-     0, 0}, // S_VILE_ATK2
+    {SpriteEnum::SPR_VILE, 32774, 10, action::faceTarget,
+     StateEnum::S_VILE_ATK3, 0, 0}, // S_VILE_ATK2
     {SpriteEnum::SPR_VILE, 32775, 8, action::vileTarget, StateEnum::S_VILE_ATK4,
      0, 0}, // S_VILE_ATK3
     {SpriteEnum::SPR_VILE, 32776, 8, action::faceTarget, StateEnum::S_VILE_ATK5,
@@ -513,10 +524,10 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0, 0}, // S_VILE_ATK7
     {SpriteEnum::SPR_VILE, 32780, 8, action::faceTarget, StateEnum::S_VILE_ATK9,
      0, 0}, // S_VILE_ATK8
-    {SpriteEnum::SPR_VILE, 32781, 8, action::faceTarget, StateEnum::S_VILE_ATK10,
-     0, 0}, // S_VILE_ATK9
-    {SpriteEnum::SPR_VILE, 32782, 8, action::vileAttack, StateEnum::S_VILE_ATK11,
-     0, 0}, // S_VILE_ATK10
+    {SpriteEnum::SPR_VILE, 32781, 8, action::faceTarget,
+     StateEnum::S_VILE_ATK10, 0, 0}, // S_VILE_ATK9
+    {SpriteEnum::SPR_VILE, 32782, 8, action::vileAttack,
+     StateEnum::S_VILE_ATK11, 0, 0}, // S_VILE_ATK10
     {SpriteEnum::SPR_VILE, 32783, 20, nullptr, StateEnum::S_VILE_RUN1, 0,
      0}, // S_VILE_ATK11
     {SpriteEnum::SPR_VILE, 32794, 10, nullptr, StateEnum::S_VILE_HEAL2, 0,
@@ -585,8 +596,8 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_FIRE17
     {SpriteEnum::SPR_FIRE, 32771, 2, action::fire, StateEnum::S_FIRE19, 0,
      0}, // S_FIRE18
-    {SpriteEnum::SPR_FIRE, 32772, 2, action::fireCrackle, StateEnum::S_FIRE20, 0,
-     0}, // S_FIRE19
+    {SpriteEnum::SPR_FIRE, 32772, 2, action::fireCrackle, StateEnum::S_FIRE20,
+     0, 0}, // S_FIRE19
     {SpriteEnum::SPR_FIRE, 32773, 2, action::fire, StateEnum::S_FIRE21, 0,
      0}, // S_FIRE20
     {SpriteEnum::SPR_FIRE, 32772, 2, action::fire, StateEnum::S_FIRE22, 0,
@@ -608,12 +619,16 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_FIRE, 32774, 2, action::fire, StateEnum::S_FIRE30, 0,
      0}, // S_FIRE29
     {SpriteEnum::SPR_FIRE, 32775, 2, action::fire, StateEnum::S_NULL, 0,
-     0},                                                             // S_FIRE30
-    {SpriteEnum::SPR_PUFF, 1, 4, nullptr, StateEnum::S_SMOKE2, 0, 0}, // S_SMOKE1
-    {SpriteEnum::SPR_PUFF, 2, 4, nullptr, StateEnum::S_SMOKE3, 0, 0}, // S_SMOKE2
-    {SpriteEnum::SPR_PUFF, 1, 4, nullptr, StateEnum::S_SMOKE4, 0, 0}, // S_SMOKE3
-    {SpriteEnum::SPR_PUFF, 2, 4, nullptr, StateEnum::S_SMOKE5, 0, 0}, // S_SMOKE4
-    {SpriteEnum::SPR_PUFF, 3, 4, nullptr, StateEnum::S_NULL, 0, 0},   // S_SMOKE5
+     0}, // S_FIRE30
+    {SpriteEnum::SPR_PUFF, 1, 4, nullptr, StateEnum::S_SMOKE2, 0,
+     0}, // S_SMOKE1
+    {SpriteEnum::SPR_PUFF, 2, 4, nullptr, StateEnum::S_SMOKE3, 0,
+     0}, // S_SMOKE2
+    {SpriteEnum::SPR_PUFF, 1, 4, nullptr, StateEnum::S_SMOKE4, 0,
+     0}, // S_SMOKE3
+    {SpriteEnum::SPR_PUFF, 2, 4, nullptr, StateEnum::S_SMOKE5, 0,
+     0},                                                            // S_SMOKE4
+    {SpriteEnum::SPR_PUFF, 3, 4, nullptr, StateEnum::S_NULL, 0, 0}, // S_SMOKE5
     {SpriteEnum::SPR_FATB, 32768, 2, action::tracer, StateEnum::S_TRACER2, 0,
      0}, // S_TRACER
     {SpriteEnum::SPR_FATB, 32769, 2, action::tracer, StateEnum::S_TRACER, 0,
@@ -660,14 +675,14 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_SKEL_FIST3
     {SpriteEnum::SPR_SKEL, 8, 6, action::skelFist, StateEnum::S_SKEL_RUN1, 0,
      0}, // S_SKEL_FIST4
-    {SpriteEnum::SPR_SKEL, 32777, 0, action::faceTarget, StateEnum::S_SKEL_MISS2,
-     0, 0}, // S_SKEL_MISS1
+    {SpriteEnum::SPR_SKEL, 32777, 0, action::faceTarget,
+     StateEnum::S_SKEL_MISS2, 0, 0}, // S_SKEL_MISS1
     {SpriteEnum::SPR_SKEL, 32777, 10, action::faceTarget,
      StateEnum::S_SKEL_MISS3, 0, 0}, // S_SKEL_MISS2
     {SpriteEnum::SPR_SKEL, 10, 10, action::skelMissile, StateEnum::S_SKEL_MISS4,
      0, 0}, // S_SKEL_MISS3
-    {SpriteEnum::SPR_SKEL, 10, 10, action::faceTarget, StateEnum::S_SKEL_RUN1, 0,
-     0}, // S_SKEL_MISS4
+    {SpriteEnum::SPR_SKEL, 10, 10, action::faceTarget, StateEnum::S_SKEL_RUN1,
+     0, 0}, // S_SKEL_MISS4
     {SpriteEnum::SPR_SKEL, 11, 5, nullptr, StateEnum::S_SKEL_PAIN2, 0,
      0}, // S_SKEL_PAIN
     {SpriteEnum::SPR_SKEL, 11, 5, action::pain, StateEnum::S_SKEL_RUN1, 0,
@@ -736,20 +751,20 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_FATT_RUN12
     {SpriteEnum::SPR_FATT, 6, 20, action::fatRaise, StateEnum::S_FATT_ATK2, 0,
      0}, // S_FATT_ATK1
-    {SpriteEnum::SPR_FATT, 32775, 10, action::fatAttack1, StateEnum::S_FATT_ATK3,
-     0, 0}, // S_FATT_ATK2
+    {SpriteEnum::SPR_FATT, 32775, 10, action::fatAttack1,
+     StateEnum::S_FATT_ATK3, 0, 0}, // S_FATT_ATK2
     {SpriteEnum::SPR_FATT, 8, 5, action::faceTarget, StateEnum::S_FATT_ATK4, 0,
      0}, // S_FATT_ATK3
     {SpriteEnum::SPR_FATT, 6, 5, action::faceTarget, StateEnum::S_FATT_ATK5, 0,
      0}, // S_FATT_ATK4
-    {SpriteEnum::SPR_FATT, 32775, 10, action::fatAttack2, StateEnum::S_FATT_ATK6,
-     0, 0}, // S_FATT_ATK5
+    {SpriteEnum::SPR_FATT, 32775, 10, action::fatAttack2,
+     StateEnum::S_FATT_ATK6, 0, 0}, // S_FATT_ATK5
     {SpriteEnum::SPR_FATT, 8, 5, action::faceTarget, StateEnum::S_FATT_ATK7, 0,
      0}, // S_FATT_ATK6
     {SpriteEnum::SPR_FATT, 6, 5, action::faceTarget, StateEnum::S_FATT_ATK8, 0,
      0}, // S_FATT_ATK7
-    {SpriteEnum::SPR_FATT, 32775, 10, action::fatAttack3, StateEnum::S_FATT_ATK9,
-     0, 0}, // S_FATT_ATK8
+    {SpriteEnum::SPR_FATT, 32775, 10, action::fatAttack3,
+     StateEnum::S_FATT_ATK9, 0, 0}, // S_FATT_ATK8
     {SpriteEnum::SPR_FATT, 8, 5, action::faceTarget, StateEnum::S_FATT_ATK10, 0,
      0}, // S_FATT_ATK9
     {SpriteEnum::SPR_FATT, 6, 5, action::faceTarget, StateEnum::S_FATT_RUN1, 0,
@@ -1212,8 +1227,8 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_SPID_RUN11
     {SpriteEnum::SPR_SPID, 5, 3, action::chase, StateEnum::S_SPID_RUN1, 0,
      0}, // S_SPID_RUN12
-    {SpriteEnum::SPR_SPID, 32768, 20, action::faceTarget, StateEnum::S_SPID_ATK2,
-     0, 0}, // S_SPID_ATK1
+    {SpriteEnum::SPR_SPID, 32768, 20, action::faceTarget,
+     StateEnum::S_SPID_ATK2, 0, 0}, // S_SPID_ATK1
     {SpriteEnum::SPR_SPID, 32774, 4, action::sPosAttack, StateEnum::S_SPID_ATK3,
      0, 0}, // S_SPID_ATK2
     {SpriteEnum::SPR_SPID, 32775, 4, action::sPosAttack, StateEnum::S_SPID_ATK4,
@@ -1276,8 +1291,8 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_BSPI_RUN11
     {SpriteEnum::SPR_BSPI, 5, 3, action::chase, StateEnum::S_BSPI_RUN1, 0,
      0}, // S_BSPI_RUN12
-    {SpriteEnum::SPR_BSPI, 32768, 20, action::faceTarget, StateEnum::S_BSPI_ATK2,
-     0, 0}, // S_BSPI_ATK1
+    {SpriteEnum::SPR_BSPI, 32768, 20, action::faceTarget,
+     StateEnum::S_BSPI_ATK2, 0, 0}, // S_BSPI_ATK1
     {SpriteEnum::SPR_BSPI, 32774, 4, action::bspiAttack, StateEnum::S_BSPI_ATK3,
      0, 0}, // S_BSPI_ATK2
     {SpriteEnum::SPR_BSPI, 32775, 4, nullptr, StateEnum::S_BSPI_ATK4, 0,
@@ -1354,12 +1369,12 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_CYBER_ATK1
     {SpriteEnum::SPR_CYBR, 5, 12, action::cyberAttack, StateEnum::S_CYBER_ATK3,
      0, 0}, // S_CYBER_ATK2
-    {SpriteEnum::SPR_CYBR, 4, 12, action::faceTarget, StateEnum::S_CYBER_ATK4, 0,
-     0}, // S_CYBER_ATK3
+    {SpriteEnum::SPR_CYBR, 4, 12, action::faceTarget, StateEnum::S_CYBER_ATK4,
+     0, 0}, // S_CYBER_ATK3
     {SpriteEnum::SPR_CYBR, 5, 12, action::cyberAttack, StateEnum::S_CYBER_ATK5,
      0, 0}, // S_CYBER_ATK4
-    {SpriteEnum::SPR_CYBR, 4, 12, action::faceTarget, StateEnum::S_CYBER_ATK6, 0,
-     0}, // S_CYBER_ATK5
+    {SpriteEnum::SPR_CYBR, 4, 12, action::faceTarget, StateEnum::S_CYBER_ATK6,
+     0, 0}, // S_CYBER_ATK5
     {SpriteEnum::SPR_CYBR, 5, 12, action::cyberAttack, StateEnum::S_CYBER_RUN1,
      0, 0}, // S_CYBER_ATK6
     {SpriteEnum::SPR_CYBR, 6, 10, action::pain, StateEnum::S_CYBER_RUN1, 0,
@@ -1551,8 +1566,8 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_BRAIN_DIE4
     {SpriteEnum::SPR_SSWV, 0, 10, action::look, StateEnum::S_BRAINEYE, 0,
      0}, // S_BRAINEYE
-    {SpriteEnum::SPR_SSWV, 0, 181, action::brainAwake, StateEnum::S_BRAINEYE1, 0,
-     0}, // S_BRAINEYESEE
+    {SpriteEnum::SPR_SSWV, 0, 181, action::brainAwake, StateEnum::S_BRAINEYE1,
+     0, 0}, // S_BRAINEYESEE
     {SpriteEnum::SPR_SSWV, 0, 150, action::brainSpit, StateEnum::S_BRAINEYE1, 0,
      0}, // S_BRAINEYE1
     {SpriteEnum::SPR_BOSF, 32768, 3, action::spawnSound, StateEnum::S_SPAWN2, 0,
@@ -1583,14 +1598,14 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_BRAINEXPLODE1
     {SpriteEnum::SPR_MISL, 32770, 10, nullptr, StateEnum::S_BRAINEXPLODE3, 0,
      0}, // S_BRAINEXPLODE2
-    {SpriteEnum::SPR_MISL, 32771, 10, action::brainExplode, StateEnum::S_NULL, 0,
-     0}, // S_BRAINEXPLODE3
+    {SpriteEnum::SPR_MISL, 32771, 10, action::brainExplode, StateEnum::S_NULL,
+     0, 0}, // S_BRAINEXPLODE3
     {SpriteEnum::SPR_ARM1, 0, 6, nullptr, StateEnum::S_ARM1A, 0, 0}, // S_ARM1
     {SpriteEnum::SPR_ARM1, 32769, 7, nullptr, StateEnum::S_ARM1, 0,
-     0},                                                            // S_ARM1A
+     0},                                                             // S_ARM1A
     {SpriteEnum::SPR_ARM2, 0, 6, nullptr, StateEnum::S_ARM2A, 0, 0}, // S_ARM2
     {SpriteEnum::SPR_ARM2, 32769, 6, nullptr, StateEnum::S_ARM2, 0,
-     0},                                                           // S_ARM2A
+     0},                                                            // S_ARM2A
     {SpriteEnum::SPR_BAR1, 0, 6, nullptr, StateEnum::S_BAR2, 0, 0}, // S_BAR1
     {SpriteEnum::SPR_BAR1, 1, 6, nullptr, StateEnum::S_BAR1, 0, 0}, // S_BAR2
     {SpriteEnum::SPR_BEXP, 32768, 5, nullptr, StateEnum::S_BEXP2, 0,
@@ -1608,7 +1623,7 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_FCAN, 32769, 4, nullptr, StateEnum::S_BBAR3, 0,
      0}, // S_BBAR2
     {SpriteEnum::SPR_FCAN, 32770, 4, nullptr, StateEnum::S_BBAR1, 0,
-     0},                                                             // S_BBAR3
+     0},                                                              // S_BBAR3
     {SpriteEnum::SPR_BON1, 0, 6, nullptr, StateEnum::S_BON1A, 0, 0},  // S_BON1
     {SpriteEnum::SPR_BON1, 1, 6, nullptr, StateEnum::S_BON1B, 0, 0},  // S_BON1A
     {SpriteEnum::SPR_BON1, 2, 6, nullptr, StateEnum::S_BON1C, 0, 0},  // S_BON1B
@@ -1623,10 +1638,10 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_BON2, 1, 6, nullptr, StateEnum::S_BON2, 0, 0},   // S_BON2E
     {SpriteEnum::SPR_BKEY, 0, 10, nullptr, StateEnum::S_BKEY2, 0, 0}, // S_BKEY
     {SpriteEnum::SPR_BKEY, 32769, 10, nullptr, StateEnum::S_BKEY, 0,
-     0},                                                             // S_BKEY2
+     0},                                                              // S_BKEY2
     {SpriteEnum::SPR_RKEY, 0, 10, nullptr, StateEnum::S_RKEY2, 0, 0}, // S_RKEY
     {SpriteEnum::SPR_RKEY, 32769, 10, nullptr, StateEnum::S_RKEY, 0,
-     0},                                                             // S_RKEY2
+     0},                                                              // S_RKEY2
     {SpriteEnum::SPR_YKEY, 0, 10, nullptr, StateEnum::S_YKEY2, 0, 0}, // S_YKEY
     {SpriteEnum::SPR_YKEY, 32769, 10, nullptr, StateEnum::S_YKEY, 0,
      0}, // S_YKEY2
@@ -1641,7 +1656,7 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_YSKU, 0, 10, nullptr, StateEnum::S_YSKULL2, 0,
      0}, // S_YSKULL
     {SpriteEnum::SPR_YSKU, 32769, 10, nullptr, StateEnum::S_YSKULL, 0,
-     0},                                                            // S_YSKULL2
+     0}, // S_YSKULL2
     {SpriteEnum::SPR_STIM, 0, -1, nullptr, StateEnum::S_NULL, 0, 0}, // S_STIM
     {SpriteEnum::SPR_MEDI, 0, -1, nullptr, StateEnum::S_NULL, 0, 0}, // S_MEDI
     {SpriteEnum::SPR_SOUL, 32768, 6, nullptr, StateEnum::S_SOUL2, 0,
@@ -1697,7 +1712,7 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_PMAP, 32769, 6, nullptr, StateEnum::S_PMAP, 0,
      0}, // S_PMAP6
     {SpriteEnum::SPR_PVIS, 32768, 6, nullptr, StateEnum::S_PVIS2, 0,
-     0},                                                            // S_PVIS
+     0},                                                             // S_PVIS
     {SpriteEnum::SPR_PVIS, 1, 6, nullptr, StateEnum::S_PVIS, 0, 0},  // S_PVIS2
     {SpriteEnum::SPR_CLIP, 0, -1, nullptr, StateEnum::S_NULL, 0, 0}, // S_CLIP
     {SpriteEnum::SPR_AMMO, 0, -1, nullptr, StateEnum::S_NULL, 0, 0}, // S_AMMO
@@ -1716,7 +1731,7 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_SHOT, 0, -1, nullptr, StateEnum::S_NULL, 0, 0}, // S_SHOT
     {SpriteEnum::SPR_SGN2, 0, -1, nullptr, StateEnum::S_NULL, 0, 0}, // S_SHOT2
     {SpriteEnum::SPR_COLU, 32768, -1, nullptr, StateEnum::S_NULL, 0,
-     0},                                                            // S_COLU
+     0},                                                             // S_COLU
     {SpriteEnum::SPR_SMT2, 0, -1, nullptr, StateEnum::S_NULL, 0, 0}, // S_STALAG
     {SpriteEnum::SPR_GOR1, 0, 10, nullptr, StateEnum::S_BLOODYTWITCH2, 0,
      0}, // S_BLOODYTWITCH
@@ -1767,7 +1782,8 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_SKULLCOL
     {SpriteEnum::SPR_TRE1, 0, -1, nullptr, StateEnum::S_NULL, 0,
      0}, // S_TORCHTREE
-    {SpriteEnum::SPR_TRE2, 0, -1, nullptr, StateEnum::S_NULL, 0, 0}, // S_BIGTREE
+    {SpriteEnum::SPR_TRE2, 0, -1, nullptr, StateEnum::S_NULL, 0,
+     0}, // S_BIGTREE
     {SpriteEnum::SPR_ELEC, 0, -1, nullptr, StateEnum::S_NULL, 0,
      0}, // S_TECHPILLAR
     {SpriteEnum::SPR_CEYE, 32768, 6, nullptr, StateEnum::S_EVILEYE2, 0,
@@ -1881,8 +1897,9 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_MISL, 32769, 4, action::scream,
      StateEnum::S_DETONATE2}, // S_DETONATE
     {SpriteEnum::SPR_MISL, 32770, 6, action::detonate,
-     StateEnum::S_DETONATE3},                                     // S_DETONATE2
-    {SpriteEnum::SPR_MISL, 32771, 10, nullptr, StateEnum::S_NULL}, // S_DETONATE3
+     StateEnum::S_DETONATE3}, // S_DETONATE2
+    {SpriteEnum::SPR_MISL, 32771, 10, nullptr,
+     StateEnum::S_NULL}, // S_DETONATE3
 
     // killough 7/19/98: Marine's best friend :)
     {SpriteEnum::SPR_DOGS, 0, 10, action::look,
@@ -1915,7 +1932,8 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      StateEnum::S_DOGS_PAIN2}, // S_DOGS_PAIN
     {SpriteEnum::SPR_DOGS, 7, 2, action::pain,
      StateEnum::S_DOGS_RUN1}, // S_DOGS_PAIN2
-    {SpriteEnum::SPR_DOGS, 8, 8, nullptr, StateEnum::S_DOGS_DIE2}, // S_DOGS_DIE1
+    {SpriteEnum::SPR_DOGS, 8, 8, nullptr,
+     StateEnum::S_DOGS_DIE2}, // S_DOGS_DIE1
     {SpriteEnum::SPR_DOGS, 9, 8, action::scream,
      StateEnum::S_DOGS_DIE3}, // S_DOGS_DIE2
     {SpriteEnum::SPR_DOGS, 10, 4, nullptr,
@@ -1923,7 +1941,7 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_DOGS, 11, 4, action::fall,
      StateEnum::S_DOGS_DIE5}, // S_DOGS_DIE4
     {SpriteEnum::SPR_DOGS, 12, 4, nullptr,
-     StateEnum::S_DOGS_DIE6},                                  // S_DOGS_DIE5
+     StateEnum::S_DOGS_DIE6},                                   // S_DOGS_DIE5
     {SpriteEnum::SPR_DOGS, 13, -1, nullptr, StateEnum::S_NULL}, // S_DOGS_DIE6
     {SpriteEnum::SPR_DOGS, 13, 5, nullptr,
      StateEnum::S_DOGS_RAISE2}, // S_DOGS_RAISE1
@@ -1943,7 +1961,7 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
 
 #define BFGDELAY 1
 #define OLDBFG_1FRAMES(x)                                                      \
-  {SpriteEnum::SPR_BFGG, 1, BFGDELAY, action::fireOldBfg,                       \
+  {SpriteEnum::SPR_BFGG, 1, BFGDELAY, action::fireOldBfg,                      \
    static_cast<info::StateEnum>(x + static_cast<int>(StateEnum::S_OLDBFG1) +   \
                                 2)},
 #define OLDBFG_2FRAMES(x)                                                      \
@@ -1979,7 +1997,7 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_PLS1, 32772, 4, nullptr,
      StateEnum::S_PLS1EXP4}, // S_PLS1EXP3
     {SpriteEnum::SPR_PLS1, 32773, 4, nullptr,
-     StateEnum::S_PLS1EXP5},                                     // S_PLS1EXP4
+     StateEnum::S_PLS1EXP5},                                      // S_PLS1EXP4
     {SpriteEnum::SPR_PLS1, 32774, 4, nullptr, StateEnum::S_NULL}, // S_PLS1EXP5
 
     // killough 7/19/98: Second plasma fireball in the beta:
@@ -1990,8 +2008,9 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
     {SpriteEnum::SPR_PLS2, 32770, 6, nullptr,
      StateEnum::S_PLS2BALLX2}, // S_PLS2BALLX1
     {SpriteEnum::SPR_PLS2, 32771, 6, nullptr,
-     StateEnum::S_PLS2BALLX3},                                   // S_PLS2BALLX2
-    {SpriteEnum::SPR_PLS2, 32772, 6, nullptr, StateEnum::S_NULL}, // S_PLS2BALLX3
+     StateEnum::S_PLS2BALLX3}, // S_PLS2BALLX2
+    {SpriteEnum::SPR_PLS2, 32772, 6, nullptr,
+     StateEnum::S_NULL}, // S_PLS2BALLX3
 
     {SpriteEnum::SPR_BON3, 0, 6, nullptr,
      StateEnum::S_BON3}, // S_BON3  // killough 7/11/98:
