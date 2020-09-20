@@ -11,8 +11,7 @@
 think::ActionF deh::codeptr[static_cast<size_t>(info::StateEnum::NUMSTATES)];
 std::string
     deh::spriteNames[static_cast<size_t>(info::SpriteEnum::NUMSPRITES) + 1]{};
-std::string
-    deh::musicNames[static_cast<size_t>(info::Music::NUMMUSIC) + 1]{};
+std::string deh::musicNames[static_cast<size_t>(info::Music::NUMMUSIC) + 1]{};
 std::string deh::soundNames[static_cast<size_t>(info::Sfx::NUMSFX) + 1]{};
 
 void deh::buildBexTables()
@@ -50,11 +49,25 @@ void deh::buildBexTables()
   {
     deh::spriteNames[i] = sound::sfx[i].name;
   }
-  deh::soundNames[0] =
-      deh::soundNames[static_cast<size_t>(info::Sfx::NUMSFX)] = "";
+  deh::soundNames[0] = deh::soundNames[static_cast<size_t>(info::Sfx::NUMSFX)] =
+      "";
 
   for (i = 0; i < static_cast<size_t>(info::MobjType::NUMMOBJTYPES); i += 1)
   {
-    // TODO
+    switch (static_cast<info::MobjType>(i))
+    {
+    case info::MobjType::MT_WOLFSS:
+    case info::MobjType::MT_POSSESSED:
+      info::mobjinfo[i].droppedItem = info::MobjType::MT_CLIP;
+      break;
+    case info::MobjType::MT_SHOTGUY:
+      info::mobjinfo[i].droppedItem = info::MobjType::MT_SHOTGUN;
+      break;
+    case info::MobjType::MT_CHAINGUY:
+      info::mobjinfo[i].droppedItem = info::MobjType::MT_CHAINGUN;
+      break;
+    default:
+      info::mobjinfo[i].droppedItem = info::MobjType::MT_NULL;
+    }
   }
 }
