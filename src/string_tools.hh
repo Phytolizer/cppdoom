@@ -9,8 +9,11 @@
 #include <string_view>
 #include <type_traits>
 
+namespace string_tools
+{
+
 template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
-std::optional<T> parseString(std::string_view s)
+inline std::optional<T> parseString(std::string_view s)
 {
   std::stringstream ss{s.data()};
   T value;
@@ -25,10 +28,10 @@ std::optional<T> parseString(std::string_view s)
   }
 }
 
-template <> std::optional<uint8_t> parseString<uint8_t>(std::string_view s)
+template <>
+inline std::optional<uint8_t> parseString<uint8_t>(std::string_view s)
 {
   std::stringstream ss{s.data()};
-  uint8_t value;
   int temp;
   ss >> temp;
   if (temp < std::numeric_limits<uint8_t>::min() ||
@@ -38,13 +41,13 @@ template <> std::optional<uint8_t> parseString<uint8_t>(std::string_view s)
   }
   else
   {
-    value = temp;
+    uint8_t value = temp;
     return value;
   }
 }
 
 template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
-bool parseString(std::string_view s, gsl::not_null<T *> v)
+inline bool parseString(std::string_view s, gsl::not_null<T *> v)
 {
   std::stringstream ss{s.data()};
   ss >> *v;
@@ -52,7 +55,7 @@ bool parseString(std::string_view s, gsl::not_null<T *> v)
 }
 
 template <>
-bool parseString<uint8_t>(std::string_view s, gsl::not_null<uint8_t *> v)
+inline bool parseString<uint8_t>(std::string_view s, gsl::not_null<uint8_t *> v)
 {
   std::stringstream ss{s.data()};
   int temp;
@@ -69,12 +72,33 @@ bool parseString<uint8_t>(std::string_view s, gsl::not_null<uint8_t *> v)
   }
 }
 
-static inline void trim_inp(std::string &s);
-static inline void ltrim_inp(std::string &s);
-static inline void rtrim_inp(std::string &s);
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline std::optional<T> parseHexString(std::string_view s)
+{
+  std::stringstream ss{};
+  T value;
+  ss << std::hex << s;
+  ss >> value;
+  std::stringstream ss2{};
+  ss << std::hex << value;
+  if (ss.str() != s)
+  {
+    return {};
+  }
+  return value;
+}
 
-static inline std::string trim(std::string s);
-static inline std::string ltrim(std::string s);
-static inline std::string rtrim(std::string s);
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool parseHexString(std::string_view s, gsl::not_null<T *> v)
+{
+  std::stringstream ss{};
+  ss << std::hex << s;
+  ss >> *v;
+  std::stringstream ss2{};
+  ss << std::hex << *v;
+  return ss.str() == s;
+}
+
+} // namespace string_tools
 
 #endif

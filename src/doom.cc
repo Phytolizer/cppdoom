@@ -8,6 +8,10 @@
 #include <vector>
 
 arglex::ArgMeta argMeta;
+int realtic_clock_rate = 100;
+int endoom_mode;
+std::vector<std::string> wad_files{};
+std::vector<std::string> deh_files{};
 
 int main(int argc, const char *const *argv)
 {

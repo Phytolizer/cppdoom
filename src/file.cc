@@ -57,7 +57,7 @@ std::string file::File::readLine()
           fmt::format("could not read line from file: {}", strerror(errno))};
     }
   }
-  std::string out{line, line + n};
+  std::string out{line, line + strlen(line)};
   std::free(line);
   return out;
 }

@@ -62,7 +62,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-complevel requires an argument";
         }
-        auto complevel = parseString<uint32_t>(arg->value);
+        auto complevel = string_tools::parseString<uint32_t>(arg->value);
 
         if (!complevel.has_value())
         {
@@ -83,7 +83,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-width requires an argument";
         }
-        auto width = parseString<uint32_t>(arg->value);
+        auto width = string_tools::parseString<uint32_t>(arg->value);
         if (!width.has_value())
         {
           return fmt::format("bad argument to -width: {} (expected integer)",
@@ -98,7 +98,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-height requires an argument";
         }
-        auto height = parseString<uint32_t>(arg->value);
+        auto height = string_tools::parseString<uint32_t>(arg->value);
         if (!height.has_value())
         {
           return fmt::format("bad argument to -height: {} (expected integer)",
@@ -113,7 +113,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-viewangle requires an argument";
         }
-        auto viewAngle = parseString<uint8_t>(arg->value);
+        auto viewAngle = string_tools::parseString<uint8_t>(arg->value);
         if (!viewAngle.has_value() || viewAngle > 7)
         {
           return fmt::format(
@@ -222,8 +222,8 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-warp requires an argument";
         }
-        Warp warp;
-        if (!parseString<uint8_t>(arg->value, &warp.episode))
+        Warp warp{};
+        if (!string_tools::parseString<uint8_t>(arg->value, &warp.episode))
         {
           return fmt::format("bad argument to -warp: {} (expected integer)",
                              arg->value);
@@ -231,7 +231,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         if (next(arg) != args.end() && next(arg)->type == ArgType::Positional)
         {
           ++arg;
-          if (!parseString<uint8_t>(arg->value, &warp.map))
+          if (!string_tools::parseString<uint8_t>(arg->value, &warp.map))
           {
             return fmt::format(
                 "bad second argument to -warp: {} (expected integer)",
@@ -247,7 +247,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-skill requires an argument";
         }
-        auto skill = parseString<uint8_t>(arg->value);
+        auto skill = string_tools::parseString<uint8_t>(arg->value);
         if (!skill.has_value() || skill == 0 || skill > 5)
         {
           return fmt::format(
@@ -284,7 +284,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-port requires an argument";
         }
-        auto port = parseString<uint32_t>(arg->value);
+        auto port = string_tools::parseString<uint32_t>(arg->value);
         if (!port.has_value())
         {
           return fmt::format("bad argument to -port: {} (expected integer)",
@@ -365,7 +365,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-ffmap requires an argument";
         }
-        auto ffmap = parseString<uint8_t>(arg->value);
+        auto ffmap = string_tools::parseString<uint8_t>(arg->value);
         if (!ffmap.has_value())
         {
           return fmt::format("bad argument to -ffmap: {} (expected integer)",
@@ -467,7 +467,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
   return argMeta;
 }
 
-void ArgMeta::handleLooseArg(Arg arg)
+void ArgMeta::handleLooseArg(const Arg& arg)
 {
   if (strtk::ends_with(arg.value, ".lmp"))
   {

@@ -106,7 +106,7 @@ struct ArgMeta
   bool noBlit;
   std::optional<std::string> bexOut;
 
-  void handleLooseArg(Arg arg);
+  void handleLooseArg(const Arg& arg);
 };
 
 std::vector<Arg> lexArgs(int argc, const char *const *argv);
