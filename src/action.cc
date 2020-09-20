@@ -9,9 +9,8 @@
 #include "player.hh"
 #include "pspr.hh"
 
-void action::light0(gsl::not_null<player::Player *> player, pspr::PSpDef *_psp)
+void action::light0()
 {
-  player->extraLight = false;
 }
 
 void action::weaponReady()
