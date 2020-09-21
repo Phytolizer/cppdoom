@@ -77,6 +77,8 @@ struct ArgMeta
   std::optional<Warp> warp;
   std::optional<uint8_t> skill;
 
+  std::optional<uint32_t> turbo;
+
   bool respawn;
   bool fast;
   bool noMonsters;

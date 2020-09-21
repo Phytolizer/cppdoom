@@ -441,6 +441,20 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         }
         argMeta.bexOut = arg->value;
       }
+      else if (arg->value == "turbo")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-turbo requires an argument";
+        }
+        uint32_t turbo;
+        if (!string_tools::parseString<uint32_t>(arg->value, &turbo))
+        {
+          return fmt::format("bad argument to -turbo: {} (expected integer)", arg->value);
+        }
+        argMeta.turbo = turbo;
+      }
       else
       {
         return fmt::format("unknown parameter -{}", arg->value);
