@@ -15,16 +15,27 @@
 #include "doomstat.hh"
 #include "file.hh"
 #include "game.hh"
+#include "math.hh"
+#include "render/main.hh"
 #include "swap.hh"
 #include "system.hh"
 #include "version.hh"
 #include "wad.hh"
 
+bool autoStart;
+bool fastparm;
+bool nomonsters;
+bool nomusicparm;
+bool nosfxparm;
+bool respawnparm;
+
+int startEpisode;
+int startMap;
+
+defs::Skill startSkill;
+
 std::string basesavegame;
 std::string doomverstr;
-bool nomonsters;
-bool respawnparm;
-bool fastparm;
 
 constexpr const char *const DEVSTR = "Development mode ON.";
 
@@ -116,7 +127,7 @@ void checkIwad(std::string_view iwad)
     exit(-1);
   }
 
-  bool noiwad = std::string{header.identification} != "IWAD";
+  bool noiwad = std::string{header.identification, header.identification + 4} != "IWAD";
   header.numLumps = LITTLE_LONG(header.numLumps);
   header.infoTableOffset = LITTLE_LONG(header.infoTableOffset);
   auto length = header.numLumps;
@@ -124,7 +135,7 @@ void checkIwad(std::string_view iwad)
   try
   {
     f.seekTo(header.infoTableOffset);
-    f.readToArr<wad::FileLump>(fileInfo);
+    f.readToArr<wad::FileLump>(&fileInfo);
   }
   catch (io::IoException &e)
   {
@@ -324,6 +335,12 @@ void identifyVersion()
   }
 }
 
+constexpr void turboScale(gsl::not_null<fixed::Fixed *> value,
+                          unsigned int scale)
+{
+  *value = static_cast<fixed::Fixed>(*value * scale) / 100;
+}
+
 void doom::mainSetup()
 {
   deh::buildBexTables();
@@ -385,5 +402,64 @@ void doom::mainSetup()
     spdlog::info("{}", DEVSTR);
   }
 
+  if (argMeta.turbo.has_value())
+  {
+    auto turbo = argMeta.turbo.value();
+    math::clampInPlace<decltype(turbo)>(&turbo, 10, 400);
+    spdlog::info("turbo scale: {}", turbo);
+    turboScale(&game::forwardMove[0], turbo);
+    turboScale(&game::forwardMove[1], turbo);
+    turboScale(&game::sideMove[0], turbo);
+    turboScale(&game::sideMove[1], turbo);
+  }
 
+  doomstat::modifiedGame = false;
+
+  startSkill = defs::Skill::SK_NONE;
+  startEpisode = 1;
+  startMap = 1;
+  autoStart = false;
+
+  if (argMeta.skill.has_value())
+  {
+    // this is a valid skill, it's validated in arglex
+    startSkill = static_cast<defs::Skill>(argMeta.skill.value() - 1);
+    autoStart = true;
+  }
+  if (argMeta.warp.has_value())
+  {
+    const auto &warp = argMeta.warp.value();
+    startMap = 0;
+    autoStart = true;
+    if (doomstat::gamemode == defs::GameMode::COMMERCIAL)
+    {
+      // use warp.first, as there is no episode/map separation in doom 2
+      startMap = warp.first;
+      // if warp.second was set, it is ignored
+      // (example invocation: ezboom -iwad doom2 -warp 1 2, will take player to
+      // MAP01)
+    }
+    else
+    {
+      startEpisode = warp.first;
+      if (warp.second.has_value())
+      {
+        startMap = warp.second.value();
+      }
+    }
+  }
+
+  nomusicparm = argMeta.noSound || argMeta.noMusic;
+  nosfxparm = argMeta.noSound || argMeta.noSfx;
+
+  game::nodrawers = argMeta.noDraw;
+  game::noblit = argMeta.noBlit;
+
+  if (argMeta.viewAngle.has_value())
+  {
+    render::viewAngleOffset =
+        static_cast<int>((8 - argMeta.viewAngle.value()) * tables::ANG45);
+  }
+
+  game::reloadDefaults();
 }

@@ -39,15 +39,26 @@ enum class DemoInsurance
   DuringDemoRecording,
 };
 
-extern CompLevel default_compatibility_level;
-extern bool flashing_hom;
-extern DemoInsurance default_demo_insurance;
-extern bool default_weapon_recoil;
-extern bool default_player_bobbing;
 extern bool doom_weapon_toggles;
-extern defs::GameMode gamemode;
+extern bool flashing_hom;
+extern bool modifiedGame;
+
+extern bool player_bobbing;
+extern bool default_player_bobbing;
+
+extern bool variable_friction;
+extern bool default_variable_friction;
+
+extern bool weapon_recoil;
+extern bool default_weapon_recoil;
+
+extern CompLevel default_compatibility_level;
+extern DemoInsurance default_demo_insurance;
+
 extern defs::GameMission gamemission;
+extern defs::GameMode gamemode;
 extern defs::Language language;
+
 
 } // namespace doomstat
 

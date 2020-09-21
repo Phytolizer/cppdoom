@@ -28,7 +28,8 @@ public:
 
   std::vector<std::byte> read(std::size_t nbytes) noexcept(false);
   template <typename T> void readTo(gsl::not_null<T *> buffer) noexcept(false);
-  template <typename T> void readToArr(std::vector<T> buffer) noexcept(false);
+  template <typename T>
+  void readToArr(gsl::not_null<std::vector<T> *> buffer) noexcept(false);
   std::string readLine() noexcept(false);
   std::string readUntil(char delim) noexcept(false);
   void seekTo(size_t offset) noexcept(false);
@@ -60,20 +61,22 @@ void file::File::readTo(gsl::not_null<T *> buffer) noexcept(false)
 }
 
 template <typename T>
-void file::File::readToArr(std::vector<T> buffer) noexcept(false)
+void file::File::readToArr(gsl::not_null<std::vector<T> *> buffer) noexcept(
+    false)
 {
-  auto nread = fread(buffer.data(), sizeof(T) * buffer.size(), 1, handle.get());
+  auto nread =
+      fread(buffer->data(), sizeof(T) * buffer->size(), 1, handle.get());
   if (nread != 1)
   {
     if (eof())
     {
       throw io::IoException{fmt::format("early end-of-file reading {} bytes",
-                                        sizeof(T) * buffer.size())};
+                                        sizeof(T) * buffer->size())};
     }
     else
     {
       throw io::IoException{fmt::format("error reading {} bytes: {}",
-                                        sizeof(T) * buffer.size(),
+                                        sizeof(T) * buffer->size(),
                                         strerror(errno))};
     }
   }

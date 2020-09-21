@@ -18,8 +18,8 @@ struct RecordFromTo
 
 struct Warp
 {
-  uint8_t episode;
-  uint8_t map;
+  uint8_t first;
+  std::optional<uint8_t> second;
 };
 
 enum class VideoMode
@@ -104,7 +104,7 @@ struct ArgMeta
 
   bool devparm;
   std::optional<std::string> debugFile;
-  bool noDrawers;
+  bool noDraw;
   bool noBlit;
   std::optional<std::string> bexOut;
 

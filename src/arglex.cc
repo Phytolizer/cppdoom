@@ -215,7 +215,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
           return "-warp requires an argument";
         }
         Warp warp{};
-        if (!string_tools::parseString<uint8_t>(arg->value, &warp.episode))
+        if (!string_tools::parseString<uint8_t>(arg->value, &warp.first))
         {
           return fmt::format("bad argument to -warp: {} (expected integer)",
                              arg->value);
@@ -223,7 +223,8 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         if (next(arg) != args.end() && next(arg)->type == ArgType::Positional)
         {
           ++arg;
-          if (!string_tools::parseString<uint8_t>(arg->value, &warp.map))
+          warp.second = string_tools::parseString<uint8_t>(arg->value);
+          if (warp.second.has_value())
           {
             return fmt::format(
                 "bad second argument to -warp: {} (expected integer)",
@@ -240,7 +241,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
           return "-skill requires an argument";
         }
         auto skill = string_tools::parseString<uint8_t>(arg->value);
-        if (!skill.has_value() || skill == 0 || skill > 5)
+        if (!skill.has_value() || skill < 1 || skill > 5)
         {
           return fmt::format(
               "bad argument to -skill: {} (expected an integer 1..5)",
@@ -424,9 +425,9 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         }
         argMeta.debugFile = arg->value;
       }
-      else if (arg->value == "nodrawers")
+      else if (arg->value == "nodraw")
       {
-        argMeta.noDrawers = true;
+        argMeta.noDraw = true;
       }
       else if (arg->value == "noblit")
       {

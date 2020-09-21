@@ -10,7 +10,7 @@
 namespace fixed
 {
 
-constexpr uint32_t FRACBITS = 16;
+constexpr uint8_t FRACBITS = 16;
 constexpr uint32_t FRACUNIT = 1u << FRACBITS;
 
 using Fixed = int;

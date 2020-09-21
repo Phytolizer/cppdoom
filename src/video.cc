@@ -14,7 +14,7 @@ int video::process_priority;
 void video::preInitGraphics()
 {
   unsigned int flags = 0;
-  if (!argMeta.noDrawers || !argMeta.noSound)
+  if (!argMeta.noDraw || !argMeta.noSound)
   {
     flags = SDL_INIT_VIDEO;
   }

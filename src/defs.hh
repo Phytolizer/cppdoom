@@ -306,6 +306,15 @@ enum class Language
   UNKNOWN,
 };
 
+enum class Skill {
+  SK_NONE = -1,
+  SK_BABY,
+  SK_EASY,
+  SK_MEDIUM,
+  SK_HARD,
+  SK_NIGHTMARE,
+};
+
 constexpr const int MAXPLAYERS = 4;
 
 } // namespace defs
