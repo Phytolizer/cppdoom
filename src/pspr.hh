@@ -5,7 +5,11 @@
 #ifndef DOOM_PSPR_HH
 #define DOOM_PSPR_HH
 
-#include "info.hh"
+#include "fixed.hh"
+
+namespace info {
+struct State;
+}
 
 namespace pspr
 {

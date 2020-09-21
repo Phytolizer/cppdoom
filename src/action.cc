@@ -3,332 +3,329 @@
 //
 
 #include "action.hh"
-
-#include <gsl/gsl>
-
 #include "player.hh"
-#include "pspr.hh"
-
-void action::light0()
+void action::light0(gsl::not_null<mobj::MapObject *> obj,
+                    const think::Context &context)
 {
+  dynamic_cast<player::Player *>(obj.get())->extraLight = false;
 }
-
-void action::weaponReady()
+void action::weaponReady(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::lower()
+void action::lower(gsl::not_null<mobj::MapObject *> obj,
+                   const think::Context &context)
 {
 }
-
-void action::raise()
+void action::raise(gsl::not_null<mobj::MapObject *> obj,
+                   const think::Context &context)
 {
 }
-
-void action::punch()
+void action::punch(gsl::not_null<mobj::MapObject *> obj,
+                   const think::Context &context)
 {
 }
-
-void action::reFire()
+void action::reFire(gsl::not_null<mobj::MapObject *> obj,
+                    const think::Context &context)
 {
 }
-
-void action::firePistol()
+void action::firePistol(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::light1()
+void action::light1(gsl::not_null<mobj::MapObject *> obj,
+                    const think::Context &context)
 {
 }
-
-void action::fireShotgun()
+void action::fireShotgun(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::light2()
+void action::light2(gsl::not_null<mobj::MapObject *> obj,
+                    const think::Context &context)
 {
 }
-
-void action::fireShotgun2()
+void action::fireShotgun2(gsl::not_null<mobj::MapObject *> obj,
+                          const think::Context &context)
 {
 }
-
-void action::checkReload()
+void action::checkReload(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::openShotgun2()
+void action::openShotgun2(gsl::not_null<mobj::MapObject *> obj,
+                          const think::Context &context)
 {
 }
-
-void action::loadShotgun2()
+void action::loadShotgun2(gsl::not_null<mobj::MapObject *> obj,
+                          const think::Context &context)
 {
 }
-
-void action::closeShotgun2()
+void action::closeShotgun2(gsl::not_null<mobj::MapObject *> obj,
+                           const think::Context &context)
 {
 }
-
-void action::fireCGun()
+void action::fireCGun(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::gunFlash()
+void action::gunFlash(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::fireMissile()
+void action::fireMissile(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::saw()
+void action::saw(gsl::not_null<mobj::MapObject *> obj,
+                 const think::Context &context)
 {
 }
-
-void action::firePlasma()
+void action::firePlasma(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::bfgSound()
+void action::bfgSound(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::fireBfg()
+void action::fireBfg(gsl::not_null<mobj::MapObject *> obj,
+                     const think::Context &context)
 {
 }
-
-void action::bfgSpray()
+void action::bfgSpray(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::explode()
+void action::explode(gsl::not_null<mobj::MapObject *> obj,
+                     const think::Context &context)
 {
 }
-
-void action::pain()
+void action::pain(gsl::not_null<mobj::MapObject *> obj,
+                  const think::Context &context)
 {
 }
-
-void action::playerScream()
+void action::playerScream(gsl::not_null<mobj::MapObject *> obj,
+                          const think::Context &context)
 {
 }
-
-void action::fall()
+void action::fall(gsl::not_null<mobj::MapObject *> obj,
+                  const think::Context &context)
 {
 }
-
-void action::xScream()
+void action::xScream(gsl::not_null<mobj::MapObject *> obj,
+                     const think::Context &context)
 {
 }
-
-void action::look()
+void action::look(gsl::not_null<mobj::MapObject *> obj,
+                  const think::Context &context)
 {
 }
-
-void action::chase()
+void action::chase(gsl::not_null<mobj::MapObject *> obj,
+                   const think::Context &context)
 {
 }
-
-void action::faceTarget()
+void action::faceTarget(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::posAttack()
+void action::posAttack(gsl::not_null<mobj::MapObject *> obj,
+                       const think::Context &context)
 {
 }
-
-void action::scream()
+void action::scream(gsl::not_null<mobj::MapObject *> obj,
+                    const think::Context &context)
 {
 }
-
-void action::sPosAttack()
+void action::sPosAttack(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::vileChase()
+void action::vileChase(gsl::not_null<mobj::MapObject *> obj,
+                       const think::Context &context)
 {
 }
-
-void action::vileStart()
+void action::vileStart(gsl::not_null<mobj::MapObject *> obj,
+                       const think::Context &context)
 {
 }
-
-void action::vileTarget()
+void action::vileTarget(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::vileAttack()
+void action::vileAttack(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::startFire()
+void action::startFire(gsl::not_null<mobj::MapObject *> obj,
+                       const think::Context &context)
 {
 }
-
-void action::fire()
+void action::fire(gsl::not_null<mobj::MapObject *> obj,
+                  const think::Context &context)
 {
 }
-
-void action::fireCrackle()
+void action::fireCrackle(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::tracer()
+void action::tracer(gsl::not_null<mobj::MapObject *> obj,
+                    const think::Context &context)
 {
 }
-
-void action::skelWhoosh()
+void action::skelWhoosh(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::skelFist()
+void action::skelFist(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::skelMissile()
+void action::skelMissile(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::fatRaise()
+void action::fatRaise(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::fatAttack1()
+void action::fatAttack1(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::fatAttack2()
+void action::fatAttack2(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::fatAttack3()
+void action::fatAttack3(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::bossDeath()
+void action::bossDeath(gsl::not_null<mobj::MapObject *> obj,
+                       const think::Context &context)
 {
 }
-
-void action::cPosAttack()
+void action::cPosAttack(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::cPosRefire()
+void action::cPosRefire(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::troopAttack()
+void action::troopAttack(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::sargAttack()
+void action::sargAttack(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::headAttack()
+void action::headAttack(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::bruisAttack()
+void action::bruisAttack(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::skullAttack()
+void action::skullAttack(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::metal()
+void action::metal(gsl::not_null<mobj::MapObject *> obj,
+                   const think::Context &context)
 {
 }
-
-void action::spidRefire()
+void action::spidRefire(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::babyMetal()
+void action::babyMetal(gsl::not_null<mobj::MapObject *> obj,
+                       const think::Context &context)
 {
 }
-
-void action::bspiAttack()
+void action::bspiAttack(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::hoof()
+void action::hoof(gsl::not_null<mobj::MapObject *> obj,
+                  const think::Context &context)
 {
 }
-
-void action::cyberAttack()
+void action::cyberAttack(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::painAttack()
+void action::painAttack(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::painDie()
+void action::painDie(gsl::not_null<mobj::MapObject *> obj,
+                     const think::Context &context)
 {
 }
-
-void action::keenDie()
+void action::keenDie(gsl::not_null<mobj::MapObject *> obj,
+                     const think::Context &context)
 {
 }
-
-void action::brainPain()
+void action::brainPain(gsl::not_null<mobj::MapObject *> obj,
+                       const think::Context &context)
 {
 }
-
-void action::brainScream()
+void action::brainScream(gsl::not_null<mobj::MapObject *> obj,
+                         const think::Context &context)
 {
 }
-
-void action::brainDie()
+void action::brainDie(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::brainAwake()
+void action::brainAwake(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::brainSpit()
+void action::brainSpit(gsl::not_null<mobj::MapObject *> obj,
+                       const think::Context &context)
 {
 }
-
-void action::spawnSound()
+void action::spawnSound(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::spawnFly()
+void action::spawnFly(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::brainExplode()
+void action::brainExplode(gsl::not_null<mobj::MapObject *> obj,
+                          const think::Context &context)
 {
 }
-
-void action::die()
+void action::die(gsl::not_null<mobj::MapObject *> obj,
+                 const think::Context &context)
 {
 }
-
-void action::detonate()
+void action::detonate(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::betaSkullAttack()
+void action::betaSkullAttack(gsl::not_null<mobj::MapObject *> obj,
+                             const think::Context &context)
 {
 }
-
-void action::fireOldBfg()
+void action::fireOldBfg(gsl::not_null<mobj::MapObject *> obj,
+                        const think::Context &context)
 {
 }
-
-void action::stop()
+void action::stop(gsl::not_null<mobj::MapObject *> obj,
+                  const think::Context &context)
 {
 }
-
-void action::mushroom()
+void action::mushroom(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }
-
-void action::skullPop()
+void action::skullPop(gsl::not_null<mobj::MapObject *> obj,
+                      const think::Context &context)
 {
 }

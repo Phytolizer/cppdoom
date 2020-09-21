@@ -12,7 +12,7 @@
 
 namespace mobj
 {
-struct Mobj;
+struct MapObject;
 }
 
 namespace defs
@@ -34,7 +34,7 @@ struct MSecNode
   /// sector containing this object
   Sector *sector;
   /// this object
-  mobj::Mobj *thing;
+  mobj::MapObject *thing;
   /// prev MSecNode for this thing
   MSecNode *tprev;
   /// next MSecNode for this thing
@@ -138,7 +138,7 @@ struct Sector
   /// 0 = untraversed; 1, 2 = sndlines - 1
   int soundTraversed;
   /// thing that made a sound (or nullptr)
-  mobj::Mobj *soundTarget;
+  mobj::MapObject *soundTarget;
   /// mapblock bounding box for height changes
   int blockBox[4];
   /// bounding box, in map units
@@ -148,7 +148,7 @@ struct Sector
   /// if == validcount, already checked (??)
   int validCount;
   /// list of mobjs in sector
-  std::vector<mobj::Mobj> thingList;
+  std::vector<mobj::MapObject> thingList;
 
   int friction;
   int moveFactor;

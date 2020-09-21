@@ -21,9 +21,8 @@ enum class PlayerState
   PST_REBORN,
 };
 
-struct Player
+struct Player : mobj::MapObject
 {
-  mobj::Mobj *mo;
   PlayerState playerState;
   ticcmd::TicCmd cmd;
 
@@ -80,7 +79,7 @@ struct Player
   int32_t bonusCount;
 
   /// who did damage (nullptr for floors/ceilings)
-  mobj::Mobj *attacker;
+  mobj::MapObject *attacker;
 
   /// gun flash
   bool extraLight;

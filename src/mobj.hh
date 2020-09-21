@@ -21,6 +21,11 @@ enum class SpriteEnum;
 enum class MobjType;
 } // namespace info
 
+namespace think
+{
+struct Thinker;
+}
+
 namespace player
 {
 struct Player;
@@ -109,121 +114,120 @@ enum class MobjFlag : uint64_t
   MF_FLY = 0x0000020000000000,
 };
 
-struct Mobj
+struct MapObject : think::Thinker
 {
-  think::Thinker thinker;
+  virtual ~MapObject() = default;
+  fixed::Fixed x{};
+  fixed::Fixed y{};
+  fixed::Fixed z{};
 
-  fixed::Fixed x;
-  fixed::Fixed y;
-  fixed::Fixed z;
+  MapObject *next{};
+  MapObject **prev{};
 
-  Mobj *next;
-  Mobj **prev;
+  tables::Angle angle{};
+  info::SpriteEnum sprite{};
+  int frame{};
 
-  tables::Angle angle;
-  info::SpriteEnum sprite;
-  int frame;
+  MapObject *bnext{};
+  MapObject **bprev{};
 
-  Mobj *bnext;
-  Mobj **bprev;
-
-  defs::Subsector *subsector;
+  defs::Subsector *subsector{};
 
   // closest interval over all contacted sectors
 
-  fixed::Fixed floorZ;
-  fixed::Fixed ceilingZ;
+  fixed::Fixed floorZ{};
+  fixed::Fixed ceilingZ{};
 
   /// lowest floor over all contacted sectors
-  fixed::Fixed dropoffZ;
+  fixed::Fixed dropoffZ{};
 
   // for movement checking
 
-  fixed::Fixed radius;
-  fixed::Fixed height;
+  fixed::Fixed radius{};
+  fixed::Fixed height{};
 
   // momentums
 
-  fixed::Fixed momX;
-  fixed::Fixed momY;
-  fixed::Fixed momZ;
+  fixed::Fixed momX{};
+  fixed::Fixed momY{};
+  fixed::Fixed momZ{};
 
   /// if == validcount, already checked
-  int32_t validcount;
+  int32_t validcount{};
 
-  info::MobjType type;
+  info::MobjType type{};
   /// &mobjinfo[mobj->type]
-  info::MobjInfo *info;
+  info::MobjInfo *info{};
 
   /// state tic counter
-  int32_t tics;
-  info::State *state;
-  uint64_t flags;
+  int32_t tics{};
+  info::State *state{};
+  uint64_t flags{};
   /// internal flags
-  int32_t intFlags;
-  int32_t health;
+  int32_t intFlags{};
+  int32_t health{};
 
   /// 0..7
-  int16_t moveDir;
+  int16_t moveDir{};
   /// when 0, select a new direction
-  int16_t moveCount;
+  int16_t moveCount{};
   /// monster strafing
-  int16_t strafeCount;
+  int16_t strafeCount{};
 
   /// thing being chased/attacked (or nullptr).
   /// Missiles use this to track their originator
   /// and blood to track its owner (for coloration).
-  Mobj *target;
+  MapObject *target{};
 
   /// Reaction time, if nonzero, don't attack yet.
   /// Used by player to stick them in place for a bit after teleporting
-  int16_t reactionTime;
+  int16_t reactionTime{};
 
   /// if nonzero, the current target will be chased even if shot by someone else
-  int16_t threshold;
+  int16_t threshold{};
 
   /// how long a monster pursues a target
-  int16_t pursueCount;
+  int16_t pursueCount{};
 
   /// used for torque simulation
-  int16_t gear;
+  int16_t gear{};
 
   /// additional info, for players only.
   /// Will only be valid if type == MobjType::MT_PLAYER
-  player::Player *player;
+  player::Player *player{};
 
   /// player number last looked for
-  int16_t lastLook;
+  int16_t lastLook{};
 
   /// used for nightmare respawn
-  doom_data::MapThing spawnPoint;
+  doom_data::MapThing spawnPoint{};
 
   /// thing being chased/attacked, used for revenant missiles
-  Mobj *tracer;
+  MapObject *tracer{};
 
   /// last known enemy
-  Mobj *lastEnemy;
+  MapObject *lastEnemy{};
 
   /// friction properties of sector the object is in
 
-  int32_t friction;
-  int32_t moveFactor;
+  int32_t friction{};
+  int32_t moveFactor{};
 
   /// a linked list of sectors where this object appears
-  defs::MSecNode *touchingSectorList;
+  defs::MSecNode *touchingSectorList{};
 
-  fixed::Fixed prevX;
-  fixed::Fixed prevY;
-  fixed::Fixed prevZ;
+  fixed::Fixed prevX{};
+  fixed::Fixed prevY{};
+  fixed::Fixed prevZ{};
 
-  tables::Angle pitch;
-  int32_t index;
-  int16_t patchWidth;
+  tables::Angle pitch{};
+  int32_t index{};
+  int16_t patchWidth{};
 
   /// high word stores thing num, low word identifier num
-  int32_t idenNums;
+  int32_t idenNums{};
 
-  fixed::Fixed pad;
+  fixed::Fixed pad{};
 };
 
 bool alive(const info::MobjInfo &thing);
