@@ -5,6 +5,7 @@
 #ifndef DOOM_STAT_HH
 #define DOOM_STAT_HH
 
+#include "defs.hh"
 namespace doomstat
 {
 
@@ -44,6 +45,9 @@ extern DemoInsurance default_demo_insurance;
 extern bool default_weapon_recoil;
 extern bool default_player_bobbing;
 extern bool doom_weapon_toggles;
+extern defs::GameMode gamemode;
+extern defs::GameMission gamemission;
+extern defs::Language language;
 
 } // namespace doomstat
 

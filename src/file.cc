@@ -111,4 +111,12 @@ std::size_t file::File::length()
   fseek(handle.get(), pos, SEEK_SET);
   return len;
 }
+void file::File::seekTo(size_t offset)
+{
+  if (fseek(handle.get(), offset, SEEK_SET))
+  {
+    throw io::IoException{fmt::format("could not seek to offset {}: {}", offset,
+                                      strerror(errno))};
+  }
+}
 file::File::File() = default;

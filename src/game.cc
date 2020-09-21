@@ -5,5 +5,6 @@
 #include "game.hh"
 
 int game::max_player_corpses;
-bool game::boom_autoswitch;
 int game::default_skill;
+bool game::boom_autoswitch;
+bool game::haswolflevels = false;

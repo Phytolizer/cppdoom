@@ -9,8 +9,9 @@ namespace game
 {
 
 extern int max_player_corpses;
-extern bool boom_autoswitch;
 extern int default_skill;
+extern bool boom_autoswitch;
+extern bool haswolflevels;
 
 }
 

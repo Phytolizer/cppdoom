@@ -23,3 +23,5 @@ void wad::addDefaultExtension(gsl::not_null<std::string *> path,
   }
   *path += ext;
 }
+
+std::vector<wad::WadFileInfo> wad::wadfiles;

@@ -277,6 +277,35 @@ enum class AmmoType
   AM_NOAMMO
 };
 
+enum class GameMode
+{
+  SHAREWARE,
+  REGISTERED,
+  COMMERCIAL,
+  RETAIL,
+  UNDETERMINED,
+};
+
+enum class GameMission
+{
+  DOOM,
+  DOOM2,
+  TNT,
+  PLUT,
+  NERVE,
+  HACX,
+  CHEX,
+  NONE,
+};
+
+enum class Language
+{
+  ENGLISH,
+  FRENCH,
+  GERMAN,
+  UNKNOWN,
+};
+
 constexpr const int MAXPLAYERS = 4;
 
 } // namespace defs
