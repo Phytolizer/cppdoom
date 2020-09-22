@@ -108,6 +108,8 @@ struct ArgMeta
   bool noBlit;
   std::optional<std::string> bexOut;
 
+  std::optional<uint8_t> dogs;
+
   void handleLooseArg(const Arg &arg);
 };
 

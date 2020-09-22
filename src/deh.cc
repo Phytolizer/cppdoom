@@ -4,15 +4,23 @@
 
 #include "deh.hh"
 
+#include "doomstat.hh"
 #include "info.hh"
+#include "interactions.hh"
 #include "sound.hh"
 #include "think.hh"
 
-think::ActionF deh::codeptr[static_cast<size_t>(info::StateEnum::NUMSTATES)];
-std::string
-    deh::spriteNames[static_cast<size_t>(info::SpriteEnum::NUMSPRITES) + 1]{};
-std::string deh::musicNames[static_cast<size_t>(info::Music::NUMMUSIC) + 1]{};
-std::string deh::soundNames[static_cast<size_t>(info::Sfx::NUMSFX) + 1]{};
+std::vector<think::ActionF> deh::codeptr{
+    static_cast<std::size_t>(info::StateEnum::NUMSTATES)};
+std::vector<std::string> deh::spriteNames{
+    static_cast<std::size_t>(info::SpriteEnum::NUMSPRITES) + 1};
+std::vector<std::string> deh::musicNames{
+    static_cast<std::size_t>(info::Music::NUMMUSIC) + 1};
+std::vector<std::string> deh::soundNames{
+    static_cast<std::size_t>(info::Sfx::NUMSFX) + 1};
+std::optional<int> deh::dehMaxSoul{};
+std::optional<int> deh::dehMegaHealth{};
+std::optional<int> deh::dehMaxHealth{};
 
 void deh::buildBexTables()
 {
@@ -69,5 +77,30 @@ void deh::buildBexTables()
     default:
       info::mobjinfo[i].droppedItem = info::MobjType::MT_NULL;
     }
+  }
+}
+void deh::applyCompatibility()
+{
+  int comp_max;
+  if (doomstat::compatibility_level < doomstat::CompLevel::Doom12)
+  {
+    comp_max = 199;
+  }
+  else
+  {
+    comp_max = 200;
+  }
+  interactions::max_soul = deh::dehMaxSoul.value_or(comp_max);
+  interactions::mega_health = deh::dehMegaHealth.value_or(comp_max);
+  if (doomstat::comp[static_cast<std::size_t>(
+          doomstat::CompFlag::COMP_MAXHEALTH)])
+  {
+    interactions::maxhealth = 100;
+    interactions::maxhealthbonus = deh::dehMaxHealth.value_or(comp_max);
+  }
+  else
+  {
+    interactions::maxhealth = deh::dehMaxHealth.value_or(100);
+    interactions::maxhealthbonus = interactions::maxhealth * 2;
   }
 }

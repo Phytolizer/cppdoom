@@ -9,17 +9,22 @@
 #include "think.hh"
 
 #include <cstddef>
+#include <optional>
 #include <string>
 
 namespace deh
 {
 
-extern think::ActionF codeptr[];
-extern std::string spriteNames[];
-extern std::string musicNames[];
-extern std::string soundNames[];
+extern std::vector<think::ActionF> codeptr;
+extern std::vector<std::string> spriteNames;
+extern std::vector<std::string> musicNames;
+extern std::vector<std::string> soundNames;
+extern std::optional<int> dehMaxSoul;
+extern std::optional<int> dehMegaHealth;
+extern std::optional<int> dehMaxHealth;
 
 void buildBexTables();
+void applyCompatibility();
 
 } // namespace deh
 

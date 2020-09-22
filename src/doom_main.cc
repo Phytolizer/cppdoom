@@ -23,16 +23,17 @@
 #include "wad.hh"
 
 bool autoStart;
-bool fastparm;
-bool nomonsters;
 bool nomusicparm;
 bool nosfxparm;
-bool respawnparm;
+
+bool doom::fastparm;
+bool doom::nomonsters;
+bool doom::respawnparm;
 
 int startEpisode;
 int startMap;
 
-defs::Skill startSkill;
+defs::Skill doom::startSkill;
 
 std::string basesavegame;
 std::string doomverstr;

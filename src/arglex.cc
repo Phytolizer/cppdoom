@@ -6,6 +6,7 @@
 #include <strtk.hpp>
 #include <vector>
 
+#include "doomstat.hh"
 #include "string_tools.hh"
 
 using namespace boost::variant2;
@@ -56,7 +57,10 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         }
         auto complevel = string_tools::parseString<uint32_t>(arg->value);
 
-        if (!complevel.has_value())
+        if (!complevel.has_value() ||
+            complevel.value() >=
+                static_cast<uint32_t>(
+                    doomstat::CompLevel::MAX_COMPATIBILITY_LEVEL))
         {
           return fmt::format(
               "bad argument to -complevel: {} (expected integer)", arg->value);
@@ -452,9 +456,24 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         uint32_t turbo;
         if (!string_tools::parseString<uint32_t>(arg->value, &turbo))
         {
-          return fmt::format("bad argument to -turbo: {} (expected integer)", arg->value);
+          return fmt::format("bad argument to -turbo: {} (expected integer)",
+                             arg->value);
         }
         argMeta.turbo = turbo;
+      }
+      else if (arg->value == "dogs")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-dogs requires an argument";
+        }
+        uint8_t dogs;
+        if (!string_tools::parseString<uint8_t>(arg->value, &dogs))
+        {
+          return fmt::format("bad argument to -dogs: {} (expected integer)");
+        }
+        argMeta.dogs = dogs;
       }
       else
       {
@@ -485,7 +504,7 @@ Arg arglex::lexArg(const std::string &arg)
   }
 }
 
-void ArgMeta::handleLooseArg(const Arg& arg)
+void ArgMeta::handleLooseArg(const Arg &arg)
 {
   if (strtk::ends_with(arg.value, ".lmp"))
   {
