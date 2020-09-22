@@ -22,6 +22,7 @@ extern std::vector<std::string> soundNames;
 extern std::optional<int> dehMaxSoul;
 extern std::optional<int> dehMegaHealth;
 extern std::optional<int> dehMaxHealth;
+extern std::vector<bool> mobjInfoBits;
 
 void buildBexTables();
 void applyCompatibility();

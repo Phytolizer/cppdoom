@@ -21,6 +21,9 @@ std::vector<std::string> deh::soundNames{
 std::optional<int> deh::dehMaxSoul{};
 std::optional<int> deh::dehMegaHealth{};
 std::optional<int> deh::dehMaxHealth{};
+std::vector<bool>
+    deh::mobjInfoBits(static_cast<std::size_t>(info::MobjType::NUMMOBJTYPES),
+                      false);
 
 void deh::buildBexTables()
 {
