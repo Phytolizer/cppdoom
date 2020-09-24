@@ -20,6 +20,7 @@
 #include "render/main.hh"
 #include "swap.hh"
 #include "system.hh"
+#include "tables.hh"
 #include "version.hh"
 #include "wad.hh"
 
@@ -186,7 +187,8 @@ void checkIwad(std::string_view iwad)
       }
     }
 
-    auto name = std::string{fileInfo[length].name, fileInfo[length].name + 8};
+    auto name =
+        std::string{fileInfo[length].name.begin(), fileInfo[length].name.end()};
     if (name == "DMENUPIC")
     {
       bfgedition = true;
@@ -318,7 +320,7 @@ void identifyVersion()
     if (std::filesystem::is_directory(argMeta.save.value()))
     {
       basesavegame = argMeta.save.value();
-      normalizeSlashes(basesavegame);
+      normalizeSlashes(&basesavegame);
     }
     else
     {

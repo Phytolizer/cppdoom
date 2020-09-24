@@ -6,6 +6,7 @@
 #define DOOM_PLAYER_HH
 
 #include <string>
+#include <map>
 
 #include "mobj.hh"
 #include "pspr.hh"
@@ -93,7 +94,7 @@ struct Player : mobj::MapObject
   /// 0..3
   int32_t colormap;
 
-  pspr::PSpDef psprites[static_cast<size_t>(pspr::PSprEnum::NUMPSPRITES)];
+  std::map<pspr::PSprEnum, pspr::PSpDef> psprites;
 
   /// true if secret level has been done
   bool didSecret;

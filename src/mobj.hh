@@ -9,6 +9,7 @@
 
 #include "defs.hh"
 #include "doom_data.hh"
+#include "enum_ops.hh"
 #include "fixed.hh"
 #include "gsl_aliases.hh"
 #include "info.hh"
@@ -79,7 +80,7 @@ struct MapObject : think::Thinker
   /// state tic counter
   int32_t tics{};
   info::State* state{};
-  uint64_t flags{};
+  info::MobjFlag flags{};
   /// internal flags
   int32_t intFlags{};
   int32_t health{};
@@ -147,7 +148,13 @@ struct MapObject : think::Thinker
   fixed::Fixed pad{};
 };
 
-bool alive(const info::MobjInfo& thing);
+constexpr bool alive(const NotNull<mobj::MapObject*> thing)
+{
+  return thing->health > 0 &&
+         ((thing->flags &
+           (info::MobjFlag::MF_COUNTKILL | info::MobjFlag::MF_CORPSE |
+            info::MobjFlag::MF_RESURRECTED)) == info::MobjFlag::MF_COUNTKILL);
+}
 void setMobjState(NotNull<MapObject*> mobj, info::StateEnum state);
 
 } // namespace mobj
