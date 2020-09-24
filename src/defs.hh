@@ -13,7 +13,7 @@
 namespace mobj
 {
 struct MapObject;
-}
+} // namespace mobj
 
 namespace defs
 {
@@ -32,17 +32,17 @@ struct Sector;
 struct MSecNode
 {
   /// sector containing this object
-  Sector *sector;
+  Sector* sector;
   /// this object
-  mobj::MapObject *thing;
+  mobj::MapObject* thing;
   /// prev MSecNode for this thing
-  MSecNode *tprev;
+  MSecNode* tprev;
   /// next MSecNode for this thing
-  MSecNode *tnext;
+  MSecNode* tnext;
   /// prev MSecNode for this sector
-  MSecNode *sprev;
+  MSecNode* sprev;
   /// next MSecNode for this sector
-  MSecNode *snext;
+  MSecNode* snext;
   /// used in search algs
   bool visited;
 };
@@ -82,48 +82,48 @@ enum class RFlag
 struct Line
 {
   /// needed for OpenGL
-  int32_t lineId;
+  int32_t lineId{0};
   // vertices, line goes from v1 to v2
 
-  Vertex *v1;
-  Vertex *v2;
+  Vertex* v1{nullptr};
+  Vertex* v2{nullptr};
 
   // precalculated v2-v1 for side checking
 
-  fixed::Fixed dx;
-  fixed::Fixed dy;
+  fixed::Fixed dx{0};
+  fixed::Fixed dy{0};
 
-  double texelLength;
+  double texelLength{0};
 
   /// animation related
-  uint16_t flags;
-  int16_t special;
-  int16_t tag;
+  uint16_t flags{0};
+  int16_t special{0};
+  int16_t tag{0};
   /// sidedefs
-  uint16_t sidenum[2];
+  std::array<uint16_t, 2> sidedefs{};
   /// bounding box for linedef's extent
-  fixed::Fixed boundingBox[4];
+  std::array<fixed::Fixed, 4> boundingBox{};
   /// to aid move clipping
   SlopeType slopeType;
 
   // front and back sector
 
-  Sector *frontSector;
-  Sector *backSector;
+  Sector* frontSector{nullptr};
+  Sector* backSector{nullptr};
 
   // if == validcount, already checked
-  int32_t validCount;
+  int32_t validCount{0};
   /// Thinker for reversible actions
-  void *specialData;
+  void* specialData{nullptr};
   /// translucency filter, -1 = none
-  int32_t tranLump;
-  int32_t firstTag;
-  int32_t nextTag;
+  int32_t tranLump{-1};
+  int32_t firstTag{0};
+  int32_t nextTag{0};
   /// if == gametic, r_flags already done
-  int32_t r_validCount;
+  int32_t r_validCount{0};
   RFlag rFlags;
   /// sound origin for switches/buttons
-  DegenMobj soundOrigin;
+  DegenMobj soundOrigin{};
 };
 
 struct Sector
@@ -138,13 +138,13 @@ struct Sector
   /// 0 = untraversed; 1, 2 = sndlines - 1
   int soundTraversed;
   /// thing that made a sound (or nullptr)
-  mobj::MapObject *soundTarget;
+  mobj::MapObject* soundTarget;
   /// mapblock bounding box for height changes
-  int blockBox[4];
+  std::array<int, 4> blockBox{};
   /// bounding box, in map units
-  int boundingBox[4];
+  std::array<int, 4> boundingBox{};
   /// origin for any sounds played by the sector
-  DegenMobj soundOrigin;
+  DegenMobj soundOrigin{};
   /// if == validcount, already checked (??)
   int validCount;
   /// list of mobjs in sector
@@ -153,9 +153,9 @@ struct Sector
   int friction;
   int moveFactor;
 
-  void *floorData;
-  void *ceilingData;
-  void *lightingData;
+  void* floorData;
+  void* ceilingData;
+  void* lightingData;
 
   // below is lockout machinery for stair building
 
@@ -182,7 +182,7 @@ struct Sector
   std::vector<MSecNode> touchingThingList;
 
   int32_t lineCount;
-  Line **lines;
+  Line** lines;
 
   int32_t sky;
 
@@ -214,12 +214,12 @@ struct Sector
   int32_t InterpSectorCeiling;
   int32_t InterpFloorPanning;
   int32_t InterpCeilingPanning;
-  int32_t fakeGroup[2];
+  std::array<int32_t, 2> fakeGroup{};
 };
 
 struct Subsector
 {
-  Sector *sector;
+  Sector* sector;
   int numLines;
   int firstLine;
 };
@@ -306,7 +306,8 @@ enum class Language
   UNKNOWN,
 };
 
-enum class Skill {
+enum class Skill
+{
   SK_NONE = -1,
   SK_BABY,
   SK_EASY,

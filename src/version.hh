@@ -13,6 +13,6 @@
 #define BUILD_TIME __TIME__
 #endif
 
-constexpr const char *version_date = BUILD_DATE " " BUILD_TIME;
+constexpr const char* version_date = BUILD_DATE " " BUILD_TIME;
 
 #endif // DOOM_VERSION_HH

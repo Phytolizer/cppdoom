@@ -1,7 +1,7 @@
 #include "arglex.hh"
 
-#include <vector>
 #include <string>
+#include <vector>
 
 extern arglex::ArgMeta argMeta;
 extern int realtic_clock_rate;

@@ -9,7 +9,7 @@
 #include "doom.hh"
 #include "string_tools.hh"
 
-constexpr const char *EZBOOM_DIR = ".ezboom";
+constexpr const char* EZBOOM_DIR = ".ezboom";
 
 #ifdef _WIN32
 constexpr char PATH_SEPARATOR = ';';
@@ -23,7 +23,7 @@ std::string sys::doomExeDir()
   if (!base.has_value())
   {
     // find based on HOME env var
-    const char *homeDir = std::getenv("HOME");
+    const char* homeDir = std::getenv("HOME");
     if (homeDir)
     {
       base = fmt::format("{}/{}", homeDir, EZBOOM_DIR);
@@ -33,7 +33,7 @@ std::string sys::doomExeDir()
       // find based on argv[0]
       auto lastSlash =
           std::find_if(argMeta.argv0.rbegin(), argMeta.argv0.rend(),
-                       [](const auto &c) { return c == '/' || c == '\\'; });
+                       [](const auto& c) { return c == '/' || c == '\\'; });
       if (lastSlash == argMeta.argv0.rend())
       {
         // find based on '.'
@@ -98,7 +98,7 @@ sys::internal::findFileInternal(std::string_view fname, std::string_view ext)
   if (search.empty())
   {
     search = initialSearch;
-    const char *dwpp = std::getenv("DOOMWADPATH");
+    const char* dwpp = std::getenv("DOOMWADPATH");
     if (dwpp)
     {
       std::string dwp = dwpp;
@@ -120,12 +120,12 @@ sys::internal::findFileInternal(std::string_view fname, std::string_view ext)
     }
   }
 
-  for (const auto &s : search)
+  for (const auto& s : search)
   {
     std::string dir;
     if (!s.env.empty())
     {
-      const char *d = std::getenv(s.env.data());
+      const char* d = std::getenv(s.env.data());
       if (d == nullptr)
       {
         continue;

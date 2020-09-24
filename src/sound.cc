@@ -167,8 +167,7 @@ sound::SfxInfo sound::sfx[]{
     {"hoof", false, 70, nullptr, -1, -1, nullptr},
     {"metal", false, 70, nullptr, -1, -1, nullptr},
     {"chgun", false, 64,
-     &sound::sfx[static_cast<size_t>(info::Sfx::sfx_pistol)], 150, 0,
-     nullptr},
+     &sound::sfx[static_cast<size_t>(info::Sfx::sfx_pistol)], 150, 0, nullptr},
     {"tink", false, 60, nullptr, -1, -1, nullptr},
     {"bdopn", false, 100, nullptr, -1, -1, nullptr},
     {"bdcls", false, 100, nullptr, -1, -1, nullptr},
@@ -207,3 +206,7 @@ sound::SfxInfo sound::sfx[]{
 std::string sound::snd_midiplayer;
 std::vector<std::string> sound::midiplayers = {"sdl", "fluidsynth", "opl2",
                                                "portmidi"};
+void sound::startSound(NotNull<mobj::MapObject*> mobj, info::Sfx sound)
+{
+  // TODO(kyle)
+}

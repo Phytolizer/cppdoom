@@ -12,6 +12,9 @@ extern bool demo_smoothturns;
 extern int demo_smoothturnsfactor;
 constexpr int SMOOTH_PLAYING_MAXFACTOR = 16;
 
-}
+bool isDemoPlayback();
+bool demoCompatibility();
+
+} // namespace demo
 
 #endif // DOOM_DEMO_HH

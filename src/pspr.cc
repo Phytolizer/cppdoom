@@ -4,4 +4,12 @@
 
 #include "pspr.hh"
 
-int pspr::weapon_attack_alignment = 0;
+void pspr::setPsprite(NotNull<player::Player*> player, pspr::PSprEnum position,
+                      info::StateEnum state)
+{
+  // TODO(kyle)
+}
+void pspr::fireWeapon(NotNull<player::Player*> player)
+{
+  // TODO(kyle)
+}

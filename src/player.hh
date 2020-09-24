@@ -79,10 +79,10 @@ struct Player : mobj::MapObject
   int32_t bonusCount;
 
   /// who did damage (nullptr for floors/ceilings)
-  mobj::MapObject *attacker;
+  mobj::MapObject* attacker;
 
   /// gun flash
-  bool extraLight;
+  uint8_t extraLight;
 
   /// current PLAYPAL
   ///

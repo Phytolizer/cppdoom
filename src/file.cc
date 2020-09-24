@@ -10,7 +10,7 @@
 #include "win/getline.h"
 #endif
 
-void file::File::FileDeleter::operator()(std::FILE *handle)
+void file::File::FileDeleter::operator()(std::FILE* handle)
 {
   if (fclose(handle))
   {
@@ -45,7 +45,7 @@ std::vector<std::byte> file::File::read(std::size_t nbytes)
 
 std::string file::File::readLine()
 {
-  char *line = nullptr;
+  char* line = nullptr;
   std::size_t n = 0;
 
   size_t nread = getline(&line, &n, handle.get());
@@ -67,7 +67,7 @@ std::string file::File::readLine()
   return out;
 }
 
-void file::File::write(const std::vector<std::byte> &toWrite)
+void file::File::write(const std::vector<std::byte>& toWrite)
 {
   std::size_t nwritten =
       fwrite(toWrite.data(), sizeof(std::byte), toWrite.size(), handle.get());
@@ -84,7 +84,7 @@ bool file::File::eof()
 }
 std::string file::File::readUntil(char delim) noexcept(false)
 {
-  char *line = nullptr;
+  char* line = nullptr;
   std::size_t n = 0;
   std::size_t nread = getdelim(&line, &n, delim, handle.get());
   if (nread == -1)

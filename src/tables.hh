@@ -30,6 +30,13 @@ constexpr const uint8_t DBITS = fixed::FRACBITS - SLOPE_BITS;
 
 using Angle = uint32_t;
 
+extern std::array<fixed::Fixed, 5 * FINE_ANGLES / 4> finesine;
+
+constexpr fixed::Fixed finecosine(fixed::Fixed angle)
+{
+  return finesine[angle + (FINE_ANGLES / 4)];
 }
+
+} // namespace tables
 
 #endif // DOOM_TABLES_HH

@@ -5,8 +5,8 @@
 #ifndef DOOM_THINK_HH
 #define DOOM_THINK_HH
 
-#include "pspr.hh"
-#include <gsl/gsl>
+#include "action.hh"
+#include "gsl_aliases.hh"
 
 namespace mobj
 {
@@ -16,23 +16,17 @@ struct MapObject;
 namespace think
 {
 
-struct Context
-{
-  pspr::PSpDef *psp;
-};
-
-using ActionF = void (*)(gsl::not_null<mobj::MapObject *>, const Context &);
-using Think = ActionF;
+using Think = action::Action;
 
 struct Thinker
 {
   virtual ~Thinker() = default;
-  Thinker *prev{};
-  Thinker *next{};
+  Thinker* prev{};
+  Thinker* next{};
   Think function{};
 
-  Thinker *cnext{};
-  Thinker *cprev{};
+  Thinker* cnext{};
+  Thinker* cprev{};
 
   uint32_t references{};
 };

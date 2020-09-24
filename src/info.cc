@@ -2093,7 +2093,7 @@ info::State info::states[static_cast<size_t>(info::StateEnum::NUMSTATES)]{
      0}, // S_PLAY_GDIE9
 };
 
-constexpr const char *info::sprnames[static_cast<size_t>(
+constexpr const char* info::sprnames[static_cast<size_t>(
                                          SpriteEnum::NUMSPRITES) +
                                      1]{
     "TROO", "SHTG", "PUNG", "PISG", "PISF", "SHTF", "SHT2", "CHGG", "CHGF",

@@ -69,6 +69,7 @@ struct ArgMeta
   std::optional<VideoMode> vidMode;
   std::optional<uint32_t> turbo;
   std::optional<uint32_t> port;
+  std::optional<uint32_t> emulate;
   bool respawn = false;
   bool fast = false;
   bool noMonsters = false;
@@ -92,14 +93,14 @@ struct ArgMeta
   std::optional<uint8_t> dogs;
   std::optional<Warp> warp;
 
-  void handleLooseArg(const Arg &arg);
+  void handleLooseArg(const Arg& arg);
 };
 
-std::vector<Arg> lexArgs(int argc, const char *const *argv);
+std::vector<Arg> lexArgs(int argc, const char* const* argv);
 boost::variant2::variant<ArgMeta, std::string>
-parseArgs(const std::vector<Arg> &args);
+parseArgs(const std::vector<Arg>& args);
 
-Arg lexArg(const std::string &arg);
+Arg lexArg(const std::string& arg);
 } // namespace arglex
 
 #endif

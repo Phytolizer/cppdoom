@@ -3,10 +3,14 @@
 //
 
 #include "game.hh"
+
+#include "compatibility.hh"
 #include "deh.hh"
+#include "demo.hh"
 #include "doom.hh"
 #include "doom_main.hh"
 #include "doomstat.hh"
+#include "sight.hh"
 
 bool game::boom_autoswitch;
 bool game::haswolflevels = false;
@@ -16,11 +20,12 @@ bool game::nodrawers;
 bool game::demoplayback;
 bool game::singledemo;
 bool game::netdemo;
+bool game::done_autoswitch;
 
-bool game::playerInGame[defs::MAXPLAYERS];
+std::array<bool, defs::MAXPLAYERS> game::playerInGame;
 
-fixed::Fixed game::forwardMove[2] = {0x19, 0x32};
-fixed::Fixed game::sideMove[2] = {0x18, 0x28};
+std::array<fixed::Fixed, 2> game::forwardMove{0x19, 0x32};
+std::array<fixed::Fixed, 2> game::sideMove{0x18, 0x28};
 
 int game::max_player_corpses;
 int game::default_skill;
@@ -28,8 +33,8 @@ int game::consolePlayer;
 
 // Constants
 
-const fixed::Fixed game::forwardMoveNormal[2] = {0x19, 0x32};
-const fixed::Fixed game::sideMoveNormal[2] = {0x18, 0x28};
+const std::array<fixed::Fixed, 2> game::forwardMoveNormal{0x19, 0x32};
+const std::array<fixed::Fixed, 2> game::sideMoveNormal{0x18, 0x28};
 
 // Functions
 
@@ -39,10 +44,8 @@ int game::getHelpers()
   {
     return argMeta.dogs.value();
   }
-  else
-  {
-    return doomstat::default_dogs;
-  }
+
+  return doomstat::default_dogs;
 }
 
 void game::reloadDefaults()
@@ -106,6 +109,14 @@ void game::reloadDefaults()
     }
   }
   game::compatibility();
+  if (doomstat::default_demo_insurance == doomstat::DemoInsurance::Always)
+  {
+    doomstat::demo_insurance = doomstat::DemoInsurance::Always;
+  }
+  else
+  {
+    doomstat::demo_insurance = doomstat::DemoInsurance::Never;
+  }
 }
 
 struct CompInfo
@@ -116,65 +127,93 @@ struct CompInfo
 
 void game::compatibility()
 {
-  static constexpr const std::pair<doomstat::CompFlag, CompInfo> levels[] = {
-      {doomstat::CompFlag::COMP_TELEFRAG,
-       {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_DROPOFF,
-       {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_VILE,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_PAIN,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_SKULL,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_BLAZING,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_DOORLIGHT,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_MODEL,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_GOD,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_FALLOFF,
-       {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_FLOORS,
-       {doomstat::CompLevel::Boom, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_SKYMAP,
-       {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_PURSUIT,
-       {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_DOORSTUCK,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_STAYLIFT,
-       {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_ZOMBIE,
-       {doomstat::CompLevel::LxDoom, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_STAIRS,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_INFCHEAT,
-       {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_ZEROTAGS,
-       {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
-      {doomstat::CompFlag::COMP_MOVEBLOCK,
-       {doomstat::CompLevel::LxDoom, doomstat::CompLevel::PrBoom2}},
-      {doomstat::CompFlag::COMP_RESPAWN,
-       {doomstat::CompLevel::PrBoom2, doomstat::CompLevel::PrBoom2}},
-      {doomstat::CompFlag::COMP_SOUND,
-       {doomstat::CompLevel::Boom, doomstat::CompLevel::PrBoom3}},
-      {doomstat::CompFlag::COMP_666,
-       {doomstat::CompLevel::UltDoom, doomstat::CompLevel::PrBoom4}},
-      {doomstat::CompFlag::COMP_SOUL,
-       {doomstat::CompLevel::PrBoom4, doomstat::CompLevel::PrBoom4}},
-      {doomstat::CompFlag::COMP_MASKEDANIM,
-       {doomstat::CompLevel::Doom1666, doomstat::CompLevel::PrBoom4}},
-      {doomstat::CompFlag::COMP_OUCHFACE,
-       {doomstat::CompLevel::PrBoom1, doomstat::CompLevel::PrBoom6}},
-      {doomstat::CompFlag::COMP_MAXHEALTH,
-       {doomstat::CompLevel::Boom, doomstat::CompLevel::PrBoom6}},
-      {doomstat::CompFlag::COMP_TRANSLUCENCY,
-       {doomstat::CompLevel::Boom, doomstat::CompLevel::PrBoom6}},
+  static constexpr std::array levels{
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_TELEFRAG,
+          {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_DROPOFF,
+          {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_VILE,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_PAIN,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_SKULL,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_BLAZING,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_DOORLIGHT,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_MODEL,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_GOD,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_FALLOFF,
+          {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_FLOORS,
+          {doomstat::CompLevel::Boom, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_SKYMAP,
+          {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_PURSUIT,
+          {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_DOORSTUCK,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_STAYLIFT,
+          {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_ZOMBIE,
+          {doomstat::CompLevel::LxDoom, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_STAIRS,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_INFCHEAT,
+          {doomstat::CompLevel::Mbf, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_ZEROTAGS,
+          {doomstat::CompLevel::Boom202, doomstat::CompLevel::Mbf}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_MOVEBLOCK,
+          {doomstat::CompLevel::LxDoom, doomstat::CompLevel::PrBoom2}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_RESPAWN,
+          {doomstat::CompLevel::PrBoom2, doomstat::CompLevel::PrBoom2}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_SOUND,
+          {doomstat::CompLevel::Boom, doomstat::CompLevel::PrBoom3}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_666,
+          {doomstat::CompLevel::UltDoom, doomstat::CompLevel::PrBoom4}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_SOUL,
+          {doomstat::CompLevel::PrBoom4, doomstat::CompLevel::PrBoom4}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_MASKEDANIM,
+          {doomstat::CompLevel::Doom1666, doomstat::CompLevel::PrBoom4}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_OUCHFACE,
+          {doomstat::CompLevel::PrBoom1, doomstat::CompLevel::PrBoom6}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_MAXHEALTH,
+          {doomstat::CompLevel::Boom, doomstat::CompLevel::PrBoom6}},
+      std::pair<doomstat::CompFlag, CompInfo>{
+          doomstat::CompFlag::COMP_TRANSLUCENCY,
+          {doomstat::CompLevel::Boom, doomstat::CompLevel::PrBoom6}},
   };
-  for (const auto &level : levels)
+  for (const auto& level : levels)
   {
     if (doomstat::compatibility_level < level.second.madeOptional)
     {
@@ -185,4 +224,52 @@ void game::compatibility()
   }
 
   deh::applyCompatibility();
+
+  if (demo::isDemoPlayback())
+  {
+    if (argMeta.emulate.has_value())
+    {
+      for (auto& comp : prboomCompatibility)
+      {
+        comp.state = (argMeta.emulate.value() >= comp.minVer &&
+                      argMeta.emulate.value() < comp.maxVer);
+      }
+    }
+  }
+
+  sight::crossSubsector = sight::crossSubsectorPrBoom;
+
+  if (!prboomCompatibility
+           [static_cast<std::size_t>(
+                PrBoomCompatibilityFlag::FORCE_LXDOOM_DEMO_COMPATIBILITY)]
+               .state)
+  {
+    if (demo::demoCompatibility())
+    {
+      sight::crossSubsector = sight::crossSubsectorDoom;
+    }
+
+    if (doomstat::compatibility_level == doomstat::CompLevel::Boom ||
+        doomstat::compatibility_level == doomstat::CompLevel::Boom201 ||
+        doomstat::compatibility_level == doomstat::CompLevel::Boom202 ||
+        doomstat::compatibility_level == doomstat::CompLevel::Mbf)
+    {
+      sight::crossSubsector = sight::crossSubsectorBoom;
+    }
+  }
+
+  if (!doomstat::mbfFeatures())
+  {
+    doomstat::monster_infighting =
+        doomstat::MonsterInfightingLevel::OtherSpecies;
+    doomstat::monster_backing = false;
+    doomstat::monster_avoid_hazards = false;
+    doomstat::monster_friction = false;
+    doomstat::help_friends = false;
+
+    doomstat::dogs = 0;
+    doomstat::dog_jumping = false;
+
+    doomstat::monkeys = false;
+  }
 }

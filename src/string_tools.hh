@@ -47,7 +47,7 @@ inline std::optional<uint8_t> parseString<uint8_t>(std::string_view s)
 }
 
 template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
-inline bool parseString(std::string_view s, gsl::not_null<T *> v)
+inline bool parseString(std::string_view s, gsl::not_null<T*> v)
 {
   std::stringstream ss{s.data()};
   ss >> *v;
@@ -55,7 +55,7 @@ inline bool parseString(std::string_view s, gsl::not_null<T *> v)
 }
 
 template <>
-inline bool parseString<uint8_t>(std::string_view s, gsl::not_null<uint8_t *> v)
+inline bool parseString<uint8_t>(std::string_view s, gsl::not_null<uint8_t*> v)
 {
   std::stringstream ss{s.data()};
   int temp;
@@ -89,7 +89,7 @@ inline std::optional<T> parseHexString(std::string_view s)
 }
 
 template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
-inline bool parseHexString(std::string_view s, gsl::not_null<T *> v)
+inline bool parseHexString(std::string_view s, gsl::not_null<T*> v)
 {
   std::stringstream ss{};
   ss << std::hex << s;

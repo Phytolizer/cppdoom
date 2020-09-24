@@ -11,7 +11,7 @@ namespace misc
 struct Default
 {
   std::string name;
-  void *location;
+  void* location;
   boost::variant2::variant<bool, int, std::string, std::vector<std::string>>
       value;
   std::optional<int> min;

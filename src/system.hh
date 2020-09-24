@@ -19,6 +19,6 @@ std::optional<std::string> findFileInternal(std::string_view fname,
 }
 
 std::string sigString(int signum);
-}
+} // namespace sys
 
 #endif

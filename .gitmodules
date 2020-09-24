@@ -1,0 +1,3 @@
+[submodule "deps/eternal"]
+	path = deps/eternal
+	url = https://github.com/mapbox/eternal

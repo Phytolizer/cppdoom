@@ -6,8 +6,11 @@
 #define DOOM_PSPR_HH
 
 #include "fixed.hh"
+#include "gsl_aliases.hh"
+#include "info.hh"
 
-namespace info {
+namespace info
+{
 struct State;
 }
 
@@ -15,6 +18,8 @@ namespace pspr
 {
 
 extern int weapon_attack_alignment;
+
+constexpr const auto WEAPONTOP = fixed::FRACUNIT * 32;
 
 enum class PSprEnum
 {
@@ -25,12 +30,16 @@ enum class PSprEnum
 
 struct PSpDef
 {
-  info::State *state;
+  info::State* state;
   int32_t tics;
   fixed::Fixed sx;
   fixed::Fixed sy;
 };
 
-}
+void setPsprite(NotNull<player::Player*> player, PSprEnum position,
+                info::StateEnum state);
+void fireWeapon(NotNull<player::Player*> player);
+
+} // namespace pspr
 
 #endif // DOOM_PSPR_HH

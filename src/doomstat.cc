@@ -7,6 +7,7 @@
 bool doomstat::doom_weapon_toggles;
 bool doomstat::flashing_hom;
 bool doomstat::modifiedGame;
+int doomstat::levelTime;
 
 bool doomstat::allow_pushers;
 bool doomstat::default_allow_pushers;
@@ -16,6 +17,9 @@ bool doomstat::default_comp[static_cast<std::size_t>(CompFlag::COMP_TOTAL)];
 
 doomstat::CompLevel doomstat::compatibility_level;
 doomstat::CompLevel doomstat::default_compatibility_level;
+
+doomstat::DemoInsurance doomstat::demo_insurance;
+doomstat::DemoInsurance doomstat::default_demo_insurance;
 
 int doomstat::distfriend;
 int doomstat::default_distfriend;
@@ -55,8 +59,6 @@ bool doomstat::default_variable_friction;
 
 bool doomstat::weapon_recoil;
 bool doomstat::default_weapon_recoil;
-
-doomstat::DemoInsurance doomstat::default_demo_insurance;
 
 defs::GameMission doomstat::gamemission;
 defs::GameMode doomstat::gamemode = defs::GameMode::UNDETERMINED;

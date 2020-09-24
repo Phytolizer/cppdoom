@@ -48,7 +48,7 @@ void setAffinityMask()
 
   if (video::process_affinity_mask != 0)
   {
-    const char *errbuf = nullptr;
+    const char* errbuf = nullptr;
 #ifdef _WIN32
     HMODULE kernel32_dll;
     SetAffinityFunc SetAffinity = nullptr;
@@ -100,7 +100,7 @@ void setProcessPriority()
 {
   if (video::process_priority != 0)
   {
-    const char *errbuf = nullptr;
+    const char* errbuf = nullptr;
 #ifdef _WIN32
     {
       DWORD dwPriorityClass = NORMAL_PRIORITY_CLASS;
@@ -132,7 +132,7 @@ void setProcessPriority()
   }
 }
 
-void findResponseFile(gsl::not_null<std::vector<arglex::Arg> *> args,
+void findResponseFile(gsl::not_null<std::vector<arglex::Arg>*> args,
                       std::vector<arglex::Arg>::iterator responseFile)
 {
   // remove leading '@'
@@ -201,7 +201,7 @@ void findResponseFile(gsl::not_null<std::vector<arglex::Arg> *> args,
   }
 }
 
-void loadResponseFiles(gsl::not_null<std::vector<arglex::Arg> *> args)
+void loadResponseFiles(gsl::not_null<std::vector<arglex::Arg>*> args)
 {
   bool rspFound = true;
   while (rspFound)
@@ -209,7 +209,7 @@ void loadResponseFiles(gsl::not_null<std::vector<arglex::Arg> *> args)
     rspFound = false;
     for (auto i = args->begin(); i != args->end(); ++i)
     {
-      auto &arg = *i;
+      auto& arg = *i;
       if (arg.value[0] == '@')
       {
         rspFound = true;
@@ -219,7 +219,7 @@ void loadResponseFiles(gsl::not_null<std::vector<arglex::Arg> *> args)
   }
 }
 
-int main(int argc, const char *const *argv)
+int main(int argc, const char* const* argv)
 {
   std::vector<arglex::Arg> args = arglex::lexArgs(argc, argv);
   loadResponseFiles(&args);

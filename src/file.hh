@@ -17,7 +17,7 @@ class File
 {
   struct FileDeleter
   {
-    void operator()(std::FILE *handle) noexcept(false);
+    void operator()(std::FILE* handle) noexcept(false);
   };
   std::unique_ptr<std::FILE, FileDeleter> handle;
   std::string_view name;
@@ -27,13 +27,13 @@ public:
   File(std::string_view name, std::string_view mode) noexcept(false);
 
   std::vector<std::byte> read(std::size_t nbytes) noexcept(false);
-  template <typename T> void readTo(gsl::not_null<T *> buffer) noexcept(false);
+  template <typename T> void readTo(gsl::not_null<T*> buffer) noexcept(false);
   template <typename T>
-  void readToArr(gsl::not_null<std::vector<T> *> buffer) noexcept(false);
+  void readToArr(gsl::not_null<std::vector<T>*> buffer) noexcept(false);
   std::string readLine() noexcept(false);
   std::string readUntil(char delim) noexcept(false);
   void seekTo(size_t offset) noexcept(false);
-  void write(const std::vector<std::byte> &toWrite) noexcept(false);
+  void write(const std::vector<std::byte>& toWrite) noexcept(false);
 
   bool eof();
   std::size_t length();
@@ -42,7 +42,7 @@ public:
 } // namespace file
 
 template <typename T>
-void file::File::readTo(gsl::not_null<T *> buffer) noexcept(false)
+void file::File::readTo(gsl::not_null<T*> buffer) noexcept(false)
 {
   auto nread = fread(buffer, sizeof(T), 1, handle.get());
   if (nread != 1)
@@ -61,7 +61,7 @@ void file::File::readTo(gsl::not_null<T *> buffer) noexcept(false)
 }
 
 template <typename T>
-void file::File::readToArr(gsl::not_null<std::vector<T> *> buffer) noexcept(
+void file::File::readToArr(gsl::not_null<std::vector<T>*> buffer) noexcept(
     false)
 {
   auto nread =

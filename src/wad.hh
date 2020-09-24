@@ -25,7 +25,7 @@ enum class WadSource
 
 struct WadInfo
 {
-  char identification[4];
+  std::array<char, 4> identification;
   int32_t numLumps;
   int32_t infoTableOffset;
 };
@@ -34,7 +34,7 @@ struct FileLump
 {
   int32_t filePos;
   int32_t size;
-  char name[8];
+  std::array<char, 8> name;
 };
 
 struct WadFileInfo
@@ -44,7 +44,7 @@ struct WadFileInfo
   int handle;
 };
 
-void addDefaultExtension(gsl::not_null<std::string *> path,
+void addDefaultExtension(gsl::not_null<std::string*> path,
                          std::string_view ext);
 
 extern std::vector<WadFileInfo> wadfiles;

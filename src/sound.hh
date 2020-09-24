@@ -5,6 +5,9 @@
 #ifndef DOOM_SOUND_HH
 #define DOOM_SOUND_HH
 
+#include "gsl_aliases.hh"
+#include "info.hh"
+#include "mobj.hh"
 #include <string>
 #include <vector>
 
@@ -23,7 +26,7 @@ struct MusicInfo
 {
   std::string name;
   int lumpNum;
-  const void *data;
+  const void* data;
   int handle;
 };
 
@@ -35,10 +38,10 @@ struct SfxInfo
   // FIXME actually a bool?
   bool singularity;
   int priority;
-  SfxInfo *link;
+  SfxInfo* link;
   int pitch;
   int volume;
-  void *data;
+  void* data;
   int usefulness;
   int lumpNum;
 };
@@ -47,6 +50,8 @@ extern SfxInfo sfx[];
 
 extern std::string snd_midiplayer;
 extern std::vector<std::string> midiplayers;
+
+void startSound(NotNull<mobj::MapObject*> mobj, info::Sfx sound);
 
 } // namespace sound
 

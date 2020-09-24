@@ -4,20 +4,23 @@
 
 #include "deh.hh"
 
+#include "arglex.hh"
 #include "doomstat.hh"
+#include "enum_ops.hh"
 #include "info.hh"
 #include "interactions.hh"
 #include "sound.hh"
 #include "think.hh"
+#include "video.hh"
 
-std::vector<think::ActionF> deh::codeptr{
-    static_cast<std::size_t>(info::StateEnum::NUMSTATES)};
-std::vector<std::string> deh::spriteNames{
-    static_cast<std::size_t>(info::SpriteEnum::NUMSPRITES) + 1};
-std::vector<std::string> deh::musicNames{
-    static_cast<std::size_t>(info::Music::NUMMUSIC) + 1};
-std::vector<std::string> deh::soundNames{
-    static_cast<std::size_t>(info::Sfx::NUMSFX) + 1};
+std::vector<action::Action>
+    deh::codeptr(static_cast<std::size_t>(info::StateEnum::NUMSTATES));
+std::vector<std::string> deh::spriteNames(
+    static_cast<std::size_t>(info::SpriteEnum::NUMSPRITES) + 1);
+std::vector<std::string>
+    deh::musicNames(static_cast<std::size_t>(info::Music::NUMMUSIC) + 1);
+std::vector<std::string>
+    deh::soundNames(static_cast<std::size_t>(info::Sfx::NUMSFX) + 1);
 std::optional<int> deh::dehMaxSoul{};
 std::optional<int> deh::dehMegaHealth{};
 std::optional<int> deh::dehMaxHealth{};
@@ -34,11 +37,11 @@ void deh::buildBexTables()
   }
   for (; i < static_cast<int>(info::StateEnum::NUMSTATES); i += 1)
   {
-    info::State &state = info::states[i];
+    info::State& state = info::states[i];
     state.sprite = info::SpriteEnum::SPR_TNT1;
     state.spriteFrame = 0;
     state.durationTics = -1;
-    state.action = nullptr;
+    state.action = action::doNothing;
     state.nextState = static_cast<info::StateEnum>(i);
     state.misc1 = 0;
     state.misc2 = 0;
@@ -84,7 +87,7 @@ void deh::buildBexTables()
 }
 void deh::applyCompatibility()
 {
-  int comp_max;
+  int comp_max = 0;
   if (doomstat::compatibility_level < doomstat::CompLevel::Doom12)
   {
     comp_max = 199;
@@ -105,5 +108,50 @@ void deh::applyCompatibility()
   {
     interactions::maxhealth = deh::dehMaxHealth.value_or(100);
     interactions::maxhealthbonus = interactions::maxhealth * 2;
+  }
+  if (!deh::mobjInfoBits[static_cast<std::size_t>(info::MobjType::MT_SKULL)])
+  {
+    info::mobjinfo[static_cast<std::size_t>(info::MobjType::MT_SKULL)].flags |=
+        info::MobjFlag::MF_COUNTKILL;
+  }
+  else
+  {
+    info::mobjinfo[static_cast<std::size_t>(info::MobjType::MT_SKULL)].flags &=
+        ~info::MobjFlag::MF_COUNTKILL;
+  }
+
+  deh::changeCompTranslucency();
+}
+void deh::changeCompTranslucency()
+{
+  constexpr std::array predefined_translucency = {
+      info::MobjType::MT_FIRE,      info::MobjType::MT_SMOKE,
+      info::MobjType::MT_FATSHOT,   info::MobjType::MT_BRUISERSHOT,
+      info::MobjType::MT_SPAWNFIRE, info::MobjType::MT_TROOPSHOT,
+      info::MobjType::MT_HEADSHOT,  info::MobjType::MT_PLASMA,
+      info::MobjType::MT_BFG,       info::MobjType::MT_ARACHPLAZ,
+      info::MobjType::MT_PUFF,      info::MobjType::MT_TFOG,
+      info::MobjType::MT_IFOG,      info::MobjType::MT_MISC12,
+      info::MobjType::MT_INV,       info::MobjType::MT_INS,
+      info::MobjType::MT_MEGA,
+  };
+
+  for (const auto& t : predefined_translucency)
+  {
+    if (!deh::mobjInfoBits[static_cast<std::size_t>(t)])
+    {
+      if (video::getMode() == arglex::VideoMode::ModeGL ||
+          doomstat::comp[static_cast<std::size_t>(
+              doomstat::CompFlag::COMP_TRANSLUCENCY)])
+      {
+        info::mobjinfo[static_cast<std::size_t>(t)].flags &=
+            ~info::MobjFlag::MF_TRANSLUCENT;
+      }
+      else
+      {
+        info::mobjinfo[static_cast<std::size_t>(t)].flags |=
+            info::MobjFlag::MF_TRANSLUCENT;
+      }
+    }
   }
 }

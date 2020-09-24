@@ -11,6 +11,7 @@
 
 int video::process_affinity_mask;
 int video::process_priority;
+arglex::VideoMode video::current_videomode;
 void video::preInitGraphics()
 {
   unsigned int flags = 0;
@@ -25,4 +26,8 @@ void video::preInitGraphics()
     spdlog::error("Could not initialize SDL: {}", SDL_GetError());
     exit(-1);
   }
+}
+arglex::VideoMode video::getMode()
+{
+  return video::current_videomode;
 }

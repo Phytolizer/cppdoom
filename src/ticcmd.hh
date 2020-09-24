@@ -6,6 +6,9 @@
 #define DOOM_TICCMD_HH
 
 #include <cstdint>
+
+#include "event.hh"
+
 namespace ticcmd
 {
 
@@ -16,9 +19,9 @@ struct TicCmd
   int16_t angleTurn;
   int16_t consistency;
   uint8_t chatChar;
-  uint8_t buttons;
+  event::ButtonCode buttons;
 };
 
-}
+} // namespace ticcmd
 
 #endif // DOOM_TICCMD_HH

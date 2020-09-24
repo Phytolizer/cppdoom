@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-size_t getline(char **lineptr, size_t *n, FILE *stream)
+size_t getline(char** lineptr, size_t* n, FILE* stream)
 {
-  char *bufptr = NULL;
-  char *p = bufptr;
+  char* bufptr = NULL;
+  char* p = bufptr;
   size_t size;
   int c;
 

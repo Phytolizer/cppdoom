@@ -2,3 +2,4 @@
 Language: Cpp
 AllowShortFunctionsOnASingleLine: None
 BreakBeforeBraces: Allman
+PointerAlignment: Left

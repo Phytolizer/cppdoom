@@ -6,7 +6,7 @@
 #include <spdlog/spdlog.h>
 #include <string>
 
-#include "config.hh"
+#include "config.h"
 #include "demo.hh"
 #include "doom.hh"
 #include "doomstat.hh"
@@ -64,11 +64,11 @@ const misc::Default defaults[] = {
     // TODO the rest of these
 };
 
-constexpr const char *BOOM_CFG = "ezboom.cfg";
+constexpr const char* BOOM_CFG = "ezboom.cfg";
 
 std::string defaultFile;
 
-void loadDefaultsFromFile(file::File &f)
+void loadDefaultsFromFile(file::File& f)
 {
   std::size_t lineNum = 0;
   while (!f.eof())
@@ -146,10 +146,10 @@ void loadDefaultsFromFile(file::File &f)
         std::vector<std::string> vec;
         boost::split(vec, parm, [](char c) { return c == ','; });
         std::for_each(vec.begin(), vec.end(),
-                      [](std::string &v) { boost::trim(v); });
+                      [](std::string& v) { boost::trim(v); });
         std::vector<std::string> finalVec;
         std::copy_if(vec.begin(), vec.end(), std::back_inserter(finalVec),
-                     [](const std::string &s) { return !s.empty(); });
+                     [](const std::string& s) { return !s.empty(); });
         parsedParm = finalVec;
       }
       else
@@ -164,10 +164,10 @@ void loadDefaultsFromFile(file::File &f)
           // get rid of ]
           *vec.rbegin() = vec.rbegin()->substr(0, vec.rbegin()->length() - 1);
         }
-        std::for_each(vec.begin(), vec.end(), [](auto &v) { boost::trim(v); });
+        std::for_each(vec.begin(), vec.end(), [](auto& v) { boost::trim(v); });
         std::vector<std::string> finalVec;
         std::copy_if(vec.begin(), vec.end(), std::back_inserter(finalVec),
-                     [](const std::string &s) { return !s.empty(); });
+                     [](const std::string& s) { return !s.empty(); });
         parsedParm = finalVec;
       }
     }
@@ -184,9 +184,9 @@ void loadDefaultsFromFile(file::File &f)
       parsedParm = parseRes.value();
     }
 
-    auto *d = std::find_if(defaults,
+    auto* d = std::find_if(defaults,
                            defaults + (sizeof(defaults) / sizeof(defaults[0])),
-                           [&](const auto &d) { return d.name == def; });
+                           [&](const auto& d) { return d.name == def; });
     if (!d || d->name != def || d->location == nullptr)
     {
       spdlog::warn("Unknown config key '{}'. Ignoring.", def);
@@ -258,20 +258,20 @@ void loadDefaultsFromFile(file::File &f)
 
     if (index == misc::DEF_BOOL)
     {
-      *reinterpret_cast<bool *>(d->location) = (*get_if<int>(&parsedParm) == 1);
+      *reinterpret_cast<bool*>(d->location) = (*get_if<int>(&parsedParm) == 1);
     }
     else if (index == misc::DEF_INT)
     {
-      *reinterpret_cast<int *>(d->location) = *get_if<int>(&parsedParm);
+      *reinterpret_cast<int*>(d->location) = *get_if<int>(&parsedParm);
     }
     else if (index == misc::DEF_STR)
     {
-      *reinterpret_cast<std::string *>(d->location) =
+      *reinterpret_cast<std::string*>(d->location) =
           *get_if<std::string>(&parsedParm);
     }
     else if (index == misc::DEF_ARR)
     {
-      *reinterpret_cast<std::vector<std::string> *>(d->location) =
+      *reinterpret_cast<std::vector<std::string>*>(d->location) =
           *get_if<std::vector<std::string>>(&parsedParm);
     }
   }
@@ -280,7 +280,7 @@ void loadDefaultsFromFile(file::File &f)
   if (!ezboomWad.has_value())
   {
     spdlog::error("{}.wad not found. Can't continue.", PACKAGE_TARNAME);
-//    exit(-1);
+    //    exit(-1);
   }
   else
   {
@@ -305,7 +305,7 @@ void misc::loadDefaults()
     file::File f{defaultFile, "r"};
     loadDefaultsFromFile(f);
   }
-  catch (io::IoException &e)
+  catch (io::IoException& e)
   {
     spdlog::warn("{}", e.what());
     spdlog::warn("Using built-in defaults.");
@@ -318,7 +318,7 @@ std::optional<std::vector<std::byte>> misc::readFile(std::string_view name)
   {
     f = file::File{name, "r"};
   }
-  catch (io::IoException &e)
+  catch (io::IoException& e)
   {
     return {};
   }
@@ -328,7 +328,7 @@ std::optional<std::vector<std::byte>> misc::readFile(std::string_view name)
     std::vector<std::byte> contents = f.read(length);
     return contents;
   }
-  catch (io::IoException &e)
+  catch (io::IoException& e)
   {
     return {};
   }

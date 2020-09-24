@@ -15,7 +15,7 @@
 namespace deh
 {
 
-extern std::vector<think::ActionF> codeptr;
+extern std::vector<action::Action> codeptr;
 extern std::vector<std::string> spriteNames;
 extern std::vector<std::string> musicNames;
 extern std::vector<std::string> soundNames;
@@ -26,6 +26,7 @@ extern std::vector<bool> mobjInfoBits;
 
 void buildBexTables();
 void applyCompatibility();
+void changeCompTranslucency();
 
 } // namespace deh
 

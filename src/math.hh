@@ -24,7 +24,7 @@ template <typename T> constexpr T clamp(T value, T min, T max)
 }
 
 template <typename T>
-constexpr void clampInPlace(gsl::not_null<T *> value, T min, T max)
+constexpr void clampInPlace(gsl::not_null<T*> value, T min, T max)
 {
   if (*value < min)
   {
@@ -34,6 +34,15 @@ constexpr void clampInPlace(gsl::not_null<T *> value, T min, T max)
   {
     *value = max;
   }
+}
+
+template <typename T> constexpr T abs(const T& value)
+{
+  if (value < 0)
+  {
+    return -value;
+  }
+  return value;
 }
 } // namespace math
 

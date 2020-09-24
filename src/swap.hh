@@ -33,10 +33,16 @@
 #ifdef HAVE_ASM_BYTEORDER_H
 #include <asm/byteorder.h>
 #ifdef __arch__swab16
-#define DOOM_SWAP_S (signed short)__arch__swab16
+template <typename T> constexpr short int DOOM_SWAP_S(T x)
+{
+  return static_cast<short int>(__arch__swab16(x));
+}
 #endif
 #ifdef __arch__swab32
-#define DOOM_SWAP_L (signed long)__arch__swab32
+template <typename T> constexpr long int DOOM_SWAP_L(T x)
+{
+  return static_cast<long int>(__arch__swab32);
+}
 #endif
 #endif /* HAVE_ASM_BYTEORDER_H */
 
@@ -47,46 +53,102 @@
 #define DOOM_SWAP_L (long)OSSwapInt32
 #endif
 
-#ifndef DOOM_SWAP_L
-#define DOOM_SWAP_L(x)                                                         \
-  ((long int)((((unsigned long int)(x)&0x000000ffU) << 24) |                   \
-              (((unsigned long int)(x)&0x0000ff00U) << 8) |                    \
-              (((unsigned long int)(x)&0x00ff0000U) >> 8) |                    \
-              (((unsigned long int)(x)&0xff000000U) >> 24)))
-#endif
+template <typename T> constexpr long int DOOM_SWAP_L(T x)
+{
+  return static_cast<long int>(
+      ((static_cast<unsigned long int>(x) & 0x000000ffU) << 24) |
+      ((static_cast<unsigned long int>(x) & 0x0000ff00U)) << 8 |
+      ((static_cast<unsigned long int>(x) & 0x00ff0000U)) >> 8 |
+      ((static_cast<unsigned long int>(x) & 0xff000000U)) >> 24);
+}
 
-#ifndef DOOM_SWAP_S
-#define DOOM_SWAP_S(x)                                                         \
-  ((short int)((((unsigned short int)(x)&0x00ff) << 8) |                       \
-               (((unsigned short int)(x)&0xff00) >> 8)))
-#endif
+template <typename T> constexpr short int DOOM_SWAP_S(T x)
+{
+  return static_cast<short int>(
+      ((static_cast<unsigned short int>(x) & 0x00ff) << 8) |
+      ((static_cast<unsigned short int>(x) & 0xff00) >> 8));
+}
 #ifdef WORDS_BIGENDIAN
 
-#define DOOM_WTOHL(x) DOOM_SWAP_L(x)
-#define DOOM_HTOWL(x) DOOM_SWAP_L(x)
-#define DOOM_WTOHS(x) DOOM_SWAP_S(x)
-#define DOOM_HTOWS(x) DOOM_SWAP_S(x)
+template <typename T> long int DOOM_WTOHL(T x)
+{
+  return DOOM_SWAP_L(x);
+}
+template <typename T> long int DOOM_HTOWL(T x)
+{
+  return DOOM_SWAP_L(x);
+}
+template <typename T> short int DOOM_WTOHS(T x)
+{
+  return DOOM_SWAP_S(x);
+}
+template <typename T> short int DOOM_HTOWS(T x)
+{
+  return DOOM_SWAP_S(x);
+}
 
-#define DOOM_NTOHL(x) DOOM_SWAP_L(x)
-#define DOOM_HTONL(x) DOOM_SWAP_L(x)
-#define DOOM_NTOHS(x) DOOM_SWAP_S(x)
-#define DOOM_HTONS(x) DOOM_SWAP_S(x)
+template <typename T> long int DOOM_NTOHL(T x)
+{
+  return DOOM_SWAP_L(x);
+}
+template <typename T> long int DOOM_HTONL(T x)
+{
+  return DOOM_SWAP_L(x);
+}
+template <typename T> short int DOOM_NTOHS(T x)
+{
+  return DOOM_SWAP_S(x);
+}
+template <typename T> short int DOOM_HTONS(T x)
+{
+  return DOOM_SWAP_S(x);
+}
 
 #else
 
-#define DOOM_WTOHL(x) (long int)(x)
-#define DOOM_HTOWL(x) (long int)(x)
-#define DOOM_WTOHS(x) (short int)(x)
-#define DOOM_HTOWS(x) (short int)(x)
+template <typename T> constexpr long int DOOM_WTOHL(T x)
+{
+  return static_cast<long int>(x);
+}
+template <typename T> constexpr long int DOOM_HTOWL(T x)
+{
+  return static_cast<long int>(x);
+}
+template <typename T> constexpr short int DOOM_WTOHS(T x)
+{
+  return static_cast<short int>(x);
+}
+template <typename T> constexpr short int DOOM_HTOWS(T x)
+{
+  return static_cast<short int>(x);
+}
 
-#define DOOM_NTOHL(x) (long int)(x)
-#define DOOM_HTONL(x) (long int)(x)
-#define DOOM_NTOHS(x) (short int)(x)
-#define DOOM_HTONS(x) (short int)(x)
+template <typename T> constexpr long int DOOM_NTOHL(T x)
+{
+  return static_cast<long int>(x);
+}
+template <typename T> constexpr long int DOOM_HTONL(T x)
+{
+  return static_cast<long int>(x);
+}
+template <typename T> constexpr short int DOOM_NTOHS(T x)
+{
+  return static_cast<short int>(x);
+}
+template <typename T> constexpr short int DOOM_HTONS(T x)
+{
+  return static_cast<short int>(x);
+}
 
 #endif
 
-#define LITTLE_LONG(x) DOOM_WTOHL(x)
-#define LITTLE_SHORT(x) DOOM_HTOWS(x)
+template <typename T> constexpr long int LITTLE_LONG(T x)
+{
+  return DOOM_WTOHL(x);
+}
+template <typename T> constexpr short int LITTLE_SHORT(T x)
+{
+  return DOOM_WTOHS(x);
+}
 
 #endif // DOOM_SWAP_HH

@@ -113,6 +113,7 @@ enum class CompFlag
 extern bool doom_weapon_toggles;
 extern bool flashing_hom;
 extern bool modifiedGame;
+extern int levelTime;
 
 extern bool allow_pushers;
 extern bool default_allow_pushers;
@@ -122,6 +123,9 @@ extern bool default_comp[];
 
 extern CompLevel compatibility_level;
 extern CompLevel default_compatibility_level;
+
+extern DemoInsurance demo_insurance;
+extern DemoInsurance default_demo_insurance;
 
 /// the distance friends tend to hover around
 extern int distfriend;
@@ -166,8 +170,6 @@ extern bool default_variable_friction;
 
 extern bool weapon_recoil;
 extern bool default_weapon_recoil;
-
-extern DemoInsurance default_demo_insurance;
 
 extern defs::GameMission gamemission;
 extern defs::GameMode gamemode;

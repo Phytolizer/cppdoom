@@ -2,28 +2,28 @@
 
 #include <boost/algorithm/string.hpp>
 #include <fmt/core.h>
+#include <regex>
 #include <string>
 #include <strtk.hpp>
 #include <vector>
 
+#include "compatibility.hh"
 #include "doomstat.hh"
 #include "string_tools.hh"
 
 using namespace boost::variant2;
 using namespace arglex;
 
-std::vector<Arg> arglex::lexArgs(int argc, const char *const *argv)
+std::vector<Arg> arglex::lexArgs(int argc, const char* const* argv)
 {
-  std::vector<Arg> args;
-  for (int i = 0; i < argc; i++)
-  {
-    std::string arg = argv[i];
-    args.push_back(arglex::lexArg(arg));
-  }
+  std::vector<Arg> args{};
+  gsl::span cArgs{argv, static_cast<size_t>(argc)};
+  std::transform(cArgs.begin(), cArgs.end(), std::back_inserter(args),
+                 [](auto cArg) { return lexArg(cArg); });
   return args;
 }
 
-variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
+variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg>& args)
 {
   ArgMeta argMeta;
   argMeta.argv0 = args[0].value;
@@ -453,7 +453,7 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-turbo requires an argument";
         }
-        uint32_t turbo;
+        uint32_t turbo = 0;
         if (!string_tools::parseString<uint32_t>(arg->value, &turbo))
         {
           return fmt::format("bad argument to -turbo: {} (expected integer)",
@@ -468,16 +468,56 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
         {
           return "-dogs requires an argument";
         }
-        uint8_t dogs;
+        uint8_t dogs = 0;
         if (!string_tools::parseString<uint8_t>(arg->value, &dogs))
         {
           return fmt::format("bad argument to -dogs: {} (expected integer)");
         }
         argMeta.dogs = dogs;
       }
+      else if (arg->value == "emulate")
+      {
+        ++arg;
+        if (arg == args.end())
+        {
+          return "-emulate requires an argument";
+        }
+        std::array<uint8_t, 4> b{0, 0, 0, 0};
+        std::regex parserRegex{R"((\d+)\.(\d+)\.(\d+)\.(\d+))"};
+        std::smatch sm;
+        if (!std::regex_match(arg->value, sm, parserRegex))
+        {
+          return fmt::format("bad argument to -emulate: {} (expected format "
+                             "n.n.n.n, where n represents numbers)");
+        }
+        for (int i = 0; i < 4; ++i)
+        {
+          if (!string_tools::parseString<uint8_t>(sm[i + 1].str(),
+                                                  &gsl::at(b, i)))
+          {
+            return fmt::format(
+                "bad argument to -emulate: number {} is not between 0 and 255",
+                sm[i + 1].str());
+          }
+        }
+        argMeta.emulate = (b[0] << 24) + (b[1] << 16) + (b[2] << 8) + b[3];
+      }
       else
       {
-        return fmt::format("unknown parameter -{}", arg->value);
+        // check PrBoom compatibility flags
+        bool isPrBoomCompatFlag = false;
+        for (auto& comp : prboomCompatibility)
+        {
+          if (arg->value == comp.cmd)
+          {
+            comp.state = true;
+            isPrBoomCompatFlag = true;
+          }
+        }
+        if (!isPrBoomCompatFlag)
+        {
+          return fmt::format("unknown parameter -{}", arg->value);
+        }
       }
     }
   }
@@ -492,19 +532,16 @@ variant<ArgMeta, std::string> arglex::parseArgs(const std::vector<Arg> &args)
 
   return argMeta;
 }
-Arg arglex::lexArg(const std::string &arg)
+Arg arglex::lexArg(const std::string& arg)
 {
   if (arg[0] == '-')
   {
     return Arg{arg.substr(1), ArgType::Flag};
   }
-  else
-  {
-    return Arg{arg, ArgType::Positional};
-  }
+  return Arg{arg, ArgType::Positional};
 }
 
-void ArgMeta::handleLooseArg(const Arg &arg)
+void ArgMeta::handleLooseArg(const Arg& arg)
 {
   if (strtk::ends_with(arg.value, ".lmp"))
   {

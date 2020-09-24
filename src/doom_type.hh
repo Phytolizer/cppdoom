@@ -12,6 +12,7 @@ namespace doom_type
 #if defined(_WIN32) && !defined(__clang__)
 #define PACKEDATTR __attribute__((packed, gcc_struct))
 #else
+// NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 #define PACKEDATTR __attribute__((packed))
 #endif
 #else

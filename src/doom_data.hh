@@ -21,6 +21,6 @@ struct PACKEDATTR MapThing
   int16_t options;
 };
 
-}
+} // namespace doom_data
 
 #endif // DOOM_DOOM_DATA_HH

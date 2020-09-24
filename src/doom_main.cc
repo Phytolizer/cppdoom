@@ -9,12 +9,13 @@
 #include <spdlog/spdlog.h>
 #include <strtk.hpp>
 
-#include "config.hh"
+#include "config.h"
 #include "deh.hh"
 #include "doom.hh"
 #include "doomstat.hh"
 #include "file.hh"
 #include "game.hh"
+#include "gsl_aliases.hh"
 #include "math.hh"
 #include "render/main.hh"
 #include "swap.hh"
@@ -35,29 +36,31 @@ int startMap;
 
 defs::Skill doom::startSkill;
 
-std::string basesavegame;
-std::string doomverstr;
+std::string basesavegame{};
+std::string doomverstr{};
 
-constexpr const char *const DEVSTR = "Development mode ON.";
+constexpr const char* const DEVSTR = "Development mode ON.";
 
 void doom::main()
 {
   doom::mainSetup();
 }
 
-void normalizeSlashes(std::string &s)
+void normalizeSlashes(NotNull<std::string*> s)
 {
-  if (s.empty())
+  if (s->empty())
   {
     return;
   }
 
-  auto p = s.rbegin();
+  auto p = s->rbegin();
   if (*p == '/' || *p == '\\')
   {
-    s.erase(p.base());
+    s->erase(p.base());
   }
-  while (p != s.rend())
+  // ensure p is valid
+  p = s->rbegin();
+  while (p != s->rend())
   {
     ++p;
     if (*p == '\\')
@@ -67,7 +70,7 @@ void normalizeSlashes(std::string &s)
   }
 }
 
-constexpr const char *const standard_iwads[] = {
+constexpr std::array standard_iwads = {
     "doom2f.wad", "doom2.wad", "plutonia.wad",  "tnt.wad",       "doom.wad",
     "doom1.wad",  "doomu.wad", "freedoom2.wad", "freedoom1.wad", "freedm.wad",
     "hacx.wad",   "chex.wad",  "bfgdoom2.wad",  "bfgdoom.wad",
@@ -79,17 +82,16 @@ std::optional<std::string> findIwadFile()
   {
     return sys::findFile(argMeta.iwad.value(), ".wad");
   }
-  else
+
+  for (const auto& std_iwad : standard_iwads)
   {
-    for (const auto &std_iwad : standard_iwads)
+    auto iwad = sys::findFile(std_iwad, ".wad");
+    if (iwad.has_value())
     {
-      auto iwad = sys::findFile(std_iwad, ".wad");
-      if (iwad.has_value())
-      {
-        return iwad;
-      }
+      return iwad;
     }
   }
+
   return {};
 }
 
@@ -111,7 +113,7 @@ void checkIwad(std::string_view iwad)
   {
     f = file::File{iwad, "rb"};
   }
-  catch (io::IoException &e)
+  catch (io::IoException& e)
   {
     spdlog::error("checkIwad: Can't open IWAD {}", iwad);
     exit(-1);
@@ -122,13 +124,14 @@ void checkIwad(std::string_view iwad)
   {
     f.readTo<wad::WadInfo>(&header);
   }
-  catch (io::IoException &e)
+  catch (io::IoException& e)
   {
     spdlog::error("encountered error reading IWAD {}: {}", iwad, e.what());
     exit(-1);
   }
 
-  bool noiwad = std::string{header.identification, header.identification + 4} != "IWAD";
+  bool noiwad = std::string{header.identification.begin(),
+                            header.identification.end()} != "IWAD";
   header.numLumps = LITTLE_LONG(header.numLumps);
   header.infoTableOffset = LITTLE_LONG(header.infoTableOffset);
   auto length = header.numLumps;
@@ -138,7 +141,7 @@ void checkIwad(std::string_view iwad)
     f.seekTo(header.infoTableOffset);
     f.readToArr<wad::FileLump>(&fileInfo);
   }
-  catch (io::IoException &e)
+  catch (io::IoException& e)
   {
     spdlog::error("checkIwad: failed to read directory {}: {}", iwad, e.what());
     exit(-1);
@@ -298,7 +301,7 @@ void addIwad(std::string_view iwad)
 void identifyVersion()
 {
   {
-    const char *p = std::getenv("DOOMSAVEDIR");
+    const char* p = std::getenv("DOOMSAVEDIR");
     std::string path;
     if (p == nullptr)
     {
@@ -336,7 +339,7 @@ void identifyVersion()
   }
 }
 
-constexpr void turboScale(gsl::not_null<fixed::Fixed *> value,
+constexpr void turboScale(gsl::not_null<fixed::Fixed*> value,
                           unsigned int scale)
 {
   *value = static_cast<fixed::Fixed>(*value * scale) / 100;
@@ -429,7 +432,7 @@ void doom::mainSetup()
   }
   if (argMeta.warp.has_value())
   {
-    const auto &warp = argMeta.warp.value();
+    const auto& warp = argMeta.warp.value();
     startMap = 0;
     autoStart = true;
     if (doomstat::gamemode == defs::GameMode::COMMERCIAL)

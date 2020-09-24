@@ -17,6 +17,6 @@ extern defs::Skill startSkill;
 void main();
 void mainSetup();
 
-}
+} // namespace doom
 
 #endif // DOOM_DOOM_MAIN_HH
