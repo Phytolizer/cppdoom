@@ -20,15 +20,15 @@ using Think = action::Action;
 
 struct Thinker
 {
-  virtual ~Thinker() = default;
-  Thinker* prev{};
-  Thinker* next{};
-  Think function{};
+    virtual ~Thinker() = default;
+    Thinker* prev{};
+    Thinker* next{};
+    Think function{};
 
-  Thinker* cnext{};
-  Thinker* cprev{};
+    Thinker* cnext{};
+    Thinker* cprev{};
 
-  uint32_t references{};
+    uint32_t references{};
 };
 
 } // namespace think

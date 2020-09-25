@@ -8,14 +8,12 @@ namespace sys
 {
 
 std::string doomExeDir();
-std::optional<std::string> findFile(std::string_view fname,
-                                    std::string_view ext = "");
+std::optional<std::string> findFile(std::string_view fname, std::string_view ext = "");
 std::string getVersionString();
 
 namespace internal
 {
-std::optional<std::string> findFileInternal(std::string_view fname,
-                                            std::string_view ext);
+std::optional<std::string> findFileInternal(std::string_view fname, std::string_view ext);
 }
 
 std::string sigString(int signum);

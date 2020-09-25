@@ -3,25 +3,24 @@
 //
 
 #include "wad.hh"
-void wad::addDefaultExtension(gsl::not_null<std::string*> path,
-                              std::string_view ext)
+void wad::addDefaultExtension(gsl::not_null<std::string*> path, std::string_view ext)
 {
-  for (auto p = path->rbegin(); p != path->rend(); --p)
-  {
-    if (*p == '/' || *p == '\\')
+    for (auto p = path->rbegin(); p != path->rend(); --p)
     {
-      break;
+        if (*p == '/' || *p == '\\')
+        {
+            break;
+        }
+        if (*p == '.')
+        {
+            return;
+        }
     }
-    if (*p == '.')
+    if (ext[0] != '.')
     {
-      return;
+        *path += ".";
     }
-  }
-  if (ext[0] != '.')
-  {
-    *path += ".";
-  }
-  *path += ext;
+    *path += ext;
 }
 
 std::vector<wad::WadFileInfo> wad::wadfiles;

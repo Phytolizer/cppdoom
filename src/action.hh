@@ -29,17 +29,16 @@ namespace action
 
 using VoidAction = void (*)();
 using PlayerAction = void (*)(NotNull<player::Player*>);
-using PlayerPsprAction = void (*)(NotNull<player::Player*>,
-                                  NotNull<pspr::PSpDef*>);
+using PlayerPsprAction = void (*)(NotNull<player::Player*>, NotNull<pspr::PSpDef*>);
 using MapObjectAction = void (*)(NotNull<mobj::MapObject*>);
-using Action = boost::variant2::variant<VoidAction, PlayerAction,
-                                        PlayerPsprAction, MapObjectAction>;
+using Action = boost::variant2::variant<VoidAction, PlayerAction, PlayerPsprAction, MapObjectAction>;
 
 // TODO(kyle): action functions go here!
 
 void doNothing();
 void light0(NotNull<player::Player*> player);
-void weaponReady(NotNull<player::Player*> player, pspr::PSpDef* psp);
+void weaponReady(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp);
+void fireOldBfg(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp);
 
 } // namespace action
 

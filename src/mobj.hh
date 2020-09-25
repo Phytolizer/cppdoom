@@ -34,126 +34,124 @@ namespace mobj
 
 struct MapObject : think::Thinker
 {
-  virtual ~MapObject() = default;
-  fixed::Fixed x{};
-  fixed::Fixed y{};
-  fixed::Fixed z{};
+    virtual ~MapObject() = default;
+    fixed::Fixed x{};
+    fixed::Fixed y{};
+    fixed::Fixed z{};
 
-  MapObject* next{};
-  MapObject** prev{};
+    MapObject* next{};
+    MapObject** prev{};
 
-  tables::Angle angle{};
-  info::SpriteEnum sprite{};
-  int frame{};
+    tables::Angle angle{};
+    info::SpriteEnum sprite{};
+    int frame{};
 
-  MapObject* bnext{};
-  MapObject** bprev{};
+    MapObject* bnext{};
+    MapObject** bprev{};
 
-  defs::Subsector* subsector{};
+    defs::Subsector* subsector{};
 
-  // closest interval over all contacted sectors
+    // closest interval over all contacted sectors
 
-  fixed::Fixed floorZ{};
-  fixed::Fixed ceilingZ{};
+    fixed::Fixed floorZ{};
+    fixed::Fixed ceilingZ{};
 
-  /// lowest floor over all contacted sectors
-  fixed::Fixed dropoffZ{};
+    /// lowest floor over all contacted sectors
+    fixed::Fixed dropoffZ{};
 
-  // for movement checking
+    // for movement checking
 
-  fixed::Fixed radius{};
-  fixed::Fixed height{};
+    fixed::Fixed radius{};
+    fixed::Fixed height{};
 
-  // momentums
+    // momentums
 
-  fixed::Fixed momX{};
-  fixed::Fixed momY{};
-  fixed::Fixed momZ{};
+    fixed::Fixed momX{};
+    fixed::Fixed momY{};
+    fixed::Fixed momZ{};
 
-  /// if == validcount, already checked
-  int32_t validcount{};
+    /// if == validcount, already checked
+    int32_t validcount{};
 
-  info::MobjType type{};
-  /// &mobjinfo[mobj->type]
-  info::MobjInfo* info{};
+    info::MobjType type{};
+    /// &mobjinfo[mobj->type]
+    info::MobjInfo* info{};
 
-  /// state tic counter
-  int32_t tics{};
-  info::State* state{};
-  info::MobjFlag flags{};
-  /// internal flags
-  int32_t intFlags{};
-  int32_t health{};
+    /// state tic counter
+    int32_t tics{};
+    info::State* state{};
+    info::MobjFlag flags{};
+    /// internal flags
+    int32_t intFlags{};
+    int32_t health{};
 
-  /// 0..7
-  int16_t moveDir{};
-  /// when 0, select a new direction
-  int16_t moveCount{};
-  /// monster strafing
-  int16_t strafeCount{};
+    /// 0..7
+    int16_t moveDir{};
+    /// when 0, select a new direction
+    int16_t moveCount{};
+    /// monster strafing
+    int16_t strafeCount{};
 
-  /// thing being chased/attacked (or nullptr).
-  /// Missiles use this to track their originator
-  /// and blood to track its owner (for coloration).
-  MapObject* target{};
+    /// thing being chased/attacked (or nullptr).
+    /// Missiles use this to track their originator
+    /// and blood to track its owner (for coloration).
+    MapObject* target{};
 
-  /// Reaction time, if nonzero, don't attack yet.
-  /// Used by player to stick them in place for a bit after teleporting
-  int16_t reactionTime{};
+    /// Reaction time, if nonzero, don't attack yet.
+    /// Used by player to stick them in place for a bit after teleporting
+    int16_t reactionTime{};
 
-  /// if nonzero, the current target will be chased even if shot by someone else
-  int16_t threshold{};
+    /// if nonzero, the current target will be chased even if shot by someone else
+    int16_t threshold{};
 
-  /// how long a monster pursues a target
-  int16_t pursueCount{};
+    /// how long a monster pursues a target
+    int16_t pursueCount{};
 
-  /// used for torque simulation
-  int16_t gear{};
+    /// used for torque simulation
+    int16_t gear{};
 
-  /// additional info, for players only.
-  /// Will only be valid if type == MobjType::MT_PLAYER
-  player::Player* player{};
+    /// additional info, for players only.
+    /// Will only be valid if type == MobjType::MT_PLAYER
+    player::Player* player{};
 
-  /// player number last looked for
-  int16_t lastLook{};
+    /// player number last looked for
+    int16_t lastLook{};
 
-  /// used for nightmare respawn
-  doom_data::MapThing spawnPoint{};
+    /// used for nightmare respawn
+    doom_data::MapThing spawnPoint{};
 
-  /// thing being chased/attacked, used for revenant missiles
-  MapObject* tracer{};
+    /// thing being chased/attacked, used for revenant missiles
+    MapObject* tracer{};
 
-  /// last known enemy
-  MapObject* lastEnemy{};
+    /// last known enemy
+    MapObject* lastEnemy{};
 
-  /// friction properties of sector the object is in
+    /// friction properties of sector the object is in
 
-  int32_t friction{};
-  int32_t moveFactor{};
+    int32_t friction{};
+    int32_t moveFactor{};
 
-  /// a linked list of sectors where this object appears
-  defs::MSecNode* touchingSectorList{};
+    /// a linked list of sectors where this object appears
+    defs::MSecNode* touchingSectorList{};
 
-  fixed::Fixed prevX{};
-  fixed::Fixed prevY{};
-  fixed::Fixed prevZ{};
+    fixed::Fixed prevX{};
+    fixed::Fixed prevY{};
+    fixed::Fixed prevZ{};
 
-  tables::Angle pitch{};
-  int32_t index{};
-  int16_t patchWidth{};
+    tables::Angle pitch{};
+    int32_t index{};
+    int16_t patchWidth{};
 
-  /// high word stores thing num, low word identifier num
-  int32_t idenNums{};
+    /// high word stores thing num, low word identifier num
+    int32_t idenNums{};
 
-  fixed::Fixed pad{};
+    fixed::Fixed pad{};
 };
 
 constexpr bool alive(const NotNull<mobj::MapObject*> thing)
 {
-  return thing->health > 0 &&
-         ((thing->flags &
-           (info::MobjFlag::MF_COUNTKILL | info::MobjFlag::MF_CORPSE |
-            info::MobjFlag::MF_RESURRECTED)) == info::MobjFlag::MF_COUNTKILL);
+    return thing->health > 0 && ((thing->flags & (info::MobjFlag::MF_COUNTKILL | info::MobjFlag::MF_CORPSE |
+                                                  info::MobjFlag::MF_RESURRECTED)) == info::MobjFlag::MF_COUNTKILL);
 }
 void setMobjState(NotNull<MapObject*> mobj, info::StateEnum state);
 

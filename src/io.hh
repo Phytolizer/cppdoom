@@ -10,10 +10,10 @@ namespace io
 
 class IoException : public std::runtime_error
 {
-public:
-  // cppcheck-suppress noExplicitConstructor
-  // implicit conversion is useful here
-  IoException(std::string_view info);
+  public:
+    // cppcheck-suppress noExplicitConstructor
+    // implicit conversion is useful here
+    IoException(std::string_view info);
 };
 
 } // namespace io

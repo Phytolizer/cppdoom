@@ -9,5 +9,5 @@
 
 bool string_tools::hasTrailingSlash(std::string_view s)
 {
-  return strtk::ends_with(s.data(), "/") || strtk::ends_with(s.data(), "\\");
+    return strtk::ends_with(s.data(), "/") || strtk::ends_with(s.data(), "\\");
 }

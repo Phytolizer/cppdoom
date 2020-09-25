@@ -13,39 +13,38 @@ namespace wad
 
 enum class WadSource
 {
-  SOURCE_IWAD = 0,
-  SOURCE_PRE,
-  SOURCE_AUTO_LOAD,
-  SOURCE_PWAD,
-  SOURCE_LMP,
-  SOURCE_NET,
-  SOURCE_DEH,
-  SOURCE_ERR,
+    SOURCE_IWAD = 0,
+    SOURCE_PRE,
+    SOURCE_AUTO_LOAD,
+    SOURCE_PWAD,
+    SOURCE_LMP,
+    SOURCE_NET,
+    SOURCE_DEH,
+    SOURCE_ERR,
 };
 
 struct WadInfo
 {
-  std::array<char, 4> identification;
-  int32_t numLumps;
-  int32_t infoTableOffset;
+    std::array<char, 4> identification;
+    int32_t numLumps;
+    int32_t infoTableOffset;
 };
 
 struct FileLump
 {
-  int32_t filePos;
-  int32_t size;
-  std::array<char, 8> name;
+    int32_t filePos;
+    int32_t size;
+    std::array<char, 8> name;
 };
 
 struct WadFileInfo
 {
-  std::string name;
-  WadSource src;
-  int handle;
+    std::string name;
+    WadSource src;
+    int handle;
 };
 
-void addDefaultExtension(gsl::not_null<std::string*> path,
-                         std::string_view ext);
+void addDefaultExtension(gsl::not_null<std::string*> path, std::string_view ext);
 
 extern std::vector<WadFileInfo> wadfiles;
 

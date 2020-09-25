@@ -25,7 +25,5 @@ int interactions::blue_armor_class = 2;
 int interactions::soul_health = 100;
 int interactions::bfgcells = 40;
 int interactions::monsters_infight = 0;
-int interactions::maxammo[static_cast<std::size_t>(defs::AmmoType::NUMAMMO)] = {
-    200, 50, 300, 50};
-int interactions::clipammo[static_cast<std::size_t>(defs::AmmoType::NUMAMMO)] =
-    {10, 4, 20, 1};
+int interactions::maxammo[static_cast<std::size_t>(defs::AmmoType::NUMAMMO)] = {200, 50, 300, 50};
+int interactions::clipammo[static_cast<std::size_t>(defs::AmmoType::NUMAMMO)] = {10, 4, 20, 1};

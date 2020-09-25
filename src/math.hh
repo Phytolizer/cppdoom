@@ -12,37 +12,36 @@ namespace math
 
 template <typename T> constexpr T clamp(T value, T min, T max)
 {
-  if (value < min)
-  {
-    return min;
-  }
-  if (value > max)
-  {
-    return max;
-  }
-  return value;
+    if (value < min)
+    {
+        return min;
+    }
+    if (value > max)
+    {
+        return max;
+    }
+    return value;
 }
 
-template <typename T>
-constexpr void clampInPlace(gsl::not_null<T*> value, T min, T max)
+template <typename T> constexpr void clampInPlace(gsl::not_null<T*> value, T min, T max)
 {
-  if (*value < min)
-  {
-    *value = min;
-  }
-  if (*value < max)
-  {
-    *value = max;
-  }
+    if (*value < min)
+    {
+        *value = min;
+    }
+    if (*value < max)
+    {
+        *value = max;
+    }
 }
 
 template <typename T> constexpr T abs(const T& value)
 {
-  if (value < 0)
-  {
-    return -value;
-  }
-  return value;
+    if (value < 0)
+    {
+        return -value;
+    }
+    return value;
 }
 } // namespace math
 

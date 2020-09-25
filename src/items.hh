@@ -5,25 +5,24 @@
 #ifndef EZ_BOOM_ITEMS_HH
 #define EZ_BOOM_ITEMS_HH
 
-#include <mapbox/eternal.hpp>
-
 #include "defs.hh"
 #include "info.hh"
+#include "map.hh"
 
 namespace items
 {
 
 struct WeaponInfo
 {
-  defs::AmmoType ammo;
-  info::StateEnum upState;
-  info::StateEnum downState;
-  info::StateEnum readyState;
-  info::StateEnum attackState;
-  info::StateEnum flashState;
+    defs::AmmoType ammo;
+    info::StateEnum upState;
+    info::StateEnum downState;
+    info::StateEnum readyState;
+    info::StateEnum attackState;
+    info::StateEnum flashState;
 };
 
-constinit auto weaponinfo = mapbox::eternal::map<defs::WeaponType, WeaponInfo>({
+constinit auto weaponinfo = map::map<defs::WeaponType, WeaponInfo, 11>{{{
     {defs::WeaponType::WP_FIST,
      {
          defs::AmmoType::AM_NOAMMO,
@@ -123,11 +122,11 @@ constinit auto weaponinfo = mapbox::eternal::map<defs::WeaponType, WeaponInfo>({
          info::StateEnum::S_NULL,
          info::StateEnum::S_NULL,
      }},
-});
+}}};
 
 } // namespace items
 
-constinit auto ammopershot = mapbox::eternal::map<defs::WeaponType, int>({
+constinit auto ammopershot = map::map<defs::WeaponType, int, 11>{{{
     {defs::WeaponType::WP_FIST, 0},
     {defs::WeaponType::WP_PISTOL, 1},
     {defs::WeaponType::WP_SHOTGUN, 1},
@@ -139,6 +138,6 @@ constinit auto ammopershot = mapbox::eternal::map<defs::WeaponType, int>({
     {defs::WeaponType::WP_SUPERSHOTGUN, 2},
     {defs::WeaponType::WP_NOCHANGE, 0},
     {defs::WeaponType::NUMWEAPONS, 0},
-});
+}}};
 
 #endif // EZ_BOOM_ITEMS_HH

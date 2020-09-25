@@ -8,9 +8,9 @@ extern int realtic_clock_rate;
 
 enum class EndoomMode
 {
-  colors = 1,
-  nonasciichars = 2,
-  droplastline = 4,
+    colors = 1,
+    nonasciichars = 2,
+    droplastline = 4,
 };
 
 extern int endoom_mode;

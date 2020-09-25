@@ -3,3 +3,8 @@
 //
 
 #include "random.hh"
+int random::p_random(random::PrClass cls)
+{
+    // TODO(kyle)
+    return 4;
+}

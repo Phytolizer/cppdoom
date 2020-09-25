@@ -14,11 +14,11 @@ namespace doom_data
 
 struct PACKEDATTR MapThing
 {
-  int16_t x;
-  int16_t y;
-  int16_t angle;
-  int16_t type;
-  int16_t options;
+    int16_t x;
+    int16_t y;
+    int16_t angle;
+    int16_t type;
+    int16_t options;
 };
 
 } // namespace doom_data

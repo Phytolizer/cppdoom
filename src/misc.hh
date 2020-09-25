@@ -10,12 +10,11 @@ namespace misc
 
 struct Default
 {
-  std::string name;
-  void* location;
-  boost::variant2::variant<bool, int, std::string, std::vector<std::string>>
-      value;
-  std::optional<int> min;
-  std::optional<int> max;
+    std::string name;
+    void* location;
+    boost::variant2::variant<bool, int, std::string, std::vector<std::string>> value;
+    std::optional<int> min;
+    std::optional<int> max;
 };
 constexpr int DEF_BOOL = 0;
 constexpr int DEF_INT = 1;

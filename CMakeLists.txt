@@ -24,8 +24,6 @@ if (WIN32)
     set(SDL2_LIBRARY "/dev/libs/SDL2/lib/x64")
 endif ()
 
-target_include_directories(doom PRIVATE deps/eternal/include)
-
 find_package(SDL2 REQUIRED)
 target_link_libraries(doom PRIVATE SDL2 SDL2_image)
 

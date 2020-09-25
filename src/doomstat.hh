@@ -11,103 +11,103 @@ namespace doomstat
 
 enum class CompLevel
 {
-  Auto = -1,
-  Doom12,
-  Doom1666,
-  Doom219,
-  UltDoom,
-  FinalDoom,
-  DosDoom,
-  TasDoom,
-  Boom,
-  Boom201,
-  Boom202,
-  LxDoom,
-  Mbf,
-  PrBoom1,
-  PrBoom2,
-  PrBoom3,
-  PrBoom4,
-  PrBoom5,
-  PrBoom6,
-  MAX_COMPATIBILITY_LEVEL,
+    Auto = -1,
+    Doom12,
+    Doom1666,
+    Doom219,
+    UltDoom,
+    FinalDoom,
+    DosDoom,
+    TasDoom,
+    Boom,
+    Boom201,
+    Boom202,
+    LxDoom,
+    Mbf,
+    PrBoom1,
+    PrBoom2,
+    PrBoom3,
+    PrBoom4,
+    PrBoom5,
+    PrBoom6,
+    MAX_COMPATIBILITY_LEVEL,
 
-  Best = PrBoom6,
+    Best = PrBoom6,
 };
 
 enum class DemoInsurance
 {
-  Never,
-  Always,
-  DuringDemoRecording,
+    Never,
+    Always,
+    DuringDemoRecording,
 };
 
 enum class MonsterInfightingLevel
 {
-  Never,
-  OtherSpecies,
-  Always,
+    Never,
+    OtherSpecies,
+    Always,
 };
 
 enum class CompFlag
 {
-  /// monsters used to telefrag only on MAP30, now they only telefrag from
-  /// spawners
-  COMP_TELEFRAG,
-  /// MBF encourages things to drop off of overhangs
-  COMP_DROPOFF,
-  /// original Doom archvile bugs, e.g. ghosts
-  COMP_VILE,
-  /// Pain Elemental lost soul limit
-  COMP_PAIN,
-  /// can Pain Elementals spit skulls through walls?
-  COMP_SKULL,
-  /// do blazing doors play the close sound twice?
-  COMP_BLAZING,
-  /// MBF made door lighting changes more gradual
-  COMP_DOORLIGHT,
-  /// improvements to game physics
-  COMP_MODEL,
-  /// fixes to god mode
-  COMP_GOD,
-  /// MBF encourages things to drop off of overhangs
-  COMP_FALLOFF,
-  /// fixes for moving floor bugs in Boom
-  COMP_FLOORS,
-  COMP_SKYMAP,
-  /// MBF AI change, limited pursuit?
-  COMP_PURSUIT,
-  /// fix for monsters getting stuck in doors
-  COMP_DOORSTUCK,
-  /// MBF AI change, monsters try to stay on lifts
-  COMP_STAYLIFT,
-  /// prevent dead players from triggering stuff
-  COMP_ZOMBIE,
-  COMP_STAIRS,
-  COMP_INFCHEAT,
-  /// allow zero tags in wads
-  COMP_ZEROTAGS,
-  /// enables keygrab glitch and noclipping mancubus fireballs
-  COMP_MOVEBLOCK,
-  /// objects which aren't placed by the map respawn at (0,0)
-  COMP_RESPAWN,
-  COMP_SOUND,
-  /// emulate pre-Ultimate boss death behavior
-  COMP_666,
-  /// enable lost soul bouncing
-  COMP_SOUL,
-  /// 2s mid textures don't animate
-  COMP_MASKEDANIM,
+    /// monsters used to telefrag only on MAP30, now they only telefrag from
+    /// spawners
+    COMP_TELEFRAG,
+    /// MBF encourages things to drop off of overhangs
+    COMP_DROPOFF,
+    /// original Doom archvile bugs, e.g. ghosts
+    COMP_VILE,
+    /// Pain Elemental lost soul limit
+    COMP_PAIN,
+    /// can Pain Elementals spit skulls through walls?
+    COMP_SKULL,
+    /// do blazing doors play the close sound twice?
+    COMP_BLAZING,
+    /// MBF made door lighting changes more gradual
+    COMP_DOORLIGHT,
+    /// improvements to game physics
+    COMP_MODEL,
+    /// fixes to god mode
+    COMP_GOD,
+    /// MBF encourages things to drop off of overhangs
+    COMP_FALLOFF,
+    /// fixes for moving floor bugs in Boom
+    COMP_FLOORS,
+    COMP_SKYMAP,
+    /// MBF AI change, limited pursuit?
+    COMP_PURSUIT,
+    /// fix for monsters getting stuck in doors
+    COMP_DOORSTUCK,
+    /// MBF AI change, monsters try to stay on lifts
+    COMP_STAYLIFT,
+    /// prevent dead players from triggering stuff
+    COMP_ZOMBIE,
+    COMP_STAIRS,
+    COMP_INFCHEAT,
+    /// allow zero tags in wads
+    COMP_ZEROTAGS,
+    /// enables keygrab glitch and noclipping mancubus fireballs
+    COMP_MOVEBLOCK,
+    /// objects which aren't placed by the map respawn at (0,0)
+    COMP_RESPAWN,
+    COMP_SOUND,
+    /// emulate pre-Ultimate boss death behavior
+    COMP_666,
+    /// enable lost soul bouncing
+    COMP_SOUL,
+    /// 2s mid textures don't animate
+    COMP_MASKEDANIM,
 
-  /// use Doom's buggy "Ouch" face code
-  COMP_OUCHFACE,
-  /// max health changes in DEH applies only to potions?
-  COMP_MAXHEALTH,
-  /// no predefined translucency for some things
-  COMP_TRANSLUCENCY,
+    /// use Doom's buggy "Ouch" face code
+    COMP_OUCHFACE,
+    /// max health changes in DEH applies only to potions?
+    COMP_MAXHEALTH,
+    /// no predefined translucency for some things
+    COMP_TRANSLUCENCY,
 
-  COMP_NUM,
-  COMP_TOTAL = 32,
+    COMP_NUM,
+    COMP_TOTAL = 32,
 };
 
 extern bool doom_weapon_toggles;

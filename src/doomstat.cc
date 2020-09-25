@@ -66,5 +66,5 @@ defs::Language doomstat::language = defs::Language::ENGLISH;
 
 bool doomstat::mbfFeatures()
 {
-  return compatibility_level >= doomstat::CompLevel::Mbf;
+    return compatibility_level >= doomstat::CompLevel::Mbf;
 }

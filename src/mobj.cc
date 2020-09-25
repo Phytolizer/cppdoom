@@ -5,5 +5,5 @@
 #include "mobj.hh"
 void mobj::setMobjState(NotNull<mobj::MapObject*> mobj, info::StateEnum state)
 {
-  // TODO(kyle)
+    // TODO(kyle)
 }

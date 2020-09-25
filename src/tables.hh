@@ -34,7 +34,7 @@ extern std::array<fixed::Fixed, 5 * FINE_ANGLES / 4> finesine;
 
 constexpr fixed::Fixed finecosine(fixed::Fixed angle)
 {
-  return finesine[angle + (FINE_ANGLES / 4)];
+    return finesine[angle + (FINE_ANGLES / 4)];
 }
 
 } // namespace tables

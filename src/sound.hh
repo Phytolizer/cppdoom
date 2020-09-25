@@ -16,34 +16,34 @@ namespace sound
 
 enum class MidiPlayerName
 {
-  Sdl,
-  FluidSynth,
-  Opl2,
-  PortMidi,
+    Sdl,
+    FluidSynth,
+    Opl2,
+    PortMidi,
 };
 
 struct MusicInfo
 {
-  std::string name;
-  int lumpNum;
-  const void* data;
-  int handle;
+    std::string name;
+    int lumpNum;
+    const void* data;
+    int handle;
 };
 
 extern MusicInfo music[];
 
 struct SfxInfo
 {
-  std::string name;
-  // FIXME actually a bool?
-  bool singularity;
-  int priority;
-  SfxInfo* link;
-  int pitch;
-  int volume;
-  void* data;
-  int usefulness;
-  int lumpNum;
+    std::string name;
+    // FIXME actually a bool?
+    bool singularity;
+    int priority;
+    SfxInfo* link;
+    int pitch;
+    int volume;
+    void* data;
+    int usefulness;
+    int lumpNum;
 };
 
 extern SfxInfo sfx[];
