@@ -1,0 +1,11 @@
+{
+    "name": "cppdoom",
+    "version-string": "0.1.0",
+    "dependencies": [
+        "fmt",
+        "ms-gsl",
+        "spdlog",
+        "rang",
+        "strtk"
+    ]
+}
