@@ -134,7 +134,7 @@ void checkIwad(std::string_view iwad)
     header.numLumps = LITTLE_LONG(header.numLumps);
     header.infoTableOffset = LITTLE_LONG(header.infoTableOffset);
     auto length = header.numLumps;
-    auto fileInfo = std::vector<wad::FileLump>{static_cast<size_t>(length)};
+    auto fileInfo = std::vector<wad::FileLump>(length);
     try
     {
         f.seekTo(header.infoTableOffset);

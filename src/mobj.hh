@@ -154,6 +154,9 @@ constexpr bool alive(const NotNull<mobj::MapObject*> thing)
                                                   info::MobjFlag::MF_RESURRECTED)) == info::MobjFlag::MF_COUNTKILL);
 }
 void setMobjState(NotNull<MapObject*> mobj, info::StateEnum state);
+MapObject* spawnMobj(fixed::Fixed x, fixed::Fixed y, fixed::Fixed z, info::MobjType type);
+void checkMissileSpawn(NotNull<MapObject*> th);
+void explodeMissile(NotNull<MapObject*> mo);
 
 } // namespace mobj
 

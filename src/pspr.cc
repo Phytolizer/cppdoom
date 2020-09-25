@@ -7,6 +7,8 @@
 #include "info.hh"
 #include "player.hh"
 
+int pspr::weapon_attack_alignment;
+
 void pspr::setPsprite(NotNull<player::Player*> player, pspr::PSprEnum position, info::StateEnum stateNum)
 {
     PSpDef* psp = &player->psprites[position];

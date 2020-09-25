@@ -61,6 +61,8 @@ check_include_file("asm/byteorder.h" HAVE_ASM_BYTEORDER_H)
 include(TestBigEndian)
 test_big_endian(WORDS_BIGENDIAN)
 
+set(DOOMWADDIR "${CMAKE_INSTALL_PREFIX}/share/games/doom")
+
 configure_file(cmake/config.h.cin config.h)
 
 include_directories(${CMAKE_BINARY_DIR})

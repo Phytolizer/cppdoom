@@ -13,6 +13,7 @@
 #include "pspr.hh"
 #include "random.hh"
 #include "sound.hh"
+#include "tick.hh"
 
 void action::light0(NotNull<player::Player*> player)
 {
@@ -88,18 +89,18 @@ void action::fireOldBfg(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> 
         }
 
         tables::Angle angle = player->angle;
-        tables::Angle angle1 = ((random::p_random(random::PrClass::Bfg) & 127) - 64) * (tables::ANG90 / 768) + angle;
+        tables::Angle angle1 = ((rando::p_random(rando::PrClass::Bfg) & 127) - 64) * (tables::ANG90 / 768) + angle;
         tables::Angle angle2 =
-            ((random::p_random(random::PrClass::Bfg) & 127) - 64) * (tables::ANG90 / 640) + tables::ANG90;
+            ((rando::p_random(rando::PrClass::Bfg) & 127) - 64) * (tables::ANG90 / 640) + tables::ANG90;
 
-        auto th =
+        auto* th =
             mobj::spawnMobj(player->x, player->y,
                             player->z + 62 * fixed::FRACUNIT - player->psprites[pspr::PSprEnum::PS_WEAPON].sy, type);
         tick::setTarget(&th->target, player);
         th->angle = angle1;
-        th->momx = tables::finecosine(angle1 >> tables::ANGLE_TO_FINE_SHIFT) * 25;
-        th->momy = tables::finesine[angle1 >> tables::ANGLE_TO_FINE_SHIFT] * 25;
-        th->momz = tables::finetangent[angle2 >> tables::ANGLE_TO_FINE_SHIFT] * 25;
+        th->momX = tables::finecosine(angle1 >> tables::ANGLE_TO_FINE_SHIFT) * 25;
+        th->momY = tables::finesine[angle1 >> tables::ANGLE_TO_FINE_SHIFT] * 25;
+        th->momZ = tables::finetangent[angle2 >> tables::ANGLE_TO_FINE_SHIFT] * 25;
         mobj::checkMissileSpawn(th);
     }
 }

@@ -37,6 +37,8 @@ constexpr fixed::Fixed finecosine(fixed::Fixed angle)
     return finesine[angle + (FINE_ANGLES / 4)];
 }
 
+extern std::array<fixed::Fixed, FINE_ANGLES / 2> finetangent;
+
 } // namespace tables
 
 #endif // DOOM_TABLES_HH

@@ -5,7 +5,7 @@
 #include <optional>
 #include <spdlog/spdlog.h>
 
-#include "config.hh"
+#include "config.h"
 #include "doom.hh"
 #include "string_tools.hh"
 

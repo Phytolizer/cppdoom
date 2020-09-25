@@ -114,12 +114,14 @@ extern bool doom_weapon_toggles;
 extern bool flashing_hom;
 extern bool modifiedGame;
 extern int levelTime;
+extern int gametic;
+extern int basetic;
 
 extern bool allow_pushers;
 extern bool default_allow_pushers;
 
-extern bool comp[];
-extern bool default_comp[];
+extern std::array<bool, static_cast<std::size_t>(doomstat::CompFlag::COMP_TOTAL)> comp;
+extern std::array<bool, static_cast<std::size_t>(doomstat::CompFlag::COMP_TOTAL)> default_comp;
 
 extern CompLevel compatibility_level;
 extern CompLevel default_compatibility_level;
@@ -177,6 +179,7 @@ extern defs::Language language;
 
 bool mbfFeatures();
 
+bool demo_compatibility();
 } // namespace doomstat
 
 #endif // DOOM_STAT_HH

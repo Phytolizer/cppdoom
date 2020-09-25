@@ -32,9 +32,9 @@ struct WadInfo
 
 struct FileLump
 {
-    int32_t filePos;
-    int32_t size;
-    std::array<char, 8> name;
+    int32_t filePos{0};
+    int32_t size{0};
+    std::array<char, 8> name{};
 };
 
 struct WadFileInfo

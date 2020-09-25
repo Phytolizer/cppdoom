@@ -43,6 +43,24 @@ template <typename T> constexpr T abs(const T& value)
     }
     return value;
 }
+
+template <typename T> constexpr T min(const T& a, const T& b)
+{
+    if (a < b)
+    {
+        return a;
+    }
+    return b;
+}
+
+template <typename T> constexpr T max(const T& a, const T& b)
+{
+    if (a > b)
+    {
+        return a;
+    }
+    return b;
+}
 } // namespace math
 
 #endif // DOOM_MATH_HH

@@ -2,7 +2,7 @@
   <profile version="1.0">
     <option name="myName" value="Project Default" />
     <inspection_tool class="ClangTidy" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="clangTidyChecks" value="*,-fuchsia-default-arguments-calls,-hicpp-signed-bitwise,-cppcoreguidelines-avoid-magic-numbers,-google-build-using-namespace,-modernize-use-trailing-return-type,-readability-magic-numbers,-llvm-header-guard,-cppcoreguidelines-pro-bounds-constant-array-index,-fuchsia-overloaded-operator,-bugprone-exception-escape,-google-runtime-int,-fuchsia-default-arguments-declarations" />
+      <option name="clangTidyChecks" value="*,-fuchsia-default-arguments-calls,-hicpp-signed-bitwise,-cppcoreguidelines-avoid-magic-numbers,-google-build-using-namespace,-modernize-use-trailing-return-type,-readability-magic-numbers,-llvm-header-guard,-cppcoreguidelines-pro-bounds-constant-array-index,-fuchsia-overloaded-operator,-bugprone-exception-escape,-google-runtime-int,-fuchsia-default-arguments-declarations,-misc-non-private-member-variables-in-classes" />
     </inspection_tool>
     <inspection_tool class="OCUnusedConcept" enabled="true" level="UNUSED ENTRY" enabled_by_default="true" />
     <inspection_tool class="OCUnusedGlobalDeclaration" enabled="true" level="WEAK WARNING" enabled_by_default="true" />

@@ -8,12 +8,14 @@ bool doomstat::doom_weapon_toggles;
 bool doomstat::flashing_hom;
 bool doomstat::modifiedGame;
 int doomstat::levelTime;
+int doomstat::gametic;
+int doomstat::basetic;
 
 bool doomstat::allow_pushers;
 bool doomstat::default_allow_pushers;
 
-bool doomstat::comp[static_cast<std::size_t>(CompFlag::COMP_TOTAL)];
-bool doomstat::default_comp[static_cast<std::size_t>(CompFlag::COMP_TOTAL)];
+std::array<bool, static_cast<std::size_t>(doomstat::CompFlag::COMP_TOTAL)> doomstat::comp;
+std::array<bool, static_cast<std::size_t>(doomstat::CompFlag::COMP_TOTAL)> doomstat::default_comp;
 
 doomstat::CompLevel doomstat::compatibility_level;
 doomstat::CompLevel doomstat::default_compatibility_level;
@@ -67,4 +69,8 @@ defs::Language doomstat::language = defs::Language::ENGLISH;
 bool doomstat::mbfFeatures()
 {
     return compatibility_level >= doomstat::CompLevel::Mbf;
+}
+bool doomstat::demo_compatibility()
+{
+    return compatibility_level < CompLevel::Boom;
 }
