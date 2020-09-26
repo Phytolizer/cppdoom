@@ -3,15 +3,18 @@
 //
 
 #include "action.hh"
+#include "demo.hh"
 #include "doomstat.hh"
 #include "enum_ops.hh"
 #include "event.hh"
 #include "game.hh"
+#include "game_map.hh"
 #include "info.hh"
 #include "items.hh"
 #include "player.hh"
 #include "pspr.hh"
 #include "random.hh"
+#include "render.hh"
 #include "sound.hh"
 #include "tick.hh"
 
@@ -144,4 +147,46 @@ void action::raise(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp)
 
     auto newState = items::weaponinfo.at(player->readyWeapon).readyState;
     pspr::setPsprite(player, pspr::PSprEnum::PS_WEAPON, newState);
+}
+void action::punch(NotNull<player::Player*> player)
+{
+    auto damage = (rando::p_random(rando::PrClass::Punch) % 10 + 1) * 2;
+
+    if (player->powers[to_underlying(defs::PowerType::PW_STRENGTH)] != 0)
+    {
+        damage *= 10;
+    }
+
+    auto angle = player->angle;
+    auto t = rando::p_random(rando::PrClass::PunchAngle);
+    angle += (t - rando::p_random(rando::PrClass::PunchAngle)) << 18;
+
+    int slope{0};
+    auto computeSlope = [&]() -> int {
+        return game_map::aimLineAttack(player, angle, game_map::MELEE_RANGE, info::MobjFlag::MF_NONE);
+    };
+    if (doomstat::mbfFeatures())
+    {
+        slope = game_map::aimLineAttack(player, angle, game_map::MELEE_RANGE, info::MobjFlag::MF_FRIEND);
+        if (game_map::lineTarget == nullptr)
+        {
+            slope = computeSlope();
+        }
+    }
+    else
+    {
+        slope = computeSlope();
+    }
+
+    game_map::lineAttack(player, angle, game_map::MELEE_RANGE, slope, damage);
+
+    if (game_map::lineTarget == nullptr)
+    {
+        return;
+    }
+
+    sound::startSound(player, info::Sfx::sfx_punch);
+
+    player->angle = render::pointToAngle2(player->x, player->y, game_map::lineTarget->x, game_map::lineTarget->y);
+    demo::smooth_playing::reset(player);
 }

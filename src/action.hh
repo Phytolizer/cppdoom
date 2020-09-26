@@ -41,6 +41,7 @@ void weaponReady(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp);
 void fireOldBfg(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp);
 void lower(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp);
 void raise(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp);
+void punch(NotNull<player::Player*> player);
 
 } // namespace action
 

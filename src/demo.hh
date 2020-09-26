@@ -5,7 +5,14 @@
 #ifndef DOOM_DEMO_HH
 #define DOOM_DEMO_HH
 
+#include "gsl_aliases.hh"
+
 #include <string_view>
+
+namespace player
+{
+struct Player;
+}
 
 namespace demo
 {
@@ -18,6 +25,13 @@ constexpr int SMOOTH_PLAYING_MAXFACTOR = 16;
 bool isDemoPlayback();
 bool demoCompatibility();
 bool tryGetWad(std::string_view name);
+
+namespace smooth_playing
+{
+
+void reset(NotNull<player::Player*> player);
+
+} // namespace smooth_playing
 
 } // namespace demo
 

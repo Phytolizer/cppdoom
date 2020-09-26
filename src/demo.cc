@@ -76,3 +76,7 @@ bool demo::tryGetWad(std::string_view name)
 
     return result;
 }
+void demo::smooth_playing::reset(NotNull<player::Player*> player)
+{
+    // TODO(kyle)
+}

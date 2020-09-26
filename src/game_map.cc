@@ -23,6 +23,7 @@ bool game_map::tmUnstuck;
 line::Line* game_map::ceilingLine{nullptr};
 line::Line* game_map::floorLine{nullptr};
 std::vector<line::Line> game_map::spechit;
+mobj::MapObject* game_map::lineTarget;
 
 bool game_map::tryMove(NotNull<mobj::MapObject*> thing, fixed::Fixed x, fixed::Fixed y, int dropoff)
 {
@@ -181,6 +182,16 @@ bool game_map::checkPosition(NotNull<mobj::MapObject*> thing, fixed::Fixed x, fi
     // TODO(kyle)
 }
 bool game_map::untouched(NotNull<line::Line*> linedef)
+{
+    // TODO(kyle)
+}
+fixed::Fixed game_map::aimLineAttack(NotNull<mobj::MapObject*> thing, tables::Angle angle, fixed::Fixed distance,
+                                     info::MobjFlag mask)
+{
+    // TODO(kyle)
+}
+void game_map::lineAttack(NotNull<mobj::MapObject*> thing, tables::Angle angle, fixed::Fixed distance,
+                          fixed::Fixed slope, int damage)
 {
     // TODO(kyle)
 }
