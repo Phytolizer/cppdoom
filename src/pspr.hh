@@ -23,6 +23,7 @@ extern int weapon_attack_alignment;
 constexpr const auto WEAPONTOP = fixed::FRACUNIT * 32;
 constexpr const auto WEAPONBOTTOM = fixed::FRACUNIT * 128;
 constexpr const auto LOWER_SPEED = fixed::FRACUNIT * 6;
+constexpr const auto RAISE_SPEED = fixed::FRACUNIT * 6;
 
 enum class PSprEnum
 {

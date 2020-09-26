@@ -131,3 +131,17 @@ void action::lower(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp)
     player->readyWeapon = player->pendingWeapon;
     pspr::bringUpWeapon(player);
 }
+void action::raise(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp)
+{
+    psp->sy -= pspr::RAISE_SPEED;
+
+    if (psp->sy > pspr::WEAPONTOP)
+    {
+        return;
+    }
+
+    psp->sy = pspr::WEAPONTOP;
+
+    auto newState = items::weaponinfo.at(player->readyWeapon).readyState;
+    pspr::setPsprite(player, pspr::PSprEnum::PS_WEAPON, newState);
+}
