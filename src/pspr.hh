@@ -21,6 +21,8 @@ namespace pspr
 extern int weapon_attack_alignment;
 
 constexpr const auto WEAPONTOP = fixed::FRACUNIT * 32;
+constexpr const auto WEAPONBOTTOM = fixed::FRACUNIT * 128;
+constexpr const auto LOWER_SPEED = fixed::FRACUNIT * 6;
 
 enum class PSprEnum
 {
@@ -52,6 +54,7 @@ constexpr const std::array recoil_values{
 void setPsprite(NotNull<player::Player*> player, PSprEnum position, info::StateEnum state);
 void fireWeapon(NotNull<player::Player*> player);
 void thrust(NotNull<player::Player*> player, tables::Angle angle, fixed::Fixed move);
+void bringUpWeapon(NotNull<player::Player*> player);
 
 } // namespace pspr
 

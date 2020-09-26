@@ -8,6 +8,7 @@
         "rang",
         "strtk",
         "boost-range",
-        "boost-variant2"
+        "boost-variant2",
+        "boost-algorithm"
     ]
 }

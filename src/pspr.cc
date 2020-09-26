@@ -49,3 +49,7 @@ void pspr::thrust(NotNull<player::Player*> player, tables::Angle angle, fixed::F
 {
     // TODO(kyle)
 }
+void pspr::bringUpWeapon(NotNull<player::Player*> player)
+{
+    // TODO(kyle)
+}

@@ -104,3 +104,30 @@ void action::fireOldBfg(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> 
         mobj::checkMissileSpawn(th);
     }
 }
+void action::lower(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp)
+{
+    psp->sy += pspr::LOWER_SPEED;
+
+    if (psp->sy < pspr::WEAPONBOTTOM)
+    {
+        // is already down
+        return;
+    }
+
+    if (player->playerState == player::PlayerState::PST_DEAD)
+    {
+        psp->sy = pspr::WEAPONBOTTOM;
+        return;
+    }
+
+    if (player->health == 0)
+    {
+        pspr::setPsprite(player, pspr::PSprEnum::PS_WEAPON, info::StateEnum::S_NULL);
+        return;
+    }
+
+    // old weapon is lowered, so change weapon and start raising
+
+    player->readyWeapon = player->pendingWeapon;
+    pspr::bringUpWeapon(player);
+}
