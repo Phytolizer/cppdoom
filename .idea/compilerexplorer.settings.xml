@@ -5004,6 +5004,7 @@
         </entry>
       </map>
     </option>
+    <option name="additionalSwitches" value="-fverbose-asm -O2" />
     <option name="autoscrollFromSource" value="true" />
     <option name="initialNoticeShown" value="true" />
   </component>

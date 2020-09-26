@@ -32,6 +32,7 @@ extern fixed::Fixed tmDropoffZ;
 extern bool tmUnstuck;
 extern line::Line* ceilingLine;
 extern line::Line* floorLine;
+extern std::vector<line::Line> spechit;
 
 bool tryMove(NotNull<mobj::MapObject*> thing, fixed::Fixed x, fixed::Fixed y, int dropoff);
 bool checkPosition(NotNull<mobj::MapObject*> thing, fixed::Fixed x, fixed::Fixed y);
