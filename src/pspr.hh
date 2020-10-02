@@ -52,10 +52,10 @@ constexpr const std::array recoil_values{
     80,  // wp_supershotgun
 };
 
-void setPsprite(NotNull<player::Player*> player, PSprEnum position, info::StateEnum state);
-void fireWeapon(NotNull<player::Player*> player);
-void thrust(NotNull<player::Player*> player, tables::Angle angle, fixed::Fixed move);
-void bringUpWeapon(NotNull<player::Player*> player);
+void setPsprite(player::Player& player, PSprEnum position, info::StateEnum state);
+void fireWeapon(player::Player& player);
+void thrust(player::Player& player, tables::Angle angle, fixed::Fixed move);
+void bringUpWeapon(player::Player& player);
 
 } // namespace pspr
 

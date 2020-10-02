@@ -29,7 +29,7 @@ bool tryGetWad(std::string_view name);
 namespace smooth_playing
 {
 
-void reset(NotNull<player::Player*> player);
+void reset(player::Player& player);
 
 } // namespace smooth_playing
 

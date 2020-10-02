@@ -3,7 +3,7 @@
 //
 
 #include "spec.hh"
-void spec::crossSpecialLine(NotNull<line::Line*> line, int side, NotNull<mobj::MapObject*> thing,
+void spec::crossSpecialLine(line::Line& line, int side, mobj::MapObject& thing,
                             spec::PlayerCheck playerCheck)
 {
     // TODO(kyle)

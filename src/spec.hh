@@ -22,7 +22,7 @@ enum class PlayerCheck
     NoPlayerCheck,
 };
 
-void crossSpecialLine(NotNull<line::Line*> line, int side, NotNull<mobj::MapObject*> thing, PlayerCheck playerCheck);
+void crossSpecialLine(line::Line& line, int side, mobj::MapObject& thing, PlayerCheck playerCheck);
 
 }
 

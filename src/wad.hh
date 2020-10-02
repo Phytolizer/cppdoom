@@ -89,9 +89,9 @@ static inline int findNumFromName(std::string_view name, int lump)
 {
     return findNumFromName(name, LumpInfoNamespace::NS_GLOBAL, lump);
 }
-void addDefaultExtension(NotNull<std::string*> path, std::string_view ext);
+void addDefaultExtension(std::string& path, std::string_view ext);
 void init();
-void addFile(NotNull<WadFileInfo*> wadfile);
+void addFile(WadFileInfo& wadfile);
 void extractFileBase(std::string_view path, char* dest);
 
 } // namespace wad

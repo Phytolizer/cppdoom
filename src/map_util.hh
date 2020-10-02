@@ -16,9 +16,9 @@ struct Line;
 namespace map_util
 {
 
-void unsetThingPosition(NotNull<mobj::MapObject*> thing);
-void setThingPosition(NotNull<mobj::MapObject*> thing);
-int pointOnLineSide(fixed::Fixed x, fixed::Fixed y, NotNull<const line::Line*> line);
+void unsetThingPosition(mobj::MapObject& thing);
+void setThingPosition(mobj::MapObject& thing);
+int pointOnLineSide(fixed::Fixed x, fixed::Fixed y, const line::Line& line);
 
 } // namespace map_util
 

@@ -37,12 +37,12 @@ extern line::Line* floorLine;
 extern std::vector<line::Line> spechit;
 extern mobj::MapObject* lineTarget;
 
-bool tryMove(NotNull<mobj::MapObject*> thing, fixed::Fixed x, fixed::Fixed y, int dropoff);
-bool checkPosition(NotNull<mobj::MapObject*> thing, fixed::Fixed x, fixed::Fixed y);
-bool untouched(NotNull<line::Line*> linedef);
-fixed::Fixed aimLineAttack(NotNull<mobj::MapObject*> thing, tables::Angle angle, fixed::Fixed distance,
+bool tryMove(mobj::MapObject& thing, fixed::Fixed x, fixed::Fixed y, int dropoff);
+bool checkPosition(mobj::MapObject& thing, fixed::Fixed x, fixed::Fixed y);
+bool untouched(line::Line& linedef);
+fixed::Fixed aimLineAttack(mobj::MapObject& thing, tables::Angle angle, fixed::Fixed distance,
                            info::MobjFlag mask);
-void lineAttack(NotNull<mobj::MapObject*> thing, tables::Angle angle, fixed::Fixed distance, fixed::Fixed slope,
+void lineAttack(mobj::MapObject& thing, tables::Angle angle, fixed::Fixed distance, fixed::Fixed slope,
                 int damage);
 
 } // namespace game_map

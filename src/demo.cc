@@ -35,7 +35,7 @@ bool demo::tryGetWad(std::string_view name)
     }
 
     std::string wadname = path::findFileName(name);
-    wad::addDefaultExtension(&wadname, ".wad");
+    wad::addDefaultExtension(wadname, ".wad");
     auto wadname_p = getwad_cmdline.find("%wadname%");
     std::string cmdline;
     if (wadname_p == std::string::npos)
@@ -76,7 +76,7 @@ bool demo::tryGetWad(std::string_view name)
 
     return result;
 }
-void demo::smooth_playing::reset(NotNull<player::Player*> player)
+void demo::smooth_playing::reset(player::Player& player)
 {
     // TODO(kyle)
 }

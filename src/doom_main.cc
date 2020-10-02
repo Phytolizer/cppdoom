@@ -47,21 +47,21 @@ void doom::main()
     doom::mainSetup();
 }
 
-void normalizeSlashes(NotNull<std::string*> s)
+void normalizeSlashes(std::string& s)
 {
-    if (s->empty())
+    if (s.empty())
     {
         return;
     }
 
-    auto p = s->rbegin();
+    auto p = s.rbegin();
     if (*p == '/' || *p == '\\')
     {
-        s->erase(p.base());
+        s.erase(p.base());
     }
     // ensure p is valid
-    p = s->rbegin();
-    while (p != s->rend())
+    p = s.rbegin();
+    while (p != s.rend())
     {
         ++p;
         if (*p == '\\')
@@ -202,7 +202,7 @@ void checkIwad(std::string_view iwad)
     }
     doomstat::gamemode = defs::GameMode::UNDETERMINED;
     game::haswolflevels = false;
-    if (cm >= 30 || (cm >= 20 && hx))
+    if (cm >= 30 || (cm >= 20 && hx > 0))
     {
         doomstat::gamemode = defs::GameMode::COMMERCIAL;
         game::haswolflevels = sc >= 2;
@@ -224,7 +224,7 @@ void checkIwad(std::string_view iwad)
 void addFile(std::string_view file, wad::WadSource source)
 {
     std::string f{file};
-    wad::addDefaultExtension(&f, ".wad");
+    wad::addDefaultExtension(f, ".wad");
     wad::wadfiles.push_back(wad::WadFileInfo{f, source, 0});
 
     if (strtk::ends_with(f, "nerve.wad"))
@@ -313,7 +313,7 @@ void identifyVersion()
         if (std::filesystem::is_directory(argMeta.save.value()))
         {
             basesavegame = argMeta.save.value();
-            normalizeSlashes(&basesavegame);
+            normalizeSlashes(basesavegame);
         }
         else
         {

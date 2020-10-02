@@ -11,7 +11,7 @@
 namespace tick
 {
 
-void setTarget(NotNull<mobj::MapObject**> mop, mobj::MapObject* target);
+void setTarget(mobj::MapObject*& mop, mobj::MapObject& target);
 
 }
 

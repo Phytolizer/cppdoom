@@ -18,49 +18,49 @@
 #include "sound.hh"
 #include "tick.hh"
 
-void action::light0(NotNull<player::Player*> player)
+void action::light0(player::Player& player)
 {
-    player->extraLight = 0;
+    player.extraLight = 0;
 }
-void action::weaponReady(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp)
+void action::weaponReady(player::Player& player, pspr::PSpDef& psp)
 {
-    if (player->state == &info::states.at(info::StateEnum::S_PLAY_ATK1) ||
-        player->state == &info::states.at(info::StateEnum::S_PLAY_ATK2))
+    if (player.state == &info::states.at(info::StateEnum::S_PLAY_ATK1) ||
+        player.state == &info::states.at(info::StateEnum::S_PLAY_ATK2))
     {
-        mobj::setMobjState(dynamic_cast<mobj::MapObject*>(player.get()), info::StateEnum::S_PLAY);
+        mobj::setMobjState(player, info::StateEnum::S_PLAY);
     }
 
-    if (player->readyWeapon == defs::WeaponType::WP_CHAINSAW && psp->state == &info::states.at(info::StateEnum::S_SAW))
+    if (player.readyWeapon == defs::WeaponType::WP_CHAINSAW && psp.state == &info::states.at(info::StateEnum::S_SAW))
     {
-        sound::startSound(dynamic_cast<mobj::MapObject*>(player.get()), info::Sfx::sfx_sawidl);
+        sound::startSound(player, info::Sfx::sfx_sawidl);
     }
 
-    if (player->pendingWeapon != defs::WeaponType::WP_NOCHANGE || player->health == 0)
+    if (player.pendingWeapon != defs::WeaponType::WP_NOCHANGE || player.health == 0)
     {
-        info::StateEnum newState = items::weaponinfo.at(player->readyWeapon).downState;
+        info::StateEnum newState = items::weaponinfo.at(player.readyWeapon).downState;
         pspr::setPsprite(player, pspr::PSprEnum::PS_WEAPON, newState);
         return;
     }
 
-    if (static_cast<bool>(player->cmd.buttons & event::ButtonCode::BT_ATTACK))
+    if (static_cast<bool>(player.cmd.buttons & event::ButtonCode::BT_ATTACK))
     {
-        if (!player->attackDown ||
-            player->readyWeapon != defs::WeaponType::WP_MISSILE && player->readyWeapon != defs::WeaponType::WP_BFG)
+        if (!player.attackDown ||
+            player.readyWeapon != defs::WeaponType::WP_MISSILE && player.readyWeapon != defs::WeaponType::WP_BFG)
         {
-            player->attackDown = true;
+            player.attackDown = true;
             pspr::fireWeapon(player);
             return;
         }
     }
     else
     {
-        player->attackDown = false;
+        player.attackDown = false;
     }
 
     auto angle = (128 * doomstat::levelTime) & tables::FINE_MASK;
-    psp->sx = fixed::FRACUNIT + fixed::fixedMul(player->bob, tables::finecosine(angle));
+    psp.sx = fixed::FRACUNIT + fixed::fixedMul(player.bob, tables::finecosine(angle));
     angle &= tables::FINE_ANGLES / 2 - 1;
-    psp->sy = pspr::WEAPONTOP + fixed::fixedMul(player->bob, tables::finesine[angle]);
+    psp.sy = pspr::WEAPONTOP + fixed::fixedMul(player.bob, tables::finesine[angle]);
 
     game::done_autoswitch = false;
 }
@@ -68,20 +68,20 @@ void action::doNothing()
 {
     // duh
 }
-void action::fireOldBfg(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp)
+void action::fireOldBfg(player::Player& player)
 {
     if (doomstat::compatibility_level < doomstat::CompLevel::Mbf)
     {
         return;
     }
-    if (doomstat::weapon_recoil && !(player->flags & info::MobjFlag::MF_NOCLIP))
+    if (doomstat::weapon_recoil && !(player.flags & info::MobjFlag::MF_NOCLIP))
     {
-        pspr::thrust(player, tables::ANG180 + player->angle,
+        pspr::thrust(player, tables::ANG180 + player.angle,
                      512 * pspr::recoil_values[to_underlying(defs::WeaponType::WP_PLASMA)]);
     }
 
-    --player->ammo[to_underlying(items::weaponinfo.at(player->readyWeapon).ammo)];
-    player->extraLight = 2;
+    --player.ammo[to_underlying(items::weaponinfo.at(player.readyWeapon).ammo)];
+    player.extraLight = 2;
 
     auto type = info::MobjType::MT_PLASMA1;
     for (int i = 0; i < 2; ++i)
@@ -91,39 +91,38 @@ void action::fireOldBfg(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> 
             type = info::MobjType::MT_PLASMA2;
         }
 
-        tables::Angle angle = player->angle;
+        tables::Angle angle = player.angle;
         tables::Angle angle1 = ((rando::p_random(rando::PrClass::Bfg) & 127) - 64) * (tables::ANG90 / 768) + angle;
         tables::Angle angle2 =
             ((rando::p_random(rando::PrClass::Bfg) & 127) - 64) * (tables::ANG90 / 640) + tables::ANG90;
 
-        auto* th =
-            mobj::spawnMobj(player->x, player->y,
-                            player->z + 62 * fixed::FRACUNIT - player->psprites[pspr::PSprEnum::PS_WEAPON].sy, type);
-        tick::setTarget(&th->target, player);
+        auto* th = mobj::spawnMobj(
+            player.x, player.y, player.z + 62 * fixed::FRACUNIT - player.psprites[pspr::PSprEnum::PS_WEAPON].sy, type);
+        tick::setTarget(th->target, player);
         th->angle = angle1;
         th->momX = tables::finecosine(angle1 >> tables::ANGLE_TO_FINE_SHIFT) * 25;
         th->momY = tables::finesine[angle1 >> tables::ANGLE_TO_FINE_SHIFT] * 25;
         th->momZ = tables::finetangent[angle2 >> tables::ANGLE_TO_FINE_SHIFT] * 25;
-        mobj::checkMissileSpawn(th);
+        mobj::checkMissileSpawn(*th);
     }
 }
-void action::lower(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp)
+void action::lower(player::Player& player, pspr::PSpDef& psp)
 {
-    psp->sy += pspr::LOWER_SPEED;
+    psp.sy += pspr::LOWER_SPEED;
 
-    if (psp->sy < pspr::WEAPONBOTTOM)
+    if (psp.sy < pspr::WEAPONBOTTOM)
     {
         // is already down
         return;
     }
 
-    if (player->playerState == player::PlayerState::PST_DEAD)
+    if (player.playerState == player::PlayerState::PST_DEAD)
     {
-        psp->sy = pspr::WEAPONBOTTOM;
+        psp.sy = pspr::WEAPONBOTTOM;
         return;
     }
 
-    if (player->health == 0)
+    if (player.health == 0)
     {
         pspr::setPsprite(player, pspr::PSprEnum::PS_WEAPON, info::StateEnum::S_NULL);
         return;
@@ -131,33 +130,33 @@ void action::lower(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp)
 
     // old weapon is lowered, so change weapon and start raising
 
-    player->readyWeapon = player->pendingWeapon;
+    player.readyWeapon = player.pendingWeapon;
     pspr::bringUpWeapon(player);
 }
-void action::raise(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp)
+void action::raise(player::Player& player, pspr::PSpDef& psp)
 {
-    psp->sy -= pspr::RAISE_SPEED;
+    psp.sy -= pspr::RAISE_SPEED;
 
-    if (psp->sy > pspr::WEAPONTOP)
+    if (psp.sy > pspr::WEAPONTOP)
     {
         return;
     }
 
-    psp->sy = pspr::WEAPONTOP;
+    psp.sy = pspr::WEAPONTOP;
 
-    auto newState = items::weaponinfo.at(player->readyWeapon).readyState;
+    auto newState = items::weaponinfo.at(player.readyWeapon).readyState;
     pspr::setPsprite(player, pspr::PSprEnum::PS_WEAPON, newState);
 }
-void action::punch(NotNull<player::Player*> player)
+void action::punch(player::Player& player)
 {
     auto damage = (rando::p_random(rando::PrClass::Punch) % 10 + 1) * 2;
 
-    if (player->powers[to_underlying(defs::PowerType::PW_STRENGTH)] != 0)
+    if (player.powers[to_underlying(defs::PowerType::PW_STRENGTH)] != 0)
     {
         damage *= 10;
     }
 
-    auto angle = player->angle;
+    auto angle = player.angle;
     auto t = rando::p_random(rando::PrClass::PunchAngle);
     angle += (t - rando::p_random(rando::PrClass::PunchAngle)) << 18;
 
@@ -187,6 +186,6 @@ void action::punch(NotNull<player::Player*> player)
 
     sound::startSound(player, info::Sfx::sfx_punch);
 
-    player->angle = render::pointToAngle2(player->x, player->y, game_map::lineTarget->x, game_map::lineTarget->y);
+    player.angle = render::pointToAngle2(player.x, player.y, game_map::lineTarget->x, game_map::lineTarget->y);
     demo::smooth_playing::reset(player);
 }

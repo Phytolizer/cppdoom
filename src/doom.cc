@@ -129,7 +129,7 @@ void findResponseFile(gsl::not_null<std::vector<arglex::Arg>*> args, std::vector
 {
     // remove leading '@'
     std::string fname = responseFile->value.substr(1);
-    wad::addDefaultExtension(&fname, ".rsp");
+    wad::addDefaultExtension(fname, ".rsp");
 
     auto contents = misc::readFile(fname);
     if (!contents.has_value())
