@@ -3,15 +3,15 @@
 //
 
 #include "tick.hh"
-void tick::setTarget(NotNull<mobj::MapObject**> mop, mobj::MapObject* target)
+void tick::setTarget(mobj::MapObject*& mop, mobj::MapObject& target)
 {
-    if (*mop != nullptr)
+    if (mop != nullptr)
     {
-        --(*mop)->references;
+        --mop->references;
     }
-    *mop = target;
-    if (*mop != nullptr)
+    mop = &target;
+    if (mop != nullptr)
     {
-        ++target->references;
+        ++target.references;
     }
 }

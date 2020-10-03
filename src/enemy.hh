@@ -5,7 +5,7 @@
 namespace enemy
 {
 
-void noiseAlert(NotNull<mobj::MapObject*> target, NotNull<mobj::MapObject*> emitter);
+void noiseAlert(mobj::MapObject& target, mobj::MapObject& emitter);
 
 }
 

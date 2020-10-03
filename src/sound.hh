@@ -51,7 +51,7 @@ extern SfxInfo sfx[];
 extern std::string snd_midiplayer;
 extern std::vector<std::string> midiplayers;
 
-void startSound(NotNull<mobj::MapObject*> mobj, info::Sfx sound);
+void startSound(mobj::MapObject& mobj, info::Sfx sound);
 
 } // namespace sound
 

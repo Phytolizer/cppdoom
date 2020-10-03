@@ -23,6 +23,9 @@ extern int weapon_attack_alignment;
 extern std::array<std::array<int, 10>, 2> weapon_preferences;
 
 constexpr const auto WEAPONTOP = fixed::FRACUNIT * 32;
+constexpr const auto WEAPONBOTTOM = fixed::FRACUNIT * 128;
+constexpr const auto LOWER_SPEED = fixed::FRACUNIT * 6;
+constexpr const auto RAISE_SPEED = fixed::FRACUNIT * 6;
 
 enum class PSprEnum
 {
@@ -51,11 +54,12 @@ constexpr const std::array recoil_values{
     80,  // wp_supershotgun
 };
 
-void setPsprite(NotNull<player::Player*> player, PSprEnum position, info::StateEnum state);
-void fireWeapon(NotNull<player::Player*> player);
-void thrust(NotNull<player::Player*> player, tables::Angle angle, fixed::Fixed move);
-bool checkAmmo(NotNull<player::Player*> player);
-defs::WeaponType switchWeapon(NotNull<player::Player*> player);
+bool checkAmmo(player::Player& player);
+defs::WeaponType switchWeapon(player::Player& player);
+void setPsprite(player::Player& player, PSprEnum position, info::StateEnum state);
+void fireWeapon(player::Player& player);
+void thrust(player::Player& player, tables::Angle angle, fixed::Fixed move);
+void bringUpWeapon(player::Player& player);
 
 } // namespace pspr
 

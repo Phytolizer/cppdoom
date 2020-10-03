@@ -27,14 +27,13 @@ enum class MobjType;
 namespace player
 {
 struct Player;
-}
+} // namespace player
 
 namespace mobj
 {
 
 struct MapObject : think::Thinker
 {
-    virtual ~MapObject() = default;
     fixed::Fixed x{};
     fixed::Fixed y{};
     fixed::Fixed z{};
@@ -148,15 +147,19 @@ struct MapObject : think::Thinker
     fixed::Fixed pad{};
 };
 
-constexpr bool alive(const NotNull<mobj::MapObject*> thing)
+constexpr bool alive(const mobj::MapObject& thing)
 {
-    return thing->health > 0 && ((thing->flags & (info::MobjFlag::MF_COUNTKILL | info::MobjFlag::MF_CORPSE |
-                                                  info::MobjFlag::MF_RESURRECTED)) == info::MobjFlag::MF_COUNTKILL);
+    return thing.health > 0 && ((thing.flags & (info::MobjFlag::MF_COUNTKILL | info::MobjFlag::MF_CORPSE |
+                                                info::MobjFlag::MF_RESURRECTED)) == info::MobjFlag::MF_COUNTKILL);
 }
-void setMobjState(NotNull<MapObject*> mobj, info::StateEnum state);
+constexpr bool sentient(const mobj::MapObject& thing)
+{
+    return thing.health > 0 && thing.info->seeState != info::StateEnum::S_NULL;
+}
+void setMobjState(MapObject& mobj, info::StateEnum state);
 MapObject* spawnMobj(fixed::Fixed x, fixed::Fixed y, fixed::Fixed z, info::MobjType type);
-void checkMissileSpawn(NotNull<MapObject*> th);
-void explodeMissile(NotNull<MapObject*> mo);
+void checkMissileSpawn(MapObject& th);
+void explodeMissile(MapObject& mo);
 
 } // namespace mobj
 

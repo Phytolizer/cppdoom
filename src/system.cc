@@ -1,9 +1,11 @@
 #include "system.hh"
 
+#include <fcntl.h>
 #include <filesystem>
 #include <fmt/core.h>
 #include <optional>
 #include <spdlog/spdlog.h>
+#include <sys/stat.h>
 
 #include "config.h"
 #include "doom.hh"
@@ -57,6 +59,16 @@ std::string sys::getVersionString()
 std::string sys::sigString(int signum)
 {
     return fmt::format("signal {}", signum);
+}
+int sys::fileLength(int handle)
+{
+    struct stat fileInfo{};
+    if (fstat(handle, &fileInfo) == -1)
+    {
+        spdlog::error("sys::fileLength: {}", strerror(errno));
+        exit(-1);
+    }
+    return fileInfo.st_size;
 }
 struct SearchPath
 {

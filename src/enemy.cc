@@ -1,6 +1,6 @@
 #include "enemy.hh"
 
-void enemy::noiseAlert(NotNull<mobj::MapObject*> target, NotNull<mobj::MapObject*> emitter)
+void enemy::noiseAlert(mobj::MapObject& target, mobj::MapObject& emitter)
 {
     // TODO(kyle)
 }

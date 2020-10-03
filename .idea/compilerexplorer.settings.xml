@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerExplorerSettingsProvider">
+    <option name="enabled" value="false" />
     <option name="url" value="https://godbolt.org" />
     <option name="connected" value="true" />
     <option name="remoteCompilers">
@@ -3374,12 +3375,11 @@
                 <CompilerMatch>
                   <option name="remoteCompilerInfo">
                     <RemoteCompilerInfo>
-                      <option name="id" value="g102" />
-                      <option name="name" value="x86-64 gcc 10.2" />
+                      <option name="id" value="clang1001" />
+                      <option name="name" value="x86-64 clang 10.0.1" />
                       <option name="language" value="c++" />
                     </RemoteCompilerInfo>
                   </option>
-                  <option name="compilerMatchKind" value="EXACT_MATCH" />
                 </CompilerMatch>
               </option>
               <option name="otherMatches">
@@ -5004,7 +5004,9 @@
         </entry>
       </map>
     </option>
+    <option name="additionalSwitches" value="-fverbose-asm -O2" />
     <option name="autoscrollFromSource" value="true" />
+    <option name="highlightColorRGB" value="-16742007" />
     <option name="initialNoticeShown" value="true" />
   </component>
 </project>

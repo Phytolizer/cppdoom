@@ -204,7 +204,7 @@ sound::SfxInfo sound::sfx[]{
 
 std::string sound::snd_midiplayer;
 std::vector<std::string> sound::midiplayers = {"sdl", "fluidsynth", "opl2", "portmidi"};
-void sound::startSound(NotNull<mobj::MapObject*> mobj, info::Sfx sound)
+void sound::startSound(mobj::MapObject& mobj, info::Sfx sound)
 {
     // TODO(kyle)
 }

@@ -6,6 +6,9 @@
         "ms-gsl",
         "spdlog",
         "rang",
-        "strtk"
+        "strtk",
+        "boost-range",
+        "boost-variant2",
+        "boost-algorithm"
     ]
 }

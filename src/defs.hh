@@ -10,10 +10,20 @@
 #include <cstdint>
 #include <vector>
 
+namespace line
+{
+struct Line;
+} // namespace line
+
 namespace mobj
 {
 struct MapObject;
 } // namespace mobj
+
+namespace sector
+{
+struct Sector;
+} // namespace sector
 
 namespace defs
 {
@@ -21,18 +31,16 @@ namespace defs
 /// Each sector has a DegenMobj in its center for sound origin purposes
 struct DegenMobj
 {
-    think::Thinker thinker;
-    fixed::Fixed x;
-    fixed::Fixed y;
-    fixed::Fixed z;
+    think::Thinker thinker{};
+    fixed::Fixed x{0};
+    fixed::Fixed y{0};
+    fixed::Fixed z{0};
 };
-
-struct Sector;
 
 struct MSecNode
 {
     /// sector containing this object
-    Sector* sector;
+    sector::Sector* sector;
     /// this object
     mobj::MapObject* thing;
     /// prev MSecNode for this thing
@@ -77,53 +85,6 @@ enum class RFlag
     RF_IGNORE = 0x08,
     RF_CLOSED = 0x10,
     RF_ISOLATED = 0x20,
-};
-
-struct Line
-{
-    /// needed for OpenGL
-    int32_t lineId{0};
-    // vertices, line goes from v1 to v2
-
-    Vertex* v1{nullptr};
-    Vertex* v2{nullptr};
-
-    // precalculated v2-v1 for side checking
-
-    fixed::Fixed dx{0};
-    fixed::Fixed dy{0};
-
-    double texelLength{0};
-
-    /// animation related
-    uint16_t flags{0};
-    int16_t special{0};
-    int16_t tag{0};
-    /// sidedefs
-    std::array<uint16_t, 2> sidedefs{};
-    /// bounding box for linedef's extent
-    std::array<fixed::Fixed, 4> boundingBox{};
-    /// to aid move clipping
-    SlopeType slopeType;
-
-    // front and back sector
-
-    Sector* frontSector{nullptr};
-    Sector* backSector{nullptr};
-
-    // if == validcount, already checked
-    int32_t validCount{0};
-    /// Thinker for reversible actions
-    void* specialData{nullptr};
-    /// translucency filter, -1 = none
-    int32_t tranLump{-1};
-    int32_t firstTag{0};
-    int32_t nextTag{0};
-    /// if == gametic, r_flags already done
-    int32_t r_validCount{0};
-    RFlag rFlags;
-    /// sound origin for switches/buttons
-    DegenMobj soundOrigin{};
 };
 
 struct Sector
@@ -182,7 +143,7 @@ struct Sector
     std::vector<MSecNode> touchingThingList;
 
     int32_t lineCount;
-    Line** lines;
+    line::Line** lines;
 
     int32_t sky;
 
