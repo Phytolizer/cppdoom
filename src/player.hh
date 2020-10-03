@@ -8,6 +8,7 @@
 #include <map>
 #include <string>
 
+#include "defs.hh"
 #include "enum_ops.hh"
 #include "mobj.hh"
 #include "pspr.hh"
@@ -110,6 +111,11 @@ struct Player : mobj::MapObject
     tables::Angle prevViewPitch;
     /// delay next jump for a bit
     fixed::Fixed jumpTics;
+
+    bool ownsWeapon(defs::WeaponType wt);
+    bool hasAmmo(defs::AmmoType at);
+    int32_t getAmmo(defs::AmmoType at);
+    bool hasPower(defs::PowerType pt);
 };
 
 } // namespace player

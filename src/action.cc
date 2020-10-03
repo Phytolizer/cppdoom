@@ -3,6 +3,7 @@
 //
 
 #include "action.hh"
+#include "defs.hh"
 #include "doomstat.hh"
 #include "enum_ops.hh"
 #include "event.hh"
@@ -103,4 +104,27 @@ void action::fireOldBfg(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> 
         th->momZ = tables::finetangent[angle2 >> tables::ANGLE_TO_FINE_SHIFT] * 25;
         mobj::checkMissileSpawn(th);
     }
+}
+void action::reFire(NotNull<player::Player*> player)
+{
+    // TODO(kyle)
+    if (static_cast<bool>(player->cmd.buttons & event::ButtonCode::BT_ATTACK) &&
+        player->pendingWeapon == defs::WeaponType::WP_NOCHANGE && player->health > 0)
+    {
+        player->refire = true;
+        // pspr::fireWeapon(player);
+    }
+    else
+    {
+        player->refire = false;
+        // pspr::checkAmmo(player);
+    }
+}
+void action::light1(NotNull<player::Player*> player)
+{
+    player->extraLight = 1;
+}
+void action::light2(NotNull<player::Player*> player)
+{
+    player->extraLight = 2;
 }

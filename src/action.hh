@@ -39,6 +39,9 @@ void doNothing();
 void light0(NotNull<player::Player*> player);
 void weaponReady(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp);
 void fireOldBfg(NotNull<player::Player*> player, NotNull<pspr::PSpDef*> psp);
+void reFire(NotNull<player::Player*> player);
+void light1(NotNull<player::Player*> player);
+void light2(NotNull<player::Player*> player);
 
 } // namespace action
 

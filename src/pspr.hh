@@ -5,6 +5,7 @@
 #ifndef DOOM_PSPR_HH
 #define DOOM_PSPR_HH
 
+#include "defs.hh"
 #include "fixed.hh"
 #include "gsl_aliases.hh"
 #include "info.hh"
@@ -19,6 +20,7 @@ namespace pspr
 {
 
 extern int weapon_attack_alignment;
+extern std::array<std::array<int, 10>, 2> weapon_preferences;
 
 constexpr const auto WEAPONTOP = fixed::FRACUNIT * 32;
 
@@ -52,6 +54,8 @@ constexpr const std::array recoil_values{
 void setPsprite(NotNull<player::Player*> player, PSprEnum position, info::StateEnum state);
 void fireWeapon(NotNull<player::Player*> player);
 void thrust(NotNull<player::Player*> player, tables::Angle angle, fixed::Fixed move);
+bool checkAmmo(NotNull<player::Player*> player);
+defs::WeaponType switchWeapon(NotNull<player::Player*> player);
 
 } // namespace pspr
 
